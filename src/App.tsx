@@ -16,10 +16,6 @@ function App() {
       const observer = new IntersectionObserver((event) => event.forEach((element, idx) => {
         if (element.intersectionRatio) element.target.classList.add("active");
         else element.target.classList.remove("active");
-
-        if (element.intersectionRatio >= .35) {
-          location.href = `#w${idx}`;
-        }
       }));
   
       document.querySelectorAll("div.wrap").forEach(element => observer.observe(element));
