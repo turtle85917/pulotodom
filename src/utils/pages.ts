@@ -10,7 +10,8 @@ const Skills: Skill = {
   vite: "https://img.shields.io/badge/Vite-%23A247CA?style=for-the-badge&logo=vite&logoColor=white",
   express: "https://img.shields.io/badge/Express-black?style=for-the-badge&logo=express&logoColor=white",
   mongodb: "https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white",
-  sqlite: "https://img.shields.io/badge/SQLite-%238B8B8B.svg?style=for-the-badge&logo=sqlite&logoColor=white"
+  sqlite: "https://img.shields.io/badge/SQLite-%238B8B8B.svg?style=for-the-badge&logo=sqlite&logoColor=white",
+  godot: "https://img.shields.io/badge/Godot-%23478CBF?style=for-the-badge&logo=godotengine&logoColor=white"
 };
 
 export default Skills;

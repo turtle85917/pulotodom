@@ -1,17 +1,3 @@
-@font-face {
-  font-family: TmoneyRoundWindExtraBold;
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: TossFace;
-  src: url("/assets/TossFaceFontMac.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
 :root {
   /*Scroll bar*/
   --scroll-bar-track: #000000;
@@ -19,7 +5,8 @@
 }
 
 * {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, TmoneyRoundWindExtraBold, TossFace;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,  Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bold;
 }
 
 *::-webkit-scrollbar {
@@ -77,7 +64,6 @@ div.card {
 
 html, body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  overflow: hidden;
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
@@ -101,7 +87,6 @@ div.wrap {
       details {
         summary.title {
           user-select: none;
-          cursor: pointer;
           transition: background .5s;
           margin-left: .5em;
           opacity: .5;
@@ -217,11 +202,21 @@ div.fp-nav {
       transition: .1s;
 
       div.fp-tooltip {
+        opacity: 0;
         display: none;
         position: absolute;
         color: white;
         right: 30px;
         bottom: .5px;
+
+        &.active {
+          animation: Active .5s forwards;
+        }
+
+        @keyframes Active {
+          0% {opacity: 0;}
+          100% {opacity: 1;}
+        }
       }
 
       &:hover, &.active {
@@ -233,7 +228,18 @@ div.fp-nav {
 
 div.projects {
   &+a#more {
-    margin-top: 1em;
+    font-size: 15pt;
+    margin-top: 1.5em;
     color: white; 
+  }
+}
+
+ul.desc {
+  padding: 0;
+  list-style: none;
+
+  li {
+    color: #a1a1a1;
+    font-size: 12pt;
   }
 }
