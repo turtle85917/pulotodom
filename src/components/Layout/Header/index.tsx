@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import SideBar from "@Layout/Header/SideBar";
+import SideBar from "@components/Layout/Header/SideBar";
 
 const Header: React.FC = () => {
   const [hover, setHover] = useState<boolean>(false);
@@ -20,6 +20,7 @@ const Header: React.FC = () => {
 export default Header;
 
 const Container = styled.div`
+  position: fixed;
   width: 100vw;
   max-height: 10em;
   background-color: var(--personal-color);

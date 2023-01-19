@@ -20,6 +20,7 @@
       "@": ["src"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@components/*": ["src/components/*"],
       "@Layout": ["src/components/Layout"],
       "@Layout/*": ["src/components/Layout/*"]

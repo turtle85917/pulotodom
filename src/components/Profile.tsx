@@ -1,15 +1,24 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const Profile: React.FC<{ css?: string }> = ({ css }) => {
-  return <>
-    <ProfileImage src="/slime.png" css={css} />
-  </>;
+const Profile: React.FC = () => {
+  return <Container>
+    <ProfileImage src="/slime.png" />
+  </Container>;
 }
 
 export default Profile;
 
-const ProfileImage = styled.img<{ css?: string; }>`
-  width: 50px;
-  border-radius: 9999px;
-  ${(props) => css`${props.css ?? ''}`}
+const Container = styled.div`
+  position: fixed;
+  top: 30vh;
+  right: 40px;
+`;
+
+const ProfileImage = styled.img`
+  width: 450px;
+  opacity: 0.5;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-window-dragging: no-drag;
 `;
