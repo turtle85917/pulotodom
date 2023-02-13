@@ -16,14 +16,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./",
+    "removeComments": true,
     "paths": {
       "@": ["src"],
       "@pages/*": ["src/pages/*"],
-      "@styles/*": ["src/styles/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@components/*": ["src/components/*"],
-      "@Layout": ["src/components/Layout"],
-      "@Layout/*": ["src/components/Layout/*"]
+      "@global/*": ["src/global/*"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.d.ts"],
