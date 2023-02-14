@@ -1,4 +1,5 @@
 {
-  "/title": "플로토돔",
-  "test": "친구#[이] 있었다."
+  "title": "플로토돔",
+  "test": "#{icon:discord|prefix:fab} #{icon:spinner|prefix:fas|cycle:spin} 안녕, #{0}! 사과#[을]먹었다. #{1}#[은] 뭘까.",
+  "header-title": "#{icon:home} 헤더"
 }

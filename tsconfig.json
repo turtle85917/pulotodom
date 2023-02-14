@@ -20,7 +20,10 @@
     "paths": {
       "@": ["src"],
       "@pages/*": ["src/pages/*"],
-      "@global/*": ["src/global/*"]
+      "@global/*": ["src/global/*"],
+      "@components/*": ["src/components/*"],
+      "@languages": ["src/languages"],
+      "@languages/*": ["src/languages/*"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.d.ts"],

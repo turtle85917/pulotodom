@@ -1,3 +1,7 @@
-import PageTemplate from "@global/PageTemplate";
+import L from "@languages";
 
-export default class Main extends PageTemplate {}
+export default function Main(): JSX.Element {
+  return <article>
+    {L.render("test", "세상", "나")()}
+  </article>
+}
