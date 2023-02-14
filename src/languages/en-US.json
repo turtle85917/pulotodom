@@ -1,0 +1,10 @@
+{
+  "title": "Portfolio - retracing the past.",
+  "loading": "(#{icon:spinner|cycle:spin} Loading...)",
+  "nickname": "Peullotodom",
+  "nickname-d": "It is also called \"Peulto\".",
+  "locale": "#{icon:globe|prefix:fas}",
+  "locale-d": "Change language",
+  "locale-ko": "한국어",
+  "locale-en": "English"
+}

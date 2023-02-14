@@ -1,5 +1,10 @@
 {
-  "title": "플로토돔",
-  "test": "#{icon:discord|prefix:fab} #{icon:spinner|prefix:fas|cycle:spin} 안녕, #{0}! 사과#[을]먹었다. #{1}#[은] 뭘까.",
-  "header-title": "#{icon:home} 헤더"
+  "title": "포트폴리오 - 지나간 길을 되걷다.",
+  "loading": "(#{icon:spinner|cycle:spin} 불러오는 중...)",
+  "nickname": "플로토돔",
+  "nickname-d": "\"플토\"라고도 불려요.",
+  "locale": "#{icon:globe|prefix:fas}",
+  "locale-d": "언어 바꾸기",
+  "locale-ko": "한국어",
+  "locale-en": "English"
 }
