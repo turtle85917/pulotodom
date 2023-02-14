@@ -16,7 +16,7 @@ export default class Header extends Template<{}, S> {
   }
 
   public handlingLocale(locale: string) {
-    this.locale = locale;
+    this.setLocale(locale);
     this.setState({ openLocaleDropdown: false });
   }
 
@@ -28,6 +28,9 @@ export default class Header extends Template<{}, S> {
         <div className="desc">{L.render("nickname-d")(this.locale)}</div>
       </Nickname>
       <Navigation>
+        <button data-for="tooltip" data-tip="projects-d" disabled={true}>
+          {L.render("projects")(this.locale)}
+        </button>
         <button data-for="tooltip" data-tip="locale-d" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
           {L.render("locale")(this.locale)}
         </button>

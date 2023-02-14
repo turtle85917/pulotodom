@@ -12,6 +12,11 @@
   font-style: normal;
 }
 
+:root {
+  --me-personal-color: #37946e;
+  --me-deep-color: #206d4d;
+}
+
 * {
   box-sizing: border-box;
   font-family: MainFont;
@@ -21,6 +26,7 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: var(--me-deep-color);
 }
 
 div.desc {
@@ -33,11 +39,23 @@ button {
   border: none;
   background-color: #e7e7e7;
   min-width: 2em;
+  padding: 0.5em;
   cursor: pointer;
+  font-family: Desc;
   border-radius: 5px;
   transition: 200ms;
 
   &:hover {
     background-color: #a7a7a7;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: no-drop;
+    color: #949494;
+    background-color: #6b6b6b;
   }
 }

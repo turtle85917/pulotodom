@@ -7,12 +7,10 @@ export default abstract class Template<P = {}, S = {}> extends React.PureCompone
     return localStorage.getItem("pf.locale") ?? L.defaultLocale;
   }
 
-  
-  public set locale(value: string) {
+  public setLocale(value: string) {
     localStorage.setItem("pf.locale", value);
     this.reloadLocales();
   }
-  
 
   public reloadLocales() {
     document.title = L.get("title", this.locale);

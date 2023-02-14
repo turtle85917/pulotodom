@@ -11,12 +11,13 @@ import L from "@languages";
 import ko from "@languages/ko-KR.json";
 import en from "@languages/en-US.json";
 
+export const locale = () => localStorage.getItem("pf.locale") ?? L.defaultLocale;
+
 // 언어 추가 (필수)
 L.addLocale("ko-KR", ko);
 L.addLocale("en-US", en);
 
 // pf.* 설정
-const locale = () => localStorage.getItem("pf.locale") ?? L.defaultLocale;
 localStorage.setItem("pf.locale", locale());
 
 document.title = L.get("title", locale());
@@ -26,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
     <Routes>
       <Route path="/" element={<Main />} />
     </Routes>
-    <ReactTooltip id="tooltip" place="left" getContent={(tip) => <Tooltip>{L.render(tip)(locale())}</Tooltip>} />
+    <ReactTooltip id="tooltip" getContent={(tip) => <Tooltip>{L.render(tip)(locale())}</Tooltip>} />
   </BrowserRouter>
 );
 

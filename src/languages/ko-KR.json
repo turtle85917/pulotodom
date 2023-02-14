@@ -3,8 +3,11 @@
   "loading": "(#{icon:spinner|cycle:spin} 불러오는 중...)",
   "nickname": "플로토돔",
   "nickname-d": "\"플토\"라고도 불려요.",
+  "nickname-s": "웹을 다룬다거나 게임을 만들어요.",
   "locale": "#{icon:globe|prefix:fas}",
   "locale-d": "언어 바꾸기",
   "locale-ko": "한국어",
-  "locale-en": "English"
+  "locale-en": "English",
+  "projects": "#{icon:folder} 프로젝트들",
+  "projects-d": "지금까지 만든 것들"
 }

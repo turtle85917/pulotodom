@@ -1,10 +1,13 @@
 {
   "title": "Portfolio - retracing the past.",
+  "slogan": "retracing the past.",
   "loading": "(#{icon:spinner|cycle:spin} Loading...)",
   "nickname": "Peullotodom",
   "nickname-d": "It is also called \"Peulto\".",
   "locale": "#{icon:globe|prefix:fas}",
   "locale-d": "Change language",
   "locale-ko": "한국어",
-  "locale-en": "English"
+  "locale-en": "English",
+  "projects": "#{icon:folder} Projects",
+  "projects-d": "Things made so far"
 }
