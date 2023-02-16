@@ -5,9 +5,9 @@
   "nickname": "Peullotodom",
   "nickname-d": "It is also called \"Peulto\".",
   "locale": "#{icon:globe|prefix:fas}",
-  "locale-d": "Change language",
+  "locale-t": "Change language",
   "locale-ko": "한국어",
   "locale-en": "English",
   "projects": "#{icon:folder} Projects",
-  "projects-d": "Things made so far"
+  "projects-t": "Things made so far"
 }

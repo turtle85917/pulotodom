@@ -3,11 +3,14 @@
   "loading": "(#{icon:spinner|cycle:spin} 불러오는 중...)",
   "nickname": "플로토돔",
   "nickname-d": "\"플토\"라고도 불려요.",
-  "nickname-s": "웹을 다룬다거나 게임을 만들어요.",
+  "nickname-s": "웹을 다룬다거나 게임을 만들어요. #{0}#[을] 먹었다.",
+  "nickname-t": "#{icon:star} 쨔잔! #{icon:star}",
   "locale": "#{icon:globe|prefix:fas}",
-  "locale-d": "언어 바꾸기",
+  "locale-t": "언어 바꾸기",
   "locale-ko": "한국어",
   "locale-en": "English",
   "projects": "#{icon:folder} 프로젝트들",
-  "projects-d": "지금까지 만든 것들"
+  "projects-t": "지금까지 만든 것들",
+  "guide": "포트폴리오 사이트에 어서오세요.",
+  "guide-d1": "저의 지나간 이야기들을 담았어요."
 }

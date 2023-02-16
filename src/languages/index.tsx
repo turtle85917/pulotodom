@@ -1,7 +1,7 @@
 import Icon from "@components/Icon";
 
-const REGEXP_SHARP = /#\{(?:(\d+?)|(?:icon:([^|]+))(?:\|prefix:(\w\S+))?(?:\|cycle:(spin|pulse))?)\}/;
-const REGEXP_BRACKETS = /(?!\s)(.+)#\[([을를]|[이가]|[은는]|[와과]|(?:으로|로))\]/;
+const REGEXP_PATTERN = /#\{(?:(\d+?)|(?:icon:([^!@#$%^&*()_+-=|]+))(?:\|prefix:([^|]+))?(?:\|cycle:(spin|pulse))?)\}/g;
+const REGEXP_BRACKETS = /([^\s]+)#\[([을를]|[이가]|[은는]|[와과]|(?:으로|로))\]/g;
 const MATCH_JOSA: Record<string, (has: boolean) => string> = {
   "을를": (has) => has ? '을' : '를',
   "은는": (has) => has ? '은' : '는',
@@ -33,38 +33,33 @@ export default class L {
     return ((locale?: string) => {
       const result: React.ReactNode[] = [];
       let content = L.get(key, locale);
-      let index = 0;
 
       // NOTE #{...} 커맨드 처리
-      [...content.matchAll(new RegExp(REGEXP_SHARP, 'g'))].forEach((cmd, cindex) => {
-        if (cmd[1]) {
-          content = content.replace(cmd[0], args[index]);
-          index++;
-        } else {
-          const classList = [cmd[3] ?? "fas", `fa-${cmd[2]}`];
-          cmd[4] && classList.push(`fa-${cmd[4]}`);
-          content = content.replace(cmd[0], '');
-
-          const chunk = L.get(key, locale).slice(0, cmd.index);
-          if (!REGEXP_SHARP.test(chunk)) {
-            result.push(chunk);
-            content = content.slice(cmd.index);
-          }
-          result.push(<Icon name={classList} key={cindex} />);
+      let execArray: RegExpExecArray | null = null;
+      let lastIndex: number = 0;
+      while (execArray = REGEXP_PATTERN.exec(content)) {
+        if (execArray.index - lastIndex > 0) {
+          result.push(content.slice(lastIndex, execArray.index));
         }
-      });
-      
+        const argIndex = Number(execArray[1]);
+        if (!isNaN(argIndex)) {
+          result.push(args[argIndex]);
+        } else {
+          const classList = [execArray[3] ?? "fas", `fa-${execArray[2]}`];
+          execArray[4] && classList.push(`fa-${execArray[4]}`);
+          result.push(<Icon name={classList} key={execArray.index} />);    
+        }
+        lastIndex = REGEXP_PATTERN.lastIndex;
+      }
+
       // NOTE 조사 처리
-      const chunk = content.split(' ');
-      chunk.forEach(item => {
-        const itemChunk = item.match(REGEXP_BRACKETS);
-        if (itemChunk === null) return;
-        const hasJongseong = (itemChunk[1].charCodeAt(itemChunk[1].length-1) - 0xac00) % 28 > 0;
-        const selectJosa = Object.entries(MATCH_JOSA).find(item => item[0].includes(itemChunk[2]))?.[1](hasJongseong) ?? itemChunk[2];
-        content = content.replace(`#[${itemChunk[2]}]`, selectJosa);
+      content = content.replace(REGEXP_BRACKETS, (original, ...values: string[]) => {
+        const hasJongseong = (values[0].charCodeAt(values[0].length-1) - 0xac00) % 28 > 0;
+        const result = Object.entries(MATCH_JOSA).find(item => item[0].includes(values[1]))?.[1](hasJongseong) ?? values[1];
+        return original.replace(`#[${values[1]}]`, result);
       });
 
-      result.push(content);
+      if (lastIndex < content.length) result.push(content.slice(lastIndex));
       return <>{result}</>;
     });
   }

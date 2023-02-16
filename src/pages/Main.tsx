@@ -4,10 +4,15 @@ import L from "@languages";
 export default function Main(): JSX.Element {
   return <Container>
     <div>
-      <NicknameGroup data-for="tooltip" data-tip="nickname-d">
+      <NicknameGroup data-for="tooltip" data-tip="nickname-t">
         {L.get("nickname").split('').map((chunk, index) => <Nickname index={index} key={index}>{chunk}</Nickname>)}
       </NicknameGroup>
-      <Introduction className="desc">{L.get("nickname-s")}</Introduction>
+      <Introduction className="desc">{L.render("nickname-s", "사과")()}</Introduction>
+      <Vertical />
+      <GuideGroup>
+        <Guide>{L.get("guide")}</Guide>
+        <Guide>{L.get("guide-d1")}</Guide>
+      </GuideGroup>
     </div>
   </Container>;
 }
@@ -22,6 +27,7 @@ const Container = styled.article`
 
 const NicknameGroup = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: row;
   font-size: 40px;
 `;
@@ -29,10 +35,10 @@ const NicknameGroup = styled.div`
 const Nickname = styled.div<{ index: number }>`
   transform: scale(0);
   ${({ index }) => css`
-    animation: Scale 1s forwards ${index*0.225}s cubic-bezier(0, 0.15, 1, 0.35);
+    animation: NicknameDrop 1s forwards ${index*0.225}s cubic-bezier(0, 0.15, 1, 0.35);
   `}
 
-  @keyframes Scale {
+  @keyframes NicknameDrop {
     0% {
       transform: scale(0);
     }
@@ -62,9 +68,9 @@ const Nickname = styled.div<{ index: number }>`
 const Introduction = styled.div`
   transform: translateY(-20px);
   opacity: 0;
-  animation: Drop 2s forwards 600ms cubic-bezier(0, 1.2, 1, -0.4);
+  animation: DescDrop 2s forwards 600ms linear;
 
-  @keyframes Drop {
+  @keyframes DescDrop {
     0% {
       opacity: 0;
       transform: translateY(-40px) scale(1.15);
@@ -72,10 +78,7 @@ const Introduction = styled.div`
 
     50% {
       opacity: 0.5;
-    }
-
-    60% {
-      opacity: 0.95;
+      transform: translateY(-5px) scale(1.15);
     }
 
     100% {
@@ -83,4 +86,43 @@ const Introduction = styled.div`
       transform: translateY(10px) scale(1.15);
     }
   }
+`;
+
+const Vertical = styled.span`
+  display: flex;
+  width: 2px;
+  height: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff52;
+  animation: VerticalDrop 1s forwards 2600ms;
+  transform: translateY(15px);
+
+  @keyframes VerticalDrop {
+    0% {
+      height: 0px;
+    }
+
+    50% {
+      height: 110px;
+    }
+
+    100% {
+      height: 85px;
+    }
+  }
+`;
+
+const GuideGroup = styled.div`
+  text-align: right;
+  margin-top: 15px;
+  opacity: 0;
+  animation: FadeIn 2s forwards 3000ms;
+`;
+
+const Guide = styled.div`
+  font-family: Desc;
+  font-size: 13pt;
+  font-style: italic;
+  font-weight: normal;
 `;
