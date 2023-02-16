@@ -1,6 +1,6 @@
 import Icon from "@components/Icon";
 
-const REGEXP_PATTERN = /#\{(?:(\d+?)|(?:icon:([^!@#$%^&*()_+-=|]+))(?:\|prefix:([^|]+))?(?:\|cycle:(spin|pulse))?)\}/g;
+const REGEXP_PATTERN = /#\{(?:(\d+?)|(?:(?:icon:([^!@#$%^&*(){}_+\-=|]+))(?:\|prefix:([^{}}|]+))?(?:\|cycle:(spin|pulse))?)|(?:(br|img:((?:https*:\/)?\/[\w!@#$%^&*()_+\-=|\.\/]+))))\}/g;
 const REGEXP_BRACKETS = /([^\s]+)#\[([을를]|[이가]|[은는]|[와과]|(?:으로|로))\]/g;
 const MATCH_JOSA: Record<string, (has: boolean) => string> = {
   "을를": (has) => has ? '을' : '를',
@@ -44,10 +44,13 @@ export default class L {
         const argIndex = Number(execArray[1]);
         if (!isNaN(argIndex)) {
           result.push(args[argIndex]);
+        } else if (execArray[5]) {
+          if (execArray[5].startsWith("br")) result.push(<br key={execArray.index} />);
+          if (execArray[5].startsWith("img")) result.push(<img src={execArray[6]} height={120} alt={`L#${execArray[6]}`} key={execArray.index} />);
         } else {
           const classList = [execArray[3] ?? "fas", `fa-${execArray[2]}`];
           execArray[4] && classList.push(`fa-${execArray[4]}`);
-          result.push(<Icon name={classList} key={execArray.index} />);    
+          result.push(<Icon name={classList} key={execArray.index} />);
         }
         lastIndex = REGEXP_PATTERN.lastIndex;
       }

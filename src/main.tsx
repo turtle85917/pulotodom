@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
     <Routes>
       <Route path="/" element={<Main />} />
     </Routes>
-    <ReactTooltip id="tooltip" getContent={(tip) => <Tooltip>{L.render(tip)(locale())}</Tooltip>} />
+    <ReactTooltip id="tooltip" place="bottom" getContent={(tip) => <Tooltip>{L.render(tip)(locale())}</Tooltip>} />
   </BrowserRouter>
 );
 

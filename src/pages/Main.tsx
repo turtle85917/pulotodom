@@ -7,7 +7,7 @@ export default function Main(): JSX.Element {
       <NicknameGroup data-for="tooltip" data-tip="nickname-t">
         {L.get("nickname").split('').map((chunk, index) => <Nickname index={index} key={index}>{chunk}</Nickname>)}
       </NicknameGroup>
-      <Introduction className="desc">{L.render("nickname-s", "사과")()}</Introduction>
+      <Introduction className="desc">{L.get("nickname-s")}</Introduction>
       <Vertical />
       <GuideGroup>
         <Guide>{L.get("guide")}</Guide>
@@ -117,7 +117,7 @@ const GuideGroup = styled.div`
   text-align: right;
   margin-top: 15px;
   opacity: 0;
-  animation: FadeIn 2s forwards 3000ms;
+  animation: FadeIn 2s forwards 2500ms;
 `;
 
 const Guide = styled.div`
