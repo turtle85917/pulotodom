@@ -12,7 +12,12 @@ export default function Main(): JSX.Element {
       <GuideGroup>
         <Guide>{L.get("guide")}</Guide>
         <Guide>{L.get("guide-d1")}</Guide>
+        <Guide>{L.get("guide-d2")}</Guide>
       </GuideGroup>
+      <ButtonGroup>
+        <UtilityButton data-for="tooltip" data-tip="projects-t">{L.render()("projects")}</UtilityButton>
+        <UtilityButton data-for="tooltip" data-tip="timeline-t">{L.render()("timeline")}</UtilityButton>
+      </ButtonGroup>
     </div>
   </Container>;
 }
@@ -115,7 +120,7 @@ const Vertical = styled.span`
 
 const GuideGroup = styled.div`
   text-align: right;
-  margin-top: 15px;
+  margin-top: 20px;
   opacity: 0;
   animation: FadeIn 2s forwards 2500ms;
 `;
@@ -125,4 +130,16 @@ const Guide = styled.div`
   font-size: 13pt;
   font-style: italic;
   font-weight: normal;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  animation: FadeIn 800ms forwards 3000ms;
+`;
+
+const UtilityButton = styled.button`
+  font-size: 12pt;
+  margin-top: 15px;
 `;

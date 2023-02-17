@@ -1,6 +1,6 @@
 import Icon from "@components/Icon";
 
-const REGEXP_PATTERN = /#\{(?:(\d+?)|(?:(?:icon:([^!@#$%^&*(){}_+\-=|]+))(?:\|prefix:([^{}}|]+))?(?:\|cycle:(spin|pulse))?)|(?:(br|img:((?:https*:\/)?\/[\w!@#$%^&*()_+\-=|\.\/]+))))\}/g;
+const REGEXP_PATTERN = /#\{(?:(\d+?)|(?:(?:icon:([^!@#$%^&*(){}_+=|]+))(?:\|prefix:([^{}}|]+))?(?:\|cycle:(spin|pulse))?)|(?:(br|img:((?:https*:\/)?\/[\w!@#$%^&*()_+\-=|\.\/]+))))\}/g;
 const REGEXP_BRACKETS = /([^\s]+)#\[([을를]|[이가]|[은는]|[와과]|(?:으로|로))\]/g;
 const MATCH_JOSA: Record<string, (has: boolean) => string> = {
   "을를": (has) => has ? '을' : '를',
@@ -17,22 +17,24 @@ const MATCH_JOSA: Record<string, (has: boolean) => string> = {
  * - `#{icon:...}` 아이콘으로 대체.
  * - - `#{...|prefix:...}` 아이콘의 접두어에 맞춰 대체. *(optional)*
  * - - `#{...|cycle:pulse|spin}` 아이콘의 싸이클링 적용. *(optional)*
+ * - `#{br}` \<br /> 태그 생성
+ * - `#{img:...}` \<img src="..." /> 태그 생성
  * - `#[이]` 대괄호 안 조사를 앞쪽에 붙어있는 단어에 맞춰 치환.
  * - *...key 값에 매칭되는 값을 찾지 못하면 `(L#key)` 반환.*
  */
 export default class L {
   public static defaultLocale: string = "ko-KR";
-  private static dictionary: Map<string, Record<string, string>> = new Map();
+  private static dictionary: Record<string, Record<string, string>> = {};
 
-  public static get(key: string, locale?: string) {
-    const dictionary = L.dictionary.get(locale ?? L.defaultLocale);
-    return dictionary?.[key] ?? `(L#${key})`;
+  public static get(key: string, locale: string = L.defaultLocale) {
+    return L.dictionary[locale]?.[key] ?? `(L#${key})`;
   }
 
-  public static render(key: string, ...args: any[]) {
-    return ((locale?: string) => {
+  public static render(locale: string = L.defaultLocale) {
+    return ((key: string, ...args: any[]) => {
       const result: React.ReactNode[] = [];
-      let content = L.get(key, locale);
+      let content = L.dictionary[locale]?.[key];
+      if (!content) return `(L#${key})`;
 
       // NOTE #{...} 커맨드 처리
       let execArray: RegExpExecArray | null = null;
@@ -46,7 +48,7 @@ export default class L {
           result.push(args[argIndex]);
         } else if (execArray[5]) {
           if (execArray[5].startsWith("br")) result.push(<br key={execArray.index} />);
-          if (execArray[5].startsWith("img")) result.push(<img src={execArray[6]} height={120} alt={`L#${execArray[6]}`} key={execArray.index} />);
+          if (execArray[5].startsWith("img")) result.push(<img src={execArray[6]} height={120} alt={`(L#${key})`} key={execArray.index} />);
         } else {
           const classList = [execArray[3] ?? "fas", `fa-${execArray[2]}`];
           execArray[4] && classList.push(`fa-${execArray[4]}`);
@@ -68,7 +70,7 @@ export default class L {
   }
 
   public static addLocale(locale: string, data: Record<string, string>) {
-    if (L.dictionary.has(locale)) return;
-    L.dictionary.set(locale, data);
+    if (L.dictionary[locale]) return;
+    L.dictionary[locale] = data;
   }
 }

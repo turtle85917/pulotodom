@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import L from "@languages";
-import Template from "@global/Template";
 
 interface S {
   openLocaleDropdown: boolean;
 }
 
-export default class Header extends Template<{}, S> {
+export default class Header extends React.Component<{}, S> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -15,29 +14,27 @@ export default class Header extends Template<{}, S> {
     }
   }
 
-  public handlingLocale(locale: string) {
-    this.setLocale(locale);
-    this.setState({ openLocaleDropdown: false });
-  }
-
   render(): React.ReactNode {
     return <Container>
       <Image src="/slime.png" />
       <Nickname>
-        {L.render("nickname")(this.locale)}
-        <div className="desc">{L.render("nickname-d")(this.locale)}</div>
+        {L.get("nickname")}
+        <div className="desc">{L.get("nickname-d")}</div>
       </Nickname>
       <Navigation>
-        <button data-for="tooltip" data-tip="projects-t" disabled={true}>
-          {L.render("projects")(this.locale)}
+        <button data-for="tooltip" data-tip="projects-t">
+          {L.render()("projects")}
+        </button>
+        <button data-for="tooltip" data-tip="timeline-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
+          {L.render()("timeline")}
         </button>
         <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
-          {L.render("locale")(this.locale)}
+          {L.render()("locale")}
         </button>
-        {this.state.openLocaleDropdown && <Dropdown>
-          <DropdownMenu onClick={() => this.handlingLocale("ko-KR")}>{L.render("locale-ko")(this.locale)}</DropdownMenu>
-          <DropdownMenu onClick={() => this.handlingLocale("en-US")}>{L.render("locale-en")(this.locale)}</DropdownMenu>
-        </Dropdown>}
+        {/* {this.state.openLocaleDropdown && <Dropdown>
+          <DropdownMenu>{L.render()("locale-ko")}</DropdownMenu>
+          <DropdownMenu>{L.render()("locale-en")}</DropdownMenu>
+        </Dropdown>} */}
       </Navigation>
     </Container>;
   }
@@ -52,6 +49,7 @@ const Container = styled.header`
 
 const Navigation = styled.nav`
   display: flex;
+  gap: 4px;
 `;
 
 const Nickname = styled.span`

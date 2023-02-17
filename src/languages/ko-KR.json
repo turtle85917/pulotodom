@@ -5,12 +5,15 @@
   "nickname-d": "\"플토\"라고도 불려요.",
   "nickname-s": "웹을 다룬다거나 게임을 만들어요.",
   "nickname-t": "#{icon:star} 쨘! 저의 프로필 이미지에요. #{icon:star}#{br}#{br}#{img:/slime.png}",
-  "locale": "#{icon:globe|prefix:fas}",
+  "locale": "#{icon:globe}",
   "locale-t": "언어 바꾸기",
   "locale-ko": "한국어",
   "locale-en": "English",
-  "projects": "#{icon:folder} 프로젝트들",
+  "projects": "#{icon:box-archive} 프로젝트들",
   "projects-t": "지금까지 만든 것들",
-  "guide": "포트폴리오 사이트에 어서오세요.",
-  "guide-d1": "저의 지나간 이야기들을 담았어요."
+  "timeline": "#{icon:timeline} 개발 일대기",
+  "timeline-t": "처음부터 지금까지",
+  "guide": "포트폴리오 사이트에 어서와요.",
+  "guide-d1": "개발 전적을 볼 수 있고,",
+  "guide-d2": "일대기도 볼 수 있어요."
 }

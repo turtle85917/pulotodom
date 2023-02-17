@@ -39,16 +39,23 @@ div.desc {
 
 button {
   border: none;
-  background-color: #e7e7e7;
+  background-color: #dadada;
   min-width: 2em;
   padding: 0.5em;
   cursor: pointer;
   font-family: Desc;
   border-radius: 5px;
-  transition: 200ms;
+  transition: 200ms background-color;
+  
+  &:not(:disabled) {
+    border-bottom: 5px solid #6b6b6b;
 
-  &:hover {
-    background-color: #a7a7a7;
+    &:hover {
+      border-bottom: none;
+      background-color: #a7a7a7;
+      transform: translateY(5px);
+      height: 35px;
+    }
   }
 
   &:focus {
