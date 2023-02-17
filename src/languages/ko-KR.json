@@ -5,6 +5,7 @@
   "nickname-d": "\"플토\"라고도 불려요.",
   "nickname-s": "웹을 다룬다거나 게임을 만들어요.",
   "nickname-t": "#{icon:star} 쨘! 저의 프로필 이미지에요. #{icon:star}#{br}#{br}#{img:/slime.png}",
+  "mobile-menu": "#{icon:bars} 메뉴",
   "locale": "#{icon:globe}",
   "locale-t": "언어 바꾸기",
   "locale-ko": "한국어",

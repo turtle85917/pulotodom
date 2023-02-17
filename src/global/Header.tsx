@@ -36,6 +36,9 @@ export default class Header extends React.Component<{}, S> {
           <DropdownMenu>{L.render()("locale-en")}</DropdownMenu>
         </Dropdown>} */}
       </Navigation>
+      <MenuButton onClick={() => {}}>
+        {L.render()("mobile-menu")}
+      </MenuButton>
     </Container>;
   }
 }
@@ -50,7 +53,25 @@ const Container = styled.header`
 const Navigation = styled.nav`
   display: flex;
   gap: 4px;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    & {
+      display: none;
+    }
+  }
 `;
+
+const MenuButton = styled.button`
+  display: none;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    & {
+      display: block;
+    }
+  }
+`;
+
+
 
 const Nickname = styled.span`
   font-size: 15pt;
@@ -89,4 +110,4 @@ const DropdownMenu = styled.a`
   &:hover {
     background-color: #535353;
   }
-`
+`;
