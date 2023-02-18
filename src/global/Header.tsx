@@ -18,6 +18,14 @@ export default class Header extends React.Component<{}, S> {
     }
   }
 
+  componentDidMount(): void {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        this.setState({ openLocaleDropdown: false });
+      }
+    });
+  }
+
   render(): React.ReactNode {
     return <Container>
       <Image src="/slime.png" />
@@ -26,24 +34,32 @@ export default class Header extends React.Component<{}, S> {
         <div className="desc">{L.get("nickname-d")}</div>
       </Nickname>
       <Navigation>
-        <button data-for="tooltip" data-tip="projects-t">
+        {/\/(.+)/.test(window.location.pathname) && <button onClick={() => window.location.href = '/'} data-for="tooltip" data-tip="return-t">
+          {L.render()("return")}
+        </button>}
+        <button onClick={() => window.location.href = "/projects"} data-for="tooltip" data-tip="projects-t">
           {L.render()("projects")}
         </button>
-        <button data-for="tooltip" data-tip="timeline-t">
+        <button onClick={() => window.location.href = "/timeline"} data-for="tooltip" data-tip="timeline-t">
           {L.render()("timeline")}
         </button>
         <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
           {L.render()("locale")}
         </button>
-        {/* {this.state.openLocaleDropdown && <Dropdown>
-          <DropdownMenu>{L.render()("locale-ko")}</DropdownMenu>
-          <DropdownMenu>{L.render()("locale-en")}</DropdownMenu>
-        </Dropdown>} */}
+        {this.state.openLocaleDropdown && <Dropdown>
+          <DropdownMenu href="/">{L.render()("locale-ko")}</DropdownMenu>
+          <DropdownMenu href="/">{L.render()("locale-en")}</DropdownMenu>
+        </Dropdown>}
       </Navigation>
       <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow })}>
         {L.render()("mobile-menu")}
       </MenuButton>
       {this.state.openMobileMenuWindow && <MenuContainer>
+        {/\/(.+)/.test(window.location.pathname) && <MenuItemButton onClick={() => window.location.href = '/'}>
+          {L.render()("return")}
+          &nbsp;
+          <div className="desc">{L.get("return-t")}</div>
+        </MenuItemButton>}
         <MenuItemButton className="mobile">
           {L.render()("projects")}
           &nbsp;

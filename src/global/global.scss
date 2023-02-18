@@ -46,13 +46,14 @@ div.desc {
   font-family: Desc;
 }
 
-a.button, button {
+button {
   border: none;
   background-color: #dadada;
   min-width: 2em;
   padding: 0.5em;
   cursor: pointer;
   font-family: Desc;
+  font-size: 10pt;
   border-radius: 5px;
   white-space: break-spaces;
   transition: 200ms background-color;

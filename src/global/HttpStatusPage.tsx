@@ -19,7 +19,7 @@ export default class HttpStatusPage extends React.Component<P, {}> {
         {L.get(`error-${this.props.statusCode}`)}
       </HttpStatusHead>
       <HttpStatusDescription>{L.render()(`error-${this.props.statusCode}-d`)}</HttpStatusDescription>
-      {this.props.needToReturn && <ReturnHome className="button mobile" href="/" data-for="tooltip" data-tip="return-t">{L.render()("return")}</ReturnHome>}
+      {this.props.needToReturn && <ReturnHome className="button mobile" onClick={() => window.location.href = '/'} data-for="tooltip" data-tip="return-t">{L.render()("return")}</ReturnHome>}
     </Container>
   }
 }
@@ -50,6 +50,6 @@ const HttpStatusDescription = styled.span`
   margin-top: 15px;
 `;
 
-const ReturnHome = styled.a`
+const ReturnHome = styled.button`
   margin-top: 15px;
 `;

@@ -10,7 +10,7 @@
   "locale-t": "언어 바꾸기",
   "locale-ko": "한국어",
   "locale-en": "English",
-  "return": "#{icon:person-walking-luggage} 집으로 돌아가기",
+  "return": "#{icon:person-walking-luggage} 처음으로 돌아가기",
   "return-t": "올바른 페이지로 돌아가요.",
   "projects": "#{icon:box-archive} 프로젝트들",
   "projects-t": "지금까지 만든 것들",

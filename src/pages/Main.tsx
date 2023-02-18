@@ -15,8 +15,8 @@ export default function Main(): JSX.Element {
         <Guide>{L.get("guide-d2")}</Guide>
       </GuideGroup>
       <ButtonGroup>
-        <UtilityButton className="button" href="/projects" data-for="tooltip" data-tip="projects-t">{L.render()("projects")}</UtilityButton>
-        <UtilityButton className="button" data-for="tooltip" data-tip="timeline-t">{L.render()("timeline")}</UtilityButton>
+        <UtilityButton className="button" onClick={() => window.location.href = "/projects"} data-for="tooltip" data-tip="projects-t">{L.render()("projects")}</UtilityButton>
+        <UtilityButton className="button" onClick={() => window.location.href = "/timeline"} data-for="tooltip" data-tip="timeline-t">{L.render()("timeline")}</UtilityButton>
       </ButtonGroup>
     </div>
   </Container>;
@@ -139,7 +139,7 @@ const ButtonGroup = styled.div`
   animation: FadeIn 800ms forwards 3000ms;
 `;
 
-const UtilityButton = styled.a`
+const UtilityButton = styled.button`
   font-size: 12pt;
   margin-top: 15px;
 `;
