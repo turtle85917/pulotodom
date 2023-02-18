@@ -1,11 +1,11 @@
 import React from "react";
 
-interface P {
+interface Props {
   name: string[];
 }
 
-export default class Icon extends React.Component<P, {}> {
-  render(): React.ReactNode {
+export default class Icon extends React.Component<Props, {}> {
+  public render(): React.ReactNode {
     return <i className={this.props.name.join(' ')} />
   }
 }

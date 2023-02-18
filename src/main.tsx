@@ -1,13 +1,13 @@
 import "@global/global.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import ReactTooltip from "react-tooltip";
 import Main from "@pages/Main";
 import Projects from "@pages/Projects";
-import HttpStatusPage from "@global/HttpStatusPage";
+import Curtain from "@components/Curtain";
+import HttpStatusPage from "@components/HttpStatusPage";
 import theme from "@global/Theme";
 import Header from "@global/Header";
 import L from "@languages";
@@ -22,22 +22,6 @@ L.addLocale("en-US", en);
 
 // pf.* 설정
 localStorage.setItem("pf.locale", locale());
-
-const Curtain = (): JSX.Element|null => {
-  const [animated, setAnimated] = useState<boolean>(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setAnimated(true);
-    }, 500);
-  }, []);
-
-  if (animated) return null;
-
-  return <CurtainContainer>
-    <CurtainPart className="left" />
-    <CurtainPart className="right" />
-  </CurtainContainer>;
-}
 
 document.title = L.get("title", locale());
 ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
@@ -58,36 +42,4 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
 // styled 정의
 const Tooltip = styled.div`
   font-family: Desc;
-`;
-
-const CurtainContainer = styled.div`
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-`;
-
-const CurtainPart = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: 500ms;
-  transform: translateX(0%);
-  animation: CurtainAnimation 500ms forwards;
-
-  &.left {
-    --direction: -100%;
-  }
-
-  &.right {
-    --direction: 100%;
-  }
-
-  @keyframes CurtainAnimation {
-    to {
-      transform: translateX(var(--direction));
-    }
-  }
 `;

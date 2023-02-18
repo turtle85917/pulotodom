@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import L from "@languages";
+import { cutaway } from "./Utility";
 
 interface S {
   openLocaleDropdown: boolean;
@@ -18,7 +19,7 @@ export default class Header extends React.Component<{}, S> {
     }
   }
 
-  componentDidMount(): void {
+  public componentDidMount(): void {
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         this.setState({ openLocaleDropdown: false });
@@ -26,7 +27,7 @@ export default class Header extends React.Component<{}, S> {
     });
   }
 
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     return <Container>
       <Image src="/slime.png" />
       <Nickname>
@@ -34,13 +35,13 @@ export default class Header extends React.Component<{}, S> {
         <div className="desc">{L.get("nickname-d")}</div>
       </Nickname>
       <Navigation>
-        {/\/(.+)/.test(window.location.pathname) && <button onClick={() => window.location.href = '/'} data-for="tooltip" data-tip="return-t">
+        {/\/(.+)/.test(window.location.pathname) && <button onClick={() => cutaway('/')} data-for="tooltip" data-tip="return-t">
           {L.render()("return")}
         </button>}
-        <button onClick={() => window.location.href = "/projects"} data-for="tooltip" data-tip="projects-t">
+        <button onClick={() => cutaway("/projects")} data-for="tooltip" data-tip="projects-t">
           {L.render()("projects")}
         </button>
-        <button onClick={() => window.location.href = "/timeline"} data-for="tooltip" data-tip="timeline-t">
+        <button onClick={() => cutaway("/timeline")} data-for="tooltip" data-tip="timeline-t">
           {L.render()("timeline")}
         </button>
         <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
@@ -55,25 +56,25 @@ export default class Header extends React.Component<{}, S> {
         {L.render()("mobile-menu")}
       </MenuButton>
       {this.state.openMobileMenuWindow && <MenuContainer>
-        {/\/(.+)/.test(window.location.pathname) && <MenuItemButton onClick={() => window.location.href = '/'}>
+        {/\/(.+)/.test(window.location.pathname) && <MenuItemButton className="mobile" onClick={() => cutaway('/')}>
           {L.render()("return")}
           &nbsp;
-          <div className="desc">{L.get("return-t")}</div>
+          <MenuItemButtonDesc className="desc">{L.get("return-t")}</MenuItemButtonDesc>
         </MenuItemButton>}
-        <MenuItemButton className="mobile">
+        <MenuItemButton className="mobile" onClick={() => cutaway("/projects")}>
           {L.render()("projects")}
           &nbsp;
-          <div className="desc">{L.get("projects-t")}</div>
+          <MenuItemButtonDesc className="desc">{L.get("projects-t")}</MenuItemButtonDesc>
         </MenuItemButton>
-        <MenuItemButton className="mobile">
+        <MenuItemButton className="mobile" onClick={() => cutaway("/timeline")}>
           {L.render()("timeline")}
           &nbsp;
-          <div className="desc">{L.get("timeline-t")}</div>
+          <MenuItemButtonDesc className="desc">{L.get("timeline-t")}</MenuItemButtonDesc>
         </MenuItemButton>
         <MenuItemButton className="mobile">
           {L.render()("locale")}
           &nbsp;
-          <div className="desc">{L.get("locale-t")}</div>
+          <MenuItemButtonDesc className="desc">{L.get("locale-t")}</MenuItemButtonDesc>
         </MenuItemButton>
       </MenuContainer>}
     </Container>;
@@ -119,6 +120,7 @@ const MenuContainer = styled.div`
   left: 0;
   z-index: 50;
   background-color: #575757dc;
+  animation: FadeIn 500ms forwards;
 `;
 
 const MenuItemButton = styled.button`
@@ -136,6 +138,11 @@ const MenuItemButton = styled.button`
   &:first-child {
     margin-top: 50px;
   }
+`;
+
+const MenuItemButtonDesc = styled.div`
+  margin-top: auto;
+  margin-bottom: 6.25px;
 `;
 
 const Nickname = styled.span`

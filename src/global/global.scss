@@ -69,6 +69,10 @@ button {
     }
   }
 
+  &.mobile {
+    border-bottom: none;
+  }
+
   &:focus {
     outline: none;
   }

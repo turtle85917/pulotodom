@@ -11,7 +11,7 @@
   "locale-ko": "한국어",
   "locale-en": "English",
   "return": "#{icon:person-walking-luggage} 처음으로 돌아가기",
-  "return-t": "올바른 페이지로 돌아가요.",
+  "return-t": "처음 페이지로 돌아가요.",
   "projects": "#{icon:box-archive} 프로젝트들",
   "projects-t": "지금까지 만든 것들",
   "timeline": "#{icon:timeline} 개발 일대기",
@@ -22,5 +22,5 @@
   "error-404": "없는 공간.",
   "error-404-d": "원래부터 없었거나,#{br}언제부턴가 사라진 페이지예요.",
   "error-501": "만들고 있는 중",
-  "error-501-d": "#{icon:gear|cycle:pulse} 열심히 만들고... 있을거에요.#{br}언젠가는 공개될거에요."
+  "error-501-d": "#{icon:gear|cycle:pulse} 열심히 만들고 있어요.#{br}언젠가는 공개될거에요."
 }

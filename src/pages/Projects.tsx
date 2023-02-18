@@ -1,4 +1,4 @@
-import HttpStatusPage from "@global/HttpStatusPage";
+import HttpStatusPage from "@components/HttpStatusPage";
 import L from "@languages";
 
 export default function Projects(): JSX.Element {

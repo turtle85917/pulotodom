@@ -1,25 +1,26 @@
-import L from "@languages";
 import React from "react";
 import styled from "styled-components";
+import L from "@languages";
+import { cutaway } from "@global/Utility";
 
-interface P {
+interface Props {
   statusCode: string;
   needToReturn?: boolean;
 }
 
-export default class HttpStatusPage extends React.Component<P, {}> {
-  constructor(props: P) {
+export default class HttpStatusPage extends React.Component<Props, {}> {
+  constructor(props: Props) {
     super(props);
   }
 
-  render() {
+  public render() {
     return <Container>
       <HttpStatusHead>
         <HttpStatusLabel>{this.props.statusCode}&nbsp;</HttpStatusLabel>
         {L.get(`error-${this.props.statusCode}`)}
       </HttpStatusHead>
       <HttpStatusDescription>{L.render()(`error-${this.props.statusCode}-d`)}</HttpStatusDescription>
-      {this.props.needToReturn && <ReturnHome className="button mobile" onClick={() => window.location.href = '/'} data-for="tooltip" data-tip="return-t">{L.render()("return")}</ReturnHome>}
+      {this.props.needToReturn && <ReturnHome className="button mobile" onClick={() => cutaway('/')} data-for="tooltip" data-tip="return-t">{L.render()("return")}</ReturnHome>}
     </Container>
   }
 }

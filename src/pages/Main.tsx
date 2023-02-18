@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import L from "@languages";
+import { cutaway } from "@global/Utility";
 
 export default function Main(): JSX.Element {
   return <Container>
@@ -15,8 +16,8 @@ export default function Main(): JSX.Element {
         <Guide>{L.get("guide-d2")}</Guide>
       </GuideGroup>
       <ButtonGroup>
-        <UtilityButton className="button" onClick={() => window.location.href = "/projects"} data-for="tooltip" data-tip="projects-t">{L.render()("projects")}</UtilityButton>
-        <UtilityButton className="button" onClick={() => window.location.href = "/timeline"} data-for="tooltip" data-tip="timeline-t">{L.render()("timeline")}</UtilityButton>
+        <UtilityButton className="button" onClick={() => cutaway("/projects")}>{L.render()("projects")}</UtilityButton>
+        <UtilityButton className="button" onClick={() => cutaway("/timeline")}>{L.render()("timeline")}</UtilityButton>
       </ButtonGroup>
     </div>
   </Container>;
