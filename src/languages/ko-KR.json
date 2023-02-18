@@ -10,11 +10,15 @@
   "locale-t": "언어 바꾸기",
   "locale-ko": "한국어",
   "locale-en": "English",
+  "return": "#{icon:person-walking-luggage} 집으로 돌아가기",
+  "return-t": "올바른 페이지로 돌아가요.",
   "projects": "#{icon:box-archive} 프로젝트들",
   "projects-t": "지금까지 만든 것들",
   "timeline": "#{icon:timeline} 개발 일대기",
   "timeline-t": "처음부터 지금까지",
   "guide": "포트폴리오 사이트에 어서와요.",
   "guide-d1": "개발 전적을 볼 수 있고,",
-  "guide-d2": "일대기도 볼 수 있어요."
+  "guide-d2": "일대기도 볼 수 있어요.",
+  "error-404": "없는 공간.",
+  "error-404-d": "원래부터 없었거나,#{br}언제부턴가 사라진 페이지예요."
 }

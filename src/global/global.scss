@@ -35,13 +35,18 @@ section#main {
   height: 100vh;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 div.desc {
   color: #2e2e2e;
   font-size: 10pt;
   font-family: Desc;
 }
 
-button {
+a.button, button {
   border: none;
   background-color: #dadada;
   min-width: 2em;

@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import ReactTooltip from "react-tooltip";
 import Main from "@pages/Main";
+import NotFound from "@pages/404";
 import theme from "@global/Theme";
 import Header from "@global/Header";
 import L from "@languages";
@@ -44,6 +45,7 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(locale())(tip)}</Tooltip>} />
       <Curtain />
