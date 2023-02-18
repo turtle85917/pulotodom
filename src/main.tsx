@@ -1,6 +1,5 @@
 import "@global/global.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -72,22 +71,19 @@ const CurtainPart = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   transition: 500ms;
   transform: translateX(0%);
+  animation: CurtainAnimation 500ms forwards;
 
   &.left {
-    animation: CurtainLeft 500ms forwards;
-    @keyframes CurtainLeft {
-      to {
-        transform: translateX(-100%);
-      }
-    }
+    --direction: -100%;
   }
 
   &.right {
-    animation: CurtainRight 500ms forwards;
-    @keyframes CurtainRight {
-      to {
-        transform: translateX(100%);
-      }
+    --direction: 100%;
+  }
+
+  @keyframes CurtainAnimation {
+    to {
+      transform: translateX(var(--direction));
     }
   }
 `;

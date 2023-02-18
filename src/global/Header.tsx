@@ -4,13 +4,17 @@ import L from "@languages";
 
 interface S {
   openLocaleDropdown: boolean;
+  openMobileMenuWindow: boolean;
+  openMobileLocaleDropDown: boolean;
 }
 
 export default class Header extends React.Component<{}, S> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      openLocaleDropdown: false
+      openLocaleDropdown: false,
+      openMobileMenuWindow: false,
+      openMobileLocaleDropDown: false
     }
   }
 
@@ -25,7 +29,7 @@ export default class Header extends React.Component<{}, S> {
         <button data-for="tooltip" data-tip="projects-t">
           {L.render()("projects")}
         </button>
-        <button data-for="tooltip" data-tip="timeline-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
+        <button data-for="tooltip" data-tip="timeline-t">
           {L.render()("timeline")}
         </button>
         <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
@@ -36,9 +40,26 @@ export default class Header extends React.Component<{}, S> {
           <DropdownMenu>{L.render()("locale-en")}</DropdownMenu>
         </Dropdown>} */}
       </Navigation>
-      <MenuButton onClick={() => {}}>
+      <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow })}>
         {L.render()("mobile-menu")}
       </MenuButton>
+      {this.state.openMobileMenuWindow && <MenuContainer>
+        <MenuItemButton className="mobile">
+          {L.render()("projects")}
+          &nbsp;
+          <div className="desc">{L.get("projects-t")}</div>
+        </MenuItemButton>
+        <MenuItemButton className="mobile">
+          {L.render()("timeline")}
+          &nbsp;
+          <div className="desc">{L.get("timeline-t")}</div>
+        </MenuItemButton>
+        <MenuItemButton className="mobile">
+          {L.render()("locale")}
+          &nbsp;
+          <div className="desc">{L.get("locale-t")}</div>
+        </MenuItemButton>
+      </MenuContainer>}
     </Container>;
   }
 }
@@ -71,7 +92,35 @@ const MenuButton = styled.button`
   }
 `;
 
+const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  gap: 50px;
+  width: 100%;
+  height: calc(100vh - 60px);
+  top: 60px;
+  left: 0;
+  z-index: 50;
+  background-color: #575757dc;
+`;
 
+const MenuItemButton = styled.button`
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+
+  div.desc {
+    font-size: 6pt;
+  }
+
+  &:first-child {
+    margin-top: 50px;
+  }
+`;
 
 const Nickname = styled.span`
   font-size: 15pt;
