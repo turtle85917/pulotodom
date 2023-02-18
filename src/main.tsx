@@ -6,7 +6,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import ReactTooltip from "react-tooltip";
 import Main from "@pages/Main";
-import NotFound from "@pages/404";
+import Projects from "@pages/Projects";
+import HttpStatusPage from "@global/HttpStatusPage";
 import theme from "@global/Theme";
 import Header from "@global/Header";
 import L from "@languages";
@@ -45,7 +46,8 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="*" element={<HttpStatusPage statusCode="404" needToReturn={true} />} />
       </Routes>
       <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(locale())(tip)}</Tooltip>} />
       <Curtain />
