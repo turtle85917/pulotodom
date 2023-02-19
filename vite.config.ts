@@ -11,6 +11,7 @@ export default defineConfig({
       { find: "@global", replacement: "/src/global" },
       { find: "@languages", replacement: "/src/languages" },
       { find: "@components", replacement: "/src/components" },
+      { find: "@data", replacement: "/src/data" },
     ]
   }
 });

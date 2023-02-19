@@ -85,6 +85,7 @@ const Container = styled.header`
   display: flex;
   font-size: 14pt;
   padding: 0.5em;
+  height: var(--header-height);
   background-color: #e7e7e7;
 `;
 
@@ -92,7 +93,7 @@ const Navigation = styled.nav`
   display: flex;
   gap: 4px;
 
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.mobile} {
     & {
       display: none;
     }
@@ -115,8 +116,8 @@ const MenuContainer = styled.div`
   position: absolute;
   gap: 50px;
   width: 100%;
-  height: calc(100vh - 60px);
-  top: 60px;
+  height: var(--absoulte-header);
+  top: var(--header-height);
   left: 0;
   z-index: 50;
   background-color: #575757dc;

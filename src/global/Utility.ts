@@ -15,9 +15,9 @@ export const reverseNumber = (value: string | number | boolean) => Number(value)
 /**
  * 페이지를 전환.
  * 
- * @param pathname 주소
+ * @param href 주소
  */
-export const cutaway = (pathname: string) => {
+export const cutaway = (href: string) => {
   window.dispatchEvent(new Event("curtain-close"));
-  window.setTimeout(() => window.location.href = pathname, 480);
+  window.setTimeout(() => window.location.href = href, 500);
 };

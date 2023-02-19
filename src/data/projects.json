@@ -1,0 +1,27 @@
+[
+  {
+    "title": "AI가 봐주는 MBTI",
+    "description": "처음으로 AI를 학습시켜서 만들어본 웹 사이트에요.",
+    "links": {
+      "github": "https://github.com/turtle85917/mbti-ai",
+      "preview": "https://mbti-ai.vercel.app"
+    }
+  },
+  {
+    "title": "Flood-it",
+    "description": "transition 속성을 처음으로 활용해서 만든 게임이에요.",
+    "links": {
+      "github": "https://github.com/turtle85917/flood-it",
+      "preview": "https://flood-it-nine.vercel.app"
+    }
+  },
+  {
+    "title": "Tower of Hanoi",
+    "description": "css로만 게임 요소를 그려 만든 첫 게임이에요.",
+    "links": {
+      "github": "https://github.com/turtle85917/tower-of-hanoi",
+      "preview": "https://tower-ofhanoi.vercel.app",
+      "wiki": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%85%B8%EC%9D%B4%EC%9D%98_%ED%83%91"
+    }
+  }
+]

@@ -13,7 +13,7 @@ export default class HttpStatusPage extends React.Component<Props, {}> {
     super(props);
   }
 
-  public render() {
+  public render(): React.ReactNode {
     return <Container>
       <HttpStatusHead>
         <HttpStatusLabel>{this.props.statusCode}&nbsp;</HttpStatusLabel>
@@ -26,11 +26,13 @@ export default class HttpStatusPage extends React.Component<Props, {}> {
 }
 
 const Container = styled.article`
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: var(--absoulte-header);
+  top: var(--header-height);
+  left: 0;
   text-align: center;
   align-items: center;
   justify-content: center;
