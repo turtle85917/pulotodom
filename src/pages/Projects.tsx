@@ -86,7 +86,7 @@ export default function Projects(): JSX.Element {
             <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
             <br />
             <span>{L.get()("monologue-preview-status")}</span>
-            <div className="desc">{L.render()(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3).toUpperCase()}`)}</div>
+            <div className="desc">{L.render()(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)}</div>
           </>}
         </>} key={index} />)}
       </MonologueCards>}
