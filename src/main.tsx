@@ -23,17 +23,18 @@ L.addLocale("en-US", en);
 // pf.* 설정
 localStorage.setItem("pf.locale", locale());
 
-document.title = L.get("title", locale());
+document.title = L.get()("title");
 ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/projects/:name" element={<Projects />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="*" element={<HttpStatusPage statusCode="404" needToReturn={true} />} />
       </Routes>
-      <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(locale())(tip)}</Tooltip>} />
+      <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render()(tip)}</Tooltip>} />
       <Curtain />
     </BrowserRouter>
   </ThemeProvider>

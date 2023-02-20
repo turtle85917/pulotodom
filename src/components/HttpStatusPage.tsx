@@ -17,7 +17,7 @@ export default class HttpStatusPage extends React.Component<Props, {}> {
     return <Container>
       <HttpStatusHead>
         <HttpStatusLabel>{this.props.statusCode}&nbsp;</HttpStatusLabel>
-        {L.get(`error-${this.props.statusCode}`)}
+        {L.get()(`error-${this.props.statusCode}`)}
       </HttpStatusHead>
       <HttpStatusDescription>{L.render()(`error-${this.props.statusCode}-d`)}</HttpStatusDescription>
       {this.props.needToReturn && <ReturnHome className="button mobile" onClick={() => cutaway('/')} data-for="tooltip" data-tip="return-t">{L.render()("return")}</ReturnHome>}

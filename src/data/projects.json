@@ -21,7 +21,54 @@
     "links": {
       "github": "https://github.com/turtle85917/tower-of-hanoi",
       "preview": "https://tower-ofhanoi.vercel.app",
-      "wiki": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%85%B8%EC%9D%B4%EC%9D%98_%ED%83%91"
+      "wiki": "https://en.wikipedia.org/wiki/Tower_of_Hanoi"
+    }
+  },
+  {
+    "title": "실시간 채팅",
+    "description": "tailwindcss와 socket.io 공부 목적용을 제작된 사이트에요. 백엔드는 Express (node.js) 기술이, 프론트엔드는 Vite과 React 기술이 사용되었어요.",
+    "links": {
+      "github": "https://github.com/turtle85917/live-chatting",
+      "preview": "https://live-chatting.vercel.app"
+    }
+  },
+  {
+    "title": "funny-terminal",
+    "description": "처음으로 만든 NPM 모듈이에요. 터미널에서 할 수 있는 텍스트 게임을 편하게 제작을 목적으로 개발하였어요.",
+    "links": {
+      "github": "https://github.com/turtle85917/readline",
+      "npm": "https://www.npmjs.com/package/funny-terminal"
+    }
+  },
+  {
+    "title": "yt-subtitles",
+    "description": "유튜브 자막을 배열 형태로 가져와요. 아직 공개되지 않은 프로젝트에서 사용하기 위한 목적으로 개발되었어요.",
+    "links": {
+      "github": "https://github.com/turtle85917/yt-subtitles",
+      "npm": "https://www.npmjs.com/package/yt-subtitles"
+    }
+  },
+  {
+    "title": "sokoban-go",
+    "description": "Golang 언어를 배우면서 만들어본 간단한 텍스트 게임이에요. 창고지기 게임이라고 불린다네요.",
+    "links": {
+      "github": "https://github.com/turtle85917/sokoban-go",
+      "wiki": "https://en.wikipedia.org/wiki/Sokoban"
+    }
+  },
+  {
+    "title": "sogoban",
+    "description": "sokoban-go 프로젝트를 텍스트가 아닌 새로운 창에서 플레이할 수 있게끔 제작해본 게임이에요. 동시에 ebitengine에 대해 공부하기도 했어요.",
+    "links": {
+      "github": "https://github.com/turtle85917/sogoban"
+    }
+  },
+  {
+    "title": "pingpong",
+    "description": "Phaser3 공부용 목적으로 제작된 웹 게임이에요.",
+    "links": {
+      "github": "https://github.com/turtle85917/pingpong",
+      "preview": "https://ping-pong-pulto.vercel.app"
     }
   }
 ]

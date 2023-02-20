@@ -29,10 +29,8 @@ export default class Header extends React.Component<{}, S> {
 
   public render(): React.ReactNode {
     return <Container>
-      <Image src="/slime.png" />
       <Nickname>
-        {L.get("nickname")}
-        <div className="desc">{L.get("nickname-d")}</div>
+        <div className="desc">{L.get()("nickname-d")}</div>
       </Nickname>
       <Navigation>
         {/\/(.+)/.test(window.location.pathname) && <button onClick={() => cutaway('/')} data-for="tooltip" data-tip="return-t">
@@ -53,28 +51,28 @@ export default class Header extends React.Component<{}, S> {
         </Dropdown>}
       </Navigation>
       <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow })}>
-        {L.render()("mobile-menu")}
+        {L.render()(`menu${this.state.openMobileMenuWindow ? "-x" : ''}`)}
       </MenuButton>
       {this.state.openMobileMenuWindow && <MenuContainer>
         {/\/(.+)/.test(window.location.pathname) && <MenuItemButton className="mobile" onClick={() => cutaway('/')}>
           {L.render()("return")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("return-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get()("return-t")}</MenuItemButtonDesc>
         </MenuItemButton>}
         <MenuItemButton className="mobile" onClick={() => cutaway("/projects")}>
           {L.render()("projects")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("projects-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get()("projects-t")}</MenuItemButtonDesc>
         </MenuItemButton>
         <MenuItemButton className="mobile" onClick={() => cutaway("/timeline")}>
           {L.render()("timeline")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("timeline-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get()("timeline-t")}</MenuItemButtonDesc>
         </MenuItemButton>
         <MenuItemButton className="mobile">
           {L.render()("locale")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("locale-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get()("locale-t")}</MenuItemButtonDesc>
         </MenuItemButton>
       </MenuContainer>}
     </Container>;
@@ -150,11 +148,6 @@ const Nickname = styled.span`
   font-size: 15pt;
   flex: 1 1 0;
   margin: auto 0.5em;
-`;
-
-const Image = styled.img`
-  border-radius: 9999px;
-  width: 40px;
 `;
 
 const Dropdown = styled.div`

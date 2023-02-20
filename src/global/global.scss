@@ -24,6 +24,10 @@
   font-family: MainFont;
   margin: 0;
   padding: 0;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 body {
@@ -38,13 +42,24 @@ section#main {
 
 a {
   color: black;
-  text-decoration: none;
+  &.hyperlink i {
+    text-decoration: inherit;
+  }
+  &:not(&.hyperlink) {
+    text-decoration: none;
+  }
 }
 
 div.desc {
   color: #2e2e2e;
   font-size: 10pt;
   font-family: Desc;
+
+  &.loading {
+    color: #000000;
+    font-size: 15pt;
+    margin-top: 5px;
+  }
 }
 
 button {
@@ -72,10 +87,6 @@ button {
 
   &.mobile {
     border-bottom: none;
-  }
-
-  &:focus {
-    outline: none;
   }
 
   &:disabled {

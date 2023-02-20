@@ -1,32 +1,101 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import L from "@languages";
 import Card from "@components/Card";
 import HttpStatusPage from "@components/HttpStatusPage";
+import { cut, cutaway, getGithubApiCommitsLink, getHumanTimeDistance, getNPMApiLink } from "@global/Utility";
 
 export default function Projects(): JSX.Element {
+  const { name } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [monologue, setMonologue] = useState<Project|null>(null);
+  const [githubCommits, setGithubCommits] = useState<GithubCommit[]>([]);
+  const [npmRegistry, setNpmRegistry] = useState<NpmRegistry|null>(null);
+  const [npmDownloads, setNpmDownloads] = useState<NpmDownloads|null>(null);
+
   useEffect(() => {
-    new Promise<{ default: Project[]; }>((resolve) => resolve(import("@data/projects.json"))).then(data => {
+    import("@data/projects.json").then(data => {
       setLoading(false);
+      setMonologue(data.default?.find(item => item.title === name) ?? null);
       setProjects(data.default);
     });
   }, []);
 
-  if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />;
-  if (loading) return <div className="desc">{L.render()("loading")}</div>;
+  useEffect(() => {
+    if (!monologue) return;
+    if (!monologue.links.github && !monologue.links.npm) return;
+    const githubUrl = getGithubApiCommitsLink(monologue.links.github ?? '');
+    const npmUrl = getNPMApiLink(monologue.links.npm ?? '');
+    if (githubUrl) {
+      setLoading(true);
+      fetch(githubUrl).then(res => res.json()).then(data => {
+        setLoading(false);
+        setGithubCommits(data);
+      });
+    }
+    if (npmUrl) {
+      setLoading(true);
+      fetch(npmUrl.registry).then(res => res.json()).then(data => setNpmRegistry(data));
+      fetch(npmUrl.downloads).then(res => res.json()).then(data => {
+        setLoading(false);
+        setNpmDownloads(data);
+      });
+    }
+  }, [monologue]);
+
+  if (loading) return <div className="desc loading">{L.render()("loading")}</div>;
+  if (monologue === null && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
+  if (monologue !== null)
+    return <Container>
+      <Title>
+        {monologue.title}
+        <div className="desc">{monologue.description}</div>
+      </Title>
+      {monologue.links && <MonologueCards>
+        {Object.entries(monologue.links).map(([k, v], index) => <Card title={L.render()(`link-${k}`)} description={<>
+          <a className="hyperlink" href={v} target="_blank">{L.render()("monologue-go")}</a>
+          <br />
+          {k === "github" && <>
+            <span>{L.get()("monologue-github-LC")}</span>
+            <div className="desc">{githubCommits[0]?.commit.message ?? L.get()("empty")}</div>
+            <br />
+            <span>{L.render()("monologue-github-TC", githubCommits.length)}</span>
+          </>}
+          {k === "npm" && <>
+            <span>{L.get()("monologue-npm-version")}</span>
+            <div className="desc">{npmRegistry ? npmVersion(npmRegistry) : L.render()("loading")}</div>
+            <CardAliases>
+              <div>
+                <span>{L.get()("monologue-npm-license")}</span>
+                <div className="desc">{npmRegistry?.license}</div>
+              </div>
+              <div>
+                <span>{L.get()("monologue-npm-downloads")}</span>
+                <div className="desc">{L.get()("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads)}</div>
+              </div>
+            </CardAliases>
+          </>}
+        </>} key={index} />)}
+      </MonologueCards>}
+    </Container>;
 
   return <Container>
     <Title>
       {L.render()("projects")}
-      <div className="desc">{L.get("projects-d")}</div>
+      <div className="desc">{L.get()("projects-d")}</div>
     </Title>
     <ProjectCards>
-      {/* {projects.map((item, index) => <Card title={item.title} description={item.description} links={item.links} key={index} />)} */}
-      <Card title="test" description="test" />
+      {projects.map((item, index) => <Card title={item.title} description={cut(item.description, 50)} links={item.links} onClick={() => cutaway(`/projects/${item.title}`)} key={index} />)}
     </ProjectCards>
   </Container>;
+}
+
+const npmVersion = (registry: NpmRegistry) => {
+  const latest = registry["dist-tags"]["latest"];
+  const published = new Date(registry.time[latest]).getTime();
+  return L.get()("monologue-npm-version-c", latest, getHumanTimeDistance(published));
 }
 
 const Container = styled.article`
@@ -56,9 +125,30 @@ const ProjectCards = styled.div`
   margin-top: 1em;
   align-items: center;
   justify-content: center;
-  grid-template-columns: repeat(5, 15em);
+  grid-template-columns: repeat(3, 15em);
 
   @media ${({ theme }) => theme.device.laptop} {
     grid-template-columns: repeat(1, 15em);
   }
+`;
+
+const MonologueCards = styled.div`
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 20em);
+  margin-top: 1em;
+  margin-left: 0.5em;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    grid-template-columns: 20em;
+  }
+`;
+
+const CardAliases = styled.div`
+  display: flex;
+  gap: 40px;
 `;

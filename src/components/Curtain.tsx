@@ -41,10 +41,11 @@ export default class Curtain extends React.Component<{}, State> {
 const CurtainContainer = styled.div`
   display: flex;
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 `;
 
 const CurtainPart = styled.div<{ reverse: boolean; }>`

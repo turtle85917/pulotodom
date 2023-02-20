@@ -3,9 +3,10 @@ import styled from "styled-components";
 import L from "@languages";
 
 interface Props {
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   links?: Record<string, string>;
+  onClick?: () => void|Promise<void>;
 }
 
 export default class Card extends React.Component<Props, {}> {
@@ -14,7 +15,7 @@ export default class Card extends React.Component<Props, {}> {
   }
 
   public render(): React.ReactNode {
-    return <Container>
+    return <Container onClick={this.props.onClick}>
       <Head>{this.props.title}</Head>
       <Body>{this.props.description}</Body>
       {this.props.links && <Source>
@@ -48,9 +49,6 @@ const Head = styled.div`
 
 const Body = styled.div`
   margin: 0.5em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-family: Desc;
 `;
 
