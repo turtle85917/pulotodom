@@ -2,6 +2,7 @@ import L from "@languages";
 
 const REGEX_GITHUB_REPO_LINK = /https:\/\/github.com\/((?:.+)\/(?:.+))/;
 const REGEX_NPM_REGISTRY_LINK = /https:\/\/www\.npmjs\.com\/package\/(.+)/;
+const REGEX_VERCEL_LINK = /https:\/\/(.+?)\.vercel\.app/;
 
 /**
  * 부울 값을 숫자로 반환.
@@ -43,7 +44,7 @@ export const cutaway = (href: string) => {
 export const getGithubApiCommitsLink = (githubRepoLink: string) => {
   const execArray = REGEX_GITHUB_REPO_LINK.exec(githubRepoLink);
   if (execArray === null) return null;
-  return `https://api.github.com/repos/${execArray[1]}/commits?per_page=1000000`;
+  return `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${execArray[1]}/commits?per_page=1000000`;
 }
 
 export const getNPMApiLink = (npmRegistryLink: string) => {
@@ -53,6 +54,12 @@ export const getNPMApiLink = (npmRegistryLink: string) => {
     registry: `https://registry.npmjs.org/${execArray[1]}`,
     downloads: `https://api.npmjs.org/downloads/range/1900-01-01:2023-02-20/${execArray[1]}`
   };
+}
+
+export const getVercelApiLink = (vercelLink: string) => {
+  const execArray = REGEX_VERCEL_LINK.exec(vercelLink);
+  if (execArray === null) return null;
+  return `https://api.vercel.com/v9/projects/${execArray[1]}`;
 }
 
 /**

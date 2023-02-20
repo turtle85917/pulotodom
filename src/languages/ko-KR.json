@@ -46,5 +46,7 @@
   "monologue-npm-version": "최신 버전",
   "monologue-npm-version-c": "v#{0} - 게시일 #{1}",
   "monologue-npm-license": "라이센스",
-  "monologue-npm-downloads": "총 조회수"
+  "monologue-npm-downloads": "총 조회수",
+  "monologue-preview-status": "상태",
+  "monologue-preview-created": "최초 배포일"
 }

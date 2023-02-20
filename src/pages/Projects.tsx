@@ -4,7 +4,7 @@ import styled from "styled-components";
 import L from "@languages";
 import Card from "@components/Card";
 import HttpStatusPage from "@components/HttpStatusPage";
-import { cut, cutaway, getGithubApiCommitsLink, getHumanTimeDistance, getNPMApiLink } from "@global/Utility";
+import { cut, cutaway, getGithubApiCommitsLink, getHumanTimeDistance, getNPMApiLink, getVercelApiLink } from "@global/Utility";
 
 export default function Projects(): JSX.Element {
   const { name } = useParams();
@@ -14,7 +14,8 @@ export default function Projects(): JSX.Element {
   const [githubCommits, setGithubCommits] = useState<GithubCommit[]>([]);
   const [npmRegistry, setNpmRegistry] = useState<NpmRegistry|null>(null);
   const [npmDownloads, setNpmDownloads] = useState<NpmDownloads|null>(null);
-
+  const [vercelProject, setVercelProject] = useState<VercelProjects|null>(null);
+  
   useEffect(() => {
     import("@data/projects.json").then(data => {
       setLoading(false);
@@ -25,14 +26,26 @@ export default function Projects(): JSX.Element {
 
   useEffect(() => {
     if (!monologue) return;
-    if (!monologue.links.github && !monologue.links.npm) return;
-    const githubUrl = getGithubApiCommitsLink(monologue.links.github ?? '');
+    if (!monologue.links.github && !monologue.links.npm && !monologue.links.preview) return;
     const npmUrl = getNPMApiLink(monologue.links.npm ?? '');
+    const vercelUrl = getVercelApiLink(monologue.links.preview ?? '');
+    const githubUrl = getGithubApiCommitsLink(monologue.links.github ?? '');
     if (githubUrl) {
       setLoading(true);
       fetch(githubUrl).then(res => res.json()).then(data => {
         setLoading(false);
         setGithubCommits(data);
+      });
+    }
+    if (vercelUrl) {
+      setLoading(true);
+      fetch(vercelUrl, {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_VERCEL_API_TOKEN}`
+        }
+      }).then(res => res.json()).then(data => {
+        setLoading(false);
+        setVercelProject(data);
       });
     }
     if (npmUrl) {
@@ -76,6 +89,12 @@ export default function Projects(): JSX.Element {
                 <div className="desc">{L.get()("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads)}</div>
               </div>
             </CardAliases>
+          </>}
+          {k === "preview" && <>
+            <span>{L.get()("monologue-preview-created")}</span>
+            <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
+            <span>{L.get()("monologue-preview-status")}</span>
+            <div className="desc">{vercelProject?.targets?.production.readyState}</div>
           </>}
         </>} key={index} />)}
       </MonologueCards>}

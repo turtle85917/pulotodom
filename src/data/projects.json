@@ -1,5 +1,13 @@
 [
   {
+    "title": "포트폴리오",
+    "description": "현재 보고 있는 이 사이트에요.",
+    "links": {
+      "github": "https://github.com/turtle85917/pulotodom",
+      "preview": "https://pulotodom.vercel.app"
+    }
+  },
+  {
     "title": "AI가 봐주는 MBTI",
     "description": "처음으로 AI를 학습시켜서 만들어본 웹 사이트에요.",
     "links": {
