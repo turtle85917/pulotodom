@@ -84,7 +84,6 @@ export default function Projects(): JSX.Element {
           {k === "preview" && <>
             <span>{L.get(L.locale)("monologue-preview-created")}</span>
             <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
-            <br />
             <span>{L.get(L.locale)("monologue-preview-status")}</span>
             <div className="desc">{L.render(L.locale)(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)}</div>
           </>}

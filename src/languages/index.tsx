@@ -27,11 +27,9 @@ export default class L {
   public static defaultLocale: string = "ko-KR";
   private static dictionary: Record<string, Record<string, string>> = {};
 
-  
   public static get locale() {
     return localStorage.getItem("pf.locale") ?? L.defaultLocale;
   }
-  
 
   public static get(locale: string = L.defaultLocale) {
     return ((key: string, ...args: any[]) => L.dictionary[locale]?.[key]?.replace(REGEXP_PATTERN, (_, v) => args[v]??'') ?? `(L#${key})`);

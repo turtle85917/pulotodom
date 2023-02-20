@@ -41,7 +41,7 @@
   "monologue-github-LC": "최근 커밋 메시지",
   "monologue-github-TC": "총 커밋 수 #{0}개",
   "monologue-npm-version": "최신 버전",
-  "monologue-npm-version-c": "v#{0} - 게시일 #{1}",
+  "monologue-npm-version-c": "v#{0} - #{1}",
   "monologue-npm-license": "라이센스",
   "monologue-npm-downloads": "총 조회수",
   "monologue-preview-status": "상태",

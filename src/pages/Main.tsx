@@ -137,6 +137,7 @@ const ButtonGroup = styled.div`
   display: flex;
   gap: 4px;
   opacity: 0;
+  justify-content: center;
   animation: FadeIn 800ms forwards 3000ms;
 `;
 
