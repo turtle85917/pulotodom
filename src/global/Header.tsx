@@ -42,15 +42,12 @@ export default class Header extends React.Component<{}, S> {
         <button onClick={() => cutaway("/timeline")} data-for="tooltip" data-tip="timeline-t">
           {L.render(L.locale)("timeline")}
         </button>
-        <button data-for="tooltip" data-tip="locale-t" onClick={() => {
-          this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown });
-          L.setLocale("en-US")
-        }}>
+        <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
           {L.render(L.locale)("locale")}
         </button>
         {this.state.openLocaleDropdown && <Dropdown>
-          <DropdownMenu href="/">{L.render(L.locale)("locale-ko")}</DropdownMenu>
-          <DropdownMenu href="/">{L.render(L.locale)("locale-en")}</DropdownMenu>
+          <DropdownMenu onClick={() => L.setLocale("ko-KR")}>{L.render(L.locale)("locale-ko")}</DropdownMenu>
+          <DropdownMenu onClick={() => L.setLocale("en-US")}>{L.render(L.locale)("locale-en")}</DropdownMenu>
         </Dropdown>}
       </Navigation>
       <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow })}>
@@ -163,6 +160,7 @@ const Dropdown = styled.div`
   text-align: center;
   justify-content: center;
   min-width: 100px;
+  z-index: 100;
   background-color: #8a8a8a;
 `;
 

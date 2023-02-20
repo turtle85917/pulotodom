@@ -38,6 +38,8 @@
   "error-404-d": "원래부터 없었거나,#{br}언제부턴가 사라진 페이지예요.",
   "error-501": "만들고 있는 중",
   "error-501-d": "#{icon:gear|cycle:pulse} 열심히 만들고 있어요.#{br}언젠가는 공개될거에요.",
+  "error-503": "아직 준비가 안됨",
+  "error-503-d": "안타깝지만 이 요청은 준비 중이어요.#{br}개발이 완료되면 다시 오세요.",
   "monologue-github-LC": "최근 커밋 메시지",
   "monologue-github-TC": "총 커밋 수 #{0}개",
   "monologue-npm-version": "최신 버전",
