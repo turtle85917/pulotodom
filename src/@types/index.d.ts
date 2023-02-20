@@ -4,7 +4,6 @@ interface Project {
   links: {
     github?: string;
     preview?: string;
-    wiki?: string;
     npm?: string;
   }
 }

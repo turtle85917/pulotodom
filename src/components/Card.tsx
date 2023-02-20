@@ -6,7 +6,7 @@ interface Props {
   title: React.ReactNode;
   description: React.ReactNode;
   links?: Record<string, string>;
-  onClick?: () => void|Promise<void>;
+  onClick?: () => any;
 }
 
 export default class Card extends React.Component<Props, {}> {

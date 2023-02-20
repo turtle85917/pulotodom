@@ -42,12 +42,7 @@ section#main {
 
 a {
   color: black;
-  &.hyperlink i {
-    text-decoration: inherit;
-  }
-  &:not(&.hyperlink) {
-    text-decoration: none;
-  }
+  text-decoration: none;
 }
 
 div.desc {

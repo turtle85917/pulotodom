@@ -67,34 +67,27 @@ export default function Projects(): JSX.Element {
         <div className="desc">{monologue.description}</div>
       </Title>
       {monologue.links && <MonologueCards>
-        {Object.entries(monologue.links).map(([k, v], index) => <Card title={L.render()(`link-${k}`)} description={<>
-          <a className="hyperlink" href={v} target="_blank">{L.render()("monologue-go")}</a>
-          <br />
+        {Object.entries(monologue.links).map(([k, v], index) => <Card onClick={() => window.open(v, "_blank")} title={L.render()(`link-${k}`)} description={<>
           {k === "github" && <>
             <span>{L.get()("monologue-github-LC")}</span>
             <div className="desc">{githubCommits[0]?.commit.message ?? L.get()("empty")}</div>
             <br />
-            <span>{L.render()("monologue-github-TC", githubCommits.length)}</span>
+            <span>{L.render()("monologue-github-TC", githubCommits.length.toLocaleString())}</span>
           </>}
           {k === "npm" && <>
             <span>{L.get()("monologue-npm-version")}</span>
             <div className="desc">{npmRegistry ? npmVersion(npmRegistry) : L.render()("loading")}</div>
-            <CardAliases>
-              <div>
-                <span>{L.get()("monologue-npm-license")}</span>
-                <div className="desc">{npmRegistry?.license}</div>
-              </div>
-              <div>
-                <span>{L.get()("monologue-npm-downloads")}</span>
-                <div className="desc">{L.get()("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads)}</div>
-              </div>
-            </CardAliases>
+            <span>{L.get()("monologue-npm-license")}</span>
+            <div className="desc">{npmRegistry?.license}</div>
+            <span>{L.get()("monologue-npm-downloads")}</span>
+            <div className="desc">{L.get()("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads.toLocaleString())}</div>
           </>}
           {k === "preview" && <>
             <span>{L.get()("monologue-preview-created")}</span>
             <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
+            <br />
             <span>{L.get()("monologue-preview-status")}</span>
-            <div className="desc">{vercelProject?.targets?.production.readyState}</div>
+            <div className="desc">{vercelProject?.targets?.production.readyState ?? L.render()("loading")}</div>
           </>}
         </>} key={index} />)}
       </MonologueCards>}
@@ -133,8 +126,9 @@ const Title = styled.h1`
 
   div.desc {
     color: #bebebe;
-    font-size: 10.5pt;
+    font-size: 12pt;
     font-family: Desc;
+    font-weight: 100;
   }
 `;
 
@@ -165,9 +159,4 @@ const MonologueCards = styled.div`
     justify-content: center;
     grid-template-columns: 20em;
   }
-`;
-
-const CardAliases = styled.div`
-  display: flex;
-  gap: 40px;
 `;

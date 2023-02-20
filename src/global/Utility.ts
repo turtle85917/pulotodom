@@ -44,7 +44,7 @@ export const cutaway = (href: string) => {
 export const getGithubApiCommitsLink = (githubRepoLink: string) => {
   const execArray = REGEX_GITHUB_REPO_LINK.exec(githubRepoLink);
   if (execArray === null) return null;
-  return `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${execArray[1]}/commits?per_page=1000000`;
+  return `https://api.github.com/repos/${execArray[1]}/commits?per_page=1000000`;
 }
 
 export const getNPMApiLink = (npmRegistryLink: string) => {

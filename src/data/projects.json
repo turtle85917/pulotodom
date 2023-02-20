@@ -28,8 +28,7 @@
     "description": "css로만 게임 요소를 그려 만든 첫 게임이에요.",
     "links": {
       "github": "https://github.com/turtle85917/tower-of-hanoi",
-      "preview": "https://tower-ofhanoi.vercel.app",
-      "wiki": "https://en.wikipedia.org/wiki/Tower_of_Hanoi"
+      "preview": "https://tower-ofhanoi.vercel.app"
     }
   },
   {
@@ -60,8 +59,7 @@
     "title": "sokoban-go",
     "description": "Golang 언어를 배우면서 만들어본 간단한 텍스트 게임이에요. 창고지기 게임이라고 불린다네요.",
     "links": {
-      "github": "https://github.com/turtle85917/sokoban-go",
-      "wiki": "https://en.wikipedia.org/wiki/Sokoban"
+      "github": "https://github.com/turtle85917/sokoban-go"
     }
   },
   {
