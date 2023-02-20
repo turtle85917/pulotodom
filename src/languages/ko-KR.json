@@ -45,5 +45,10 @@
   "monologue-npm-license": "라이센스",
   "monologue-npm-downloads": "총 조회수",
   "monologue-preview-status": "상태",
-  "monologue-preview-created": "최초 배포일"
+  "monologue-preview-created": "최초 배포일",
+  "vercel-status-REA": "#{icon:check} 정상",
+  "vercel-status-ERR": "#{icon:bug} 고장",
+  "vercel-status-BUI": "#{icon:trowel} 빌드 중",
+  "vercel-status-QUE": "#{icon:spinner|cycle:pulse} 처리 중",
+  "vercel-status-CAN": "#{icon:ban} 취소됨"
 }
