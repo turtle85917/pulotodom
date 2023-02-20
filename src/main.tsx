@@ -12,22 +12,20 @@ import ko from "@languages/ko-KR.json";
 import en from "@languages/en-US.json";
 import PageRoutes from "@global/Routes";
 
-export const locale = () => localStorage.getItem("pf.locale") ?? L.defaultLocale;
-
 // 언어 추가 (필수)
 L.addLocale("ko-KR", ko);
 L.addLocale("en-US", en);
 
 // pf.* 설정
-localStorage.setItem("pf.locale", locale());
+localStorage.setItem("pf.locale", L.locale);
 
-document.title = L.get()("title");
+document.title = L.get(L.locale)("title");
 ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <Header />
       <PageRoutes />
-      <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render()(tip)}</Tooltip>} />
+      <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(L.locale)(tip)}</Tooltip>} />
       <Curtain />
     </BrowserRouter>
   </ThemeProvider>

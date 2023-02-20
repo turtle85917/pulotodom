@@ -30,49 +30,52 @@ export default class Header extends React.Component<{}, S> {
   public render(): React.ReactNode {
     return <Container>
       <Nickname>
-        <div className="desc">{L.get()("nickname-d")}</div>
+        <div className="desc">{L.get(L.locale)("nickname-d")}</div>
       </Nickname>
       <Navigation>
         {/\/(.+)/.test(window.location.pathname) && <button onClick={() => cutaway('/')} data-for="tooltip" data-tip="return-t">
-          {L.render()("return")}
+          {L.render(L.locale)("return")}
         </button>}
         <button onClick={() => cutaway("/projects")} data-for="tooltip" data-tip="projects-t">
-          {L.render()("projects")}
+          {L.render(L.locale)("projects")}
         </button>
         <button onClick={() => cutaway("/timeline")} data-for="tooltip" data-tip="timeline-t">
-          {L.render()("timeline")}
+          {L.render(L.locale)("timeline")}
         </button>
-        <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
-          {L.render()("locale")}
+        <button data-for="tooltip" data-tip="locale-t" onClick={() => {
+          this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown });
+          L.setLocale("en-US")
+        }}>
+          {L.render(L.locale)("locale")}
         </button>
         {this.state.openLocaleDropdown && <Dropdown>
-          <DropdownMenu href="/">{L.render()("locale-ko")}</DropdownMenu>
-          <DropdownMenu href="/">{L.render()("locale-en")}</DropdownMenu>
+          <DropdownMenu href="/">{L.render(L.locale)("locale-ko")}</DropdownMenu>
+          <DropdownMenu href="/">{L.render(L.locale)("locale-en")}</DropdownMenu>
         </Dropdown>}
       </Navigation>
       <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow })}>
-        {L.render()(`menu${this.state.openMobileMenuWindow ? "-x" : ''}`)}
+        {L.render(L.locale)(`menu${this.state.openMobileMenuWindow ? "-x" : ''}`)}
       </MenuButton>
       {this.state.openMobileMenuWindow && <MenuContainer>
         {/\/(.+)/.test(window.location.pathname) && <MenuItemButton className="mobile" onClick={() => cutaway('/')}>
-          {L.render()("return")}
+          {L.render(L.locale)("return")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get()("return-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get(L.locale)("return-t")}</MenuItemButtonDesc>
         </MenuItemButton>}
         <MenuItemButton className="mobile" onClick={() => cutaway("/projects")}>
-          {L.render()("projects")}
+          {L.render(L.locale)("projects")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get()("projects-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get(L.locale)("projects-t")}</MenuItemButtonDesc>
         </MenuItemButton>
         <MenuItemButton className="mobile" onClick={() => cutaway("/timeline")}>
-          {L.render()("timeline")}
+          {L.render(L.locale)("timeline")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get()("timeline-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get(L.locale)("timeline-t")}</MenuItemButtonDesc>
         </MenuItemButton>
         <MenuItemButton className="mobile">
-          {L.render()("locale")}
+          {L.render(L.locale)("locale")}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get()("locale-t")}</MenuItemButtonDesc>
+          <MenuItemButtonDesc className="desc">{L.get(L.locale)("locale-t")}</MenuItemButtonDesc>
         </MenuItemButton>
       </MenuContainer>}
     </Container>;

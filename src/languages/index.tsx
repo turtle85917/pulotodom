@@ -1,4 +1,5 @@
 import Icon from "@components/Icon";
+import { cutaway } from "@global/Utility";
 
 const REGEXP_PATTERN = /#\{(?:(\d+?)|(?:(?:icon:([^!@#$%^&*(){}_+=|]+))(?:\|prefix:([^{}}|]+))?(?:\|cycle:(spin|pulse))?)|(?:(br|img:((?:https*:\/)?\/[\w!@#$%^&*()_+\-=|\.\/]+))))\}/g;
 const REGEXP_BRACKETS = /([^\s]+)#\[([을를]|[이가]|[은는]|[와과]|(?:으로|로))\]/g;
@@ -25,6 +26,12 @@ const MATCH_JOSA: Record<string, (has: boolean) => string> = {
 export default class L {
   public static defaultLocale: string = "ko-KR";
   private static dictionary: Record<string, Record<string, string>> = {};
+
+  
+  public static get locale() {
+    return localStorage.getItem("pf.locale") ?? L.defaultLocale;
+  }
+  
 
   public static get(locale: string = L.defaultLocale) {
     return ((key: string, ...args: any[]) => L.dictionary[locale]?.[key]?.replace(REGEXP_PATTERN, (_, v) => args[v]??'') ?? `(L#${key})`);
@@ -72,5 +79,10 @@ export default class L {
   public static addLocale(locale: string, data: Record<string, string>) {
     if (L.dictionary[locale]) return;
     L.dictionary[locale] = data;
+  }
+
+  public static setLocale(locale: string) {
+    localStorage.setItem("pf.locale", locale);
+    cutaway(window.location.href);
   }
 }

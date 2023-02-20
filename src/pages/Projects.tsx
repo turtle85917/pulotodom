@@ -58,7 +58,7 @@ export default function Projects(): JSX.Element {
     }
   }, [monologue]);
 
-  if (loading) return <div className="desc loading">{L.render()("loading")}</div>;
+  if (loading) return <div className="desc loading">{L.render(L.locale)("loading")}</div>;
   if (monologue === null && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
   if (monologue !== null)
     return <Container>
@@ -67,26 +67,26 @@ export default function Projects(): JSX.Element {
         <div className="desc">{monologue.description}</div>
       </Title>
       {monologue.links && <MonologueCards>
-        {Object.entries(monologue.links).map(([k, v], index) => <Card onClick={() => window.open(v, "_blank")} title={L.render()(`link-${k}`)} description={<>
+        {Object.entries(monologue.links).map(([k, v], index) => <Card onClick={() => window.open(v, "_blank")} title={L.render(L.locale)(`link-${k}`)} description={<>
           {k === "github" && <>
-            <span>{L.get()("monologue-github-LC")}</span>
-            <div className="desc">{githubCommits[0]?.commit.message ?? L.get()("empty")}</div>
-            <span>{L.render()("monologue-github-TC", githubCommits.length.toLocaleString())}</span>
+            <span>{L.get(L.locale)("monologue-github-LC")}</span>
+            <div className="desc">{githubCommits[0]?.commit.message ?? L.get(L.locale)("empty")}</div>
+            <span>{L.render(L.locale)("monologue-github-TC", githubCommits.length.toLocaleString())}</span>
           </>}
           {k === "npm" && <>
-            <span>{L.get()("monologue-npm-version")}</span>
-            <div className="desc">{npmRegistry ? npmVersion(npmRegistry) : L.render()("loading")}</div>
-            <span>{L.get()("monologue-npm-license")}</span>
+            <span>{L.get(L.locale)("monologue-npm-version")}</span>
+            <div className="desc">{npmRegistry ? npmVersion(npmRegistry) : L.render(L.locale)("loading")}</div>
+            <span>{L.get(L.locale)("monologue-npm-license")}</span>
             <div className="desc">{npmRegistry?.license}</div>
-            <span>{L.get()("monologue-npm-downloads")}</span>
-            <div className="desc">{L.get()("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads.toLocaleString())}</div>
+            <span>{L.get(L.locale)("monologue-npm-downloads")}</span>
+            <div className="desc">{L.get(L.locale)("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads.toLocaleString())}</div>
           </>}
           {k === "preview" && <>
-            <span>{L.get()("monologue-preview-created")}</span>
+            <span>{L.get(L.locale)("monologue-preview-created")}</span>
             <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
             <br />
-            <span>{L.get()("monologue-preview-status")}</span>
-            <div className="desc">{L.render()(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)}</div>
+            <span>{L.get(L.locale)("monologue-preview-status")}</span>
+            <div className="desc">{L.render(L.locale)(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)}</div>
           </>}
         </>} key={index} />)}
       </MonologueCards>}
@@ -94,8 +94,8 @@ export default function Projects(): JSX.Element {
 
   return <Container>
     <Title>
-      {L.render()("projects")}
-      <div className="desc">{L.get()("projects-d")}</div>
+      {L.render(L.locale)("projects")}
+      <div className="desc">{L.get(L.locale)("projects-d")}</div>
     </Title>
     <ProjectCards>
       {projects.map((item, index) => <Card title={item.title} description={cut(item.description, 50)} links={item.links} onClick={() => cutaway(`/projects/${item.title}`)} key={index} />)}
@@ -106,7 +106,7 @@ export default function Projects(): JSX.Element {
 const npmVersion = (registry: NpmRegistry) => {
   const latest = registry["dist-tags"]["latest"];
   const published = new Date(registry.time[latest]).getTime();
-  return L.get()("monologue-npm-version-c", latest, getHumanTimeDistance(published));
+  return L.get(L.locale)("monologue-npm-version-c", latest, getHumanTimeDistance(published));
 }
 
 const Container = styled.article`
