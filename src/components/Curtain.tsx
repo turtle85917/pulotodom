@@ -40,7 +40,7 @@ export default class Curtain extends React.Component<{}, State> {
 
 const CurtainContainer = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100vh;
   top: 0;

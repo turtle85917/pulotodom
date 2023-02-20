@@ -71,7 +71,6 @@ export default function Projects(): JSX.Element {
           {k === "github" && <>
             <span>{L.get()("monologue-github-LC")}</span>
             <div className="desc">{githubCommits[0]?.commit.message ?? L.get()("empty")}</div>
-            <br />
             <span>{L.render()("monologue-github-TC", githubCommits.length.toLocaleString())}</span>
           </>}
           {k === "npm" && <>
@@ -134,7 +133,7 @@ const Title = styled.h1`
 
 const ProjectCards = styled.div`
   display: grid;
-  gap: 20px;
+  gap: 35px;
   margin-top: 1em;
   align-items: center;
   justify-content: center;
@@ -147,16 +146,12 @@ const ProjectCards = styled.div`
 
 const MonologueCards = styled.div`
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(3, 20em);
+  gap: 10px;
+  grid-template-columns: repeat(3, 12em);
   margin-top: 1em;
   margin-left: 0.5em;
 
   @media ${({ theme }) => theme.device.mobile} {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    grid-template-columns: 20em;
+    grid-template-columns: 12em;
   }
 `;

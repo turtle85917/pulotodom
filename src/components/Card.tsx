@@ -26,6 +26,9 @@ export default class Card extends React.Component<Props, {}> {
 }
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
   padding: 0.5em;
   min-height: 10rem;
   transition: 300ms;
@@ -48,7 +51,9 @@ const Head = styled.div`
 `;
 
 const Body = styled.div`
-  margin: 0.5em;
+  padding: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
   font-family: Desc;
 `;
 
