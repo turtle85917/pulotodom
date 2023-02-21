@@ -6,18 +6,18 @@ export default function Main(): JSX.Element {
   return <Container>
     <div>
       <NicknameGroup data-for="tooltip" data-tip="nickname-t">
-        {L.get(L.locale)("nickname").split('').map((chunk, index) => <Nickname index={index} key={index}>{chunk}</Nickname>)}
+        {L.get("nickname").split('').map((chunk, index) => <Nickname index={index} key={index}>{chunk}</Nickname>)}
       </NicknameGroup>
-      <Introduction className="desc">{L.get(L.locale)("nickname-s")}</Introduction>
+      <Introduction className="desc">{L.get("nickname-s")}</Introduction>
       <Vertical />
       <GuideGroup>
-        <Guide>{L.get(L.locale)("guide")}</Guide>
-        <Guide>{L.get(L.locale)("guide-d1")}</Guide>
-        <Guide>{L.get(L.locale)("guide-d2")}</Guide>
+        <Guide>{L.get("guide")}</Guide>
+        <Guide>{L.get("guide-d1")}</Guide>
+        <Guide>{L.get("guide-d2")}</Guide>
       </GuideGroup>
       <ButtonGroup>
-        <UtilityButton className="button" onClick={() => cutaway("/projects")}>{L.render(L.locale)("projects")}</UtilityButton>
-        <UtilityButton className="button" onClick={() => cutaway("/timeline")}>{L.render(L.locale)("timeline")}</UtilityButton>
+        <UtilityButton className="button" onClick={() => cutaway("/projects")}>{L.render("projects")}</UtilityButton>
+        <UtilityButton className="button" onClick={() => cutaway("/timeline")}>{L.render("timeline")}</UtilityButton>
       </ButtonGroup>
     </div>
   </Container>;

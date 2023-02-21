@@ -31,47 +31,45 @@ export default class L {
     return localStorage.getItem("pf.locale") ?? L.defaultLocale;
   }
 
-  public static get(locale: string = L.defaultLocale) {
-    return ((key: string, ...args: any[]) => L.dictionary[locale]?.[key]?.replace(REGEXP_PATTERN, (_, v) => args[v]??'') ?? `(L#${key})`);
+  public static get(key: string, ...args: any[]) {
+    return L.dictionary[L.locale]?.[key]?.replace(REGEXP_PATTERN, (_, v) => args[v]??'') ?? `(L#${key})`;
   }
 
-  public static render(locale: string = L.defaultLocale) {
-    return ((key: string, ...args: any[]) => {
-      const result: React.ReactNode[] = [];
-      let content = L.dictionary[locale]?.[key];
-      if (!content) return `(L#${key})`;
+  public static render(key: string, ...args: any[]) {
+    const result: React.ReactNode[] = [];
+    let content = L.dictionary[L.locale]?.[key];
+    if (!content) return `(L#${key})`;
 
-      // NOTE #{...} 커맨드 처리
-      let execArray: RegExpExecArray | null = null;
-      let lastIndex: number = 0;
-      while (execArray = REGEXP_PATTERN.exec(content)) {
-        if (execArray.index - lastIndex > 0) {
-          result.push(content.slice(lastIndex, execArray.index));
-        }
-        const argIndex = Number(execArray[1]);
-        if (!isNaN(argIndex)) {
-          result.push(args[argIndex]);
-        } else if (execArray[5]) {
-          if (execArray[5].startsWith("br")) result.push(<br key={execArray.index} />);
-          if (execArray[5].startsWith("img")) result.push(<img src={execArray[6]} height={120} alt={`(L#${key})`} key={execArray.index} />);
-        } else {
-          const classList = [execArray[3] ?? "fas", `fa-${execArray[2]}`];
-          execArray[4] && classList.push(`fa-${execArray[4]}`);
-          result.push(<Icon name={classList} key={execArray.index} />);
-        }
-        lastIndex = REGEXP_PATTERN.lastIndex;
+    // NOTE #{...} 커맨드 처리
+    let execArray: RegExpExecArray | null = null;
+    let lastIndex: number = 0;
+    while (execArray = REGEXP_PATTERN.exec(content)) {
+      if (execArray.index - lastIndex > 0) {
+        result.push(content.slice(lastIndex, execArray.index));
       }
+      const argIndex = Number(execArray[1]);
+      if (!isNaN(argIndex)) {
+        result.push(args[argIndex]);
+      } else if (execArray[5]) {
+        if (execArray[5].startsWith("br")) result.push(<br key={execArray.index} />);
+        if (execArray[5].startsWith("img")) result.push(<img src={execArray[6]} height={120} alt={`(L#${key})`} key={execArray.index} />);
+      } else {
+        const classList = [execArray[3] ?? "fas", `fa-${execArray[2]}`];
+        execArray[4] && classList.push(`fa-${execArray[4]}`);
+        result.push(<Icon name={classList} key={execArray.index} />);
+      }
+      lastIndex = REGEXP_PATTERN.lastIndex;
+    }
 
-      // NOTE 조사 처리
-      content = content.replace(REGEXP_BRACKETS, (original, ...values: string[]) => {
-        const hasJongseong = (values[0].charCodeAt(values[0].length-1) - 0xac00) % 28 > 0;
-        const result = Object.entries(MATCH_JOSA).find(item => item[0].includes(values[1]))?.[1](hasJongseong) ?? values[1];
-        return original.replace(`#[${values[1]}]`, result);
-      });
-
-      if (lastIndex < content.length) result.push(content.slice(lastIndex));
-      return <>{result}</>;
+    // NOTE 조사 처리
+    content = content.replace(REGEXP_BRACKETS, (original, ...values: string[]) => {
+      const hasJongseong = (values[0].charCodeAt(values[0].length-1) - 0xac00) % 28 > 0;
+      const result = Object.entries(MATCH_JOSA).find(item => item[0].includes(values[1]))?.[1](hasJongseong) ?? values[1];
+      return original.replace(`#[${values[1]}]`, result);
     });
+
+    if (lastIndex < content.length) result.push(content.slice(lastIndex));
+    return <>{result}</>;
   }
 
   public static addLocale(locale: string, data: Record<string, string>) {

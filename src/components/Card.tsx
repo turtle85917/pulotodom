@@ -19,7 +19,7 @@ export default class Card extends React.Component<Props, {}> {
       <Head>{this.props.title}</Head>
       <Body>{this.props.description}</Body>
       {this.props.links && <Source>
-        {Object.entries(this.props.links).map(([k, v], index) => <SourceItem href={v} target="_blank" key={index}>{L.render(L.locale)(`link-${k}`)}</SourceItem>)}
+        {Object.entries(this.props.links).map(([k, v], index) => <SourceItem href={v} target="_blank" key={index}>{L.render(`link-${k}`)}</SourceItem>)}
       </Source>}
     </Container>;
   }

@@ -19,13 +19,13 @@ L.addLocale("en-US", en);
 // pf.* 설정
 localStorage.setItem("pf.locale", L.locale);
 
-document.title = L.get(L.locale)("title");
+document.title = L.get("title");
 ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <Header />
       <PageRoutes />
-      <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(L.locale)(tip)}</Tooltip>} />
+      <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(tip)}</Tooltip>} />
       <Curtain />
     </BrowserRouter>
   </ThemeProvider>

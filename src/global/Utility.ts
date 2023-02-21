@@ -68,7 +68,7 @@ export const getVercelApiLink = (vercelLink: string) => {
  * @param time 값
  */
 export const getHumanTime = (time: number) => {
-  if (time < 1) return L.get(L.locale)("time-now");
+  if (time < 1) return L.get("time-now");
   time = Math.round(time);
   let result: [number, string][] = [];
   if (time < 60) result = [[ time, "time-second" ]];
@@ -76,7 +76,7 @@ export const getHumanTime = (time: number) => {
   else if (time < 86400) result = [[ Math.floor(time / 3600), "time-hours" ], [ Math.round(time % 3600 / 60), "time-minutes" ]];
   else if (time < 604800) result = [[ Math.floor(time / 86400), "time-day" ], [ Math.round(time % 86400 / 3600), "time-hours" ]];
   else result = [[ Math.floor(time / 2592000), "time-month" ], [ Math.round(time % 2592000 / 86400), "time-day" ]]
-  return result.filter(item => item[0]).map(item => L.get(L.locale)(item[1], item[0])).join(' ');
+  return result.filter(item => item[0]).map(item => L.get(item[1], item[0])).join(' ');
 }
 
 /**
@@ -84,9 +84,9 @@ export const getHumanTime = (time: number) => {
  */
 export const getHumanTimeDistance = (from: number, to: number = Date.now()) => {
   const distance = Math.round((to - from) / 1000);
-  if (from === 0) return L.render(L.locale)("loading");
+  if (from === 0) return L.render("loading");
   return distance < 0
-    ? L.get(L.locale)("time-distance-future", getHumanTime(-distance))
-    : L.get(L.locale)("time-distance-past", getHumanTime(distance))
+    ? L.get("time-distance-future", getHumanTime(-distance))
+    : L.get("time-distance-past", getHumanTime(distance))
   ;
 }

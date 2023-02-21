@@ -58,7 +58,7 @@ export default function Projects(): JSX.Element {
     }
   }, [monologue]);
 
-  if (loading) return <div className="desc loading">{L.render(L.locale)("loading")}</div>;
+  if (loading) return <div className="desc loading">{L.render("loading")}</div>;
   if (monologue === null && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
   if (monologue !== null)
     return <Container>
@@ -70,8 +70,8 @@ export default function Projects(): JSX.Element {
 
   return <Container>
     <Title>
-      {L.render(L.locale)("projects")}
-      <div className="desc">{L.get(L.locale)("projects-d")}</div>
+      {L.render("projects")}
+      <div className="desc">{L.get("projects-d")}</div>
     </Title>
     <ProjectCards>
       {projects.map((item, index) => <Card title={item.title} description={cut(item.description, 50)} links={item.links} onClick={() => cutaway(`/projects/${item.title}`)} key={index} />)}
@@ -82,7 +82,7 @@ export default function Projects(): JSX.Element {
 const npmVersion = (registry: NpmRegistry) => {
   const latest = registry["dist-tags"]["latest"];
   const published = new Date(registry.time[latest]).getTime();
-  return L.get(L.locale)("monologue-npm-version-c", latest, getHumanTimeDistance(published));
+  return L.get("monologue-npm-version-c", latest, getHumanTimeDistance(published));
 }
 
 const Container = styled.article`
