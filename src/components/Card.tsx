@@ -28,16 +28,15 @@ export default class Card extends React.Component<Props, {}> {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: calc(20vw - 5%);
+  height: 10rem;
   padding: 0.5em;
-  min-height: 10rem;
   transition: 300ms;
   border-radius: 10px;
   cursor: pointer;
   background-color: #e2e2e2;
   border-bottom: 0.4em solid #a7a7a7;
   box-shadow: 0px 20px 50px -15px rgba(0,0,0,0.7);
-  animation: CardExpand 500ms forwards;
 
   &:hover {
     transform: translateY(-10px);
@@ -55,6 +54,8 @@ const Body = styled.div`
   margin-left: auto;
   margin-right: auto;
   font-family: Desc;
+  height: 5vw;
+  overflow: hidden;
 `;
 
 const Source = styled.div`

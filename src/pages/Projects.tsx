@@ -66,29 +66,7 @@ export default function Projects(): JSX.Element {
         {monologue.title}
         <div className="desc">{monologue.description}</div>
       </Title>
-      {monologue.links && <MonologueCards>
-        {Object.entries(monologue.links).map(([k, v], index) => <Card onClick={() => window.open(v, "_blank")} title={L.render(L.locale)(`link-${k}`)} description={<>
-          {k === "github" && <>
-            <span>{L.get(L.locale)("monologue-github-LC")}</span>
-            <div className="desc">{githubCommits[0]?.commit.message ?? L.get(L.locale)("empty")}</div>
-            <span>{L.render(L.locale)("monologue-github-TC", githubCommits.length.toLocaleString())}</span>
-          </>}
-          {k === "npm" && <>
-            <span>{L.get(L.locale)("monologue-npm-version")}</span>
-            <div className="desc">{npmRegistry ? npmVersion(npmRegistry) : L.render(L.locale)("loading")}</div>
-            <span>{L.get(L.locale)("monologue-npm-license")}</span>
-            <div className="desc">{npmRegistry?.license}</div>
-            <span>{L.get(L.locale)("monologue-npm-downloads")}</span>
-            <div className="desc">{L.get(L.locale)("time", npmDownloads?.downloads.reduce((prev, next) => ({ day: '', downloads: prev.downloads+next.downloads })).downloads.toLocaleString())}</div>
-          </>}
-          {k === "preview" && <>
-            <span>{L.get(L.locale)("monologue-preview-created")}</span>
-            <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
-            <span>{L.get(L.locale)("monologue-preview-status")}</span>
-            <div className="desc">{L.render(L.locale)(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)}</div>
-          </>}
-        </>} key={index} />)}
-      </MonologueCards>}
+      {monologue.links && <div className="desc">{L.render(L.locale)("loading")}</div>}
     </Container>;
 
   return <Container>
@@ -109,17 +87,19 @@ const npmVersion = (registry: NpmRegistry) => {
 }
 
 const Container = styled.article`
+  display: flex;
   position: absolute;
   width: 100%;
   height: var(--absoulte-header);
   top: var(--header-height);
   left: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.h1`
   font-size: 20pt;
-  margin-top: 0.5em;
-  margin-left: 0.5em;
   color: #f1f1f1;
 
   div.desc {
@@ -131,26 +111,15 @@ const Title = styled.h1`
 `;
 
 const ProjectCards = styled.div`
-  display: grid;
+  display: flex;
+  flex-flow: row wrap;
   gap: 35px;
+  width: 70%;
   margin-top: 1em;
   align-items: center;
   justify-content: center;
-  grid-template-columns: repeat(3, 15em);
 
   @media ${({ theme }) => theme.device.laptop} {
     grid-template-columns: repeat(1, 15em);
-  }
-`;
-
-const MonologueCards = styled.div`
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(3, 12em);
-  margin-top: 1em;
-  margin-left: 0.5em;
-
-  @media ${({ theme }) => theme.device.mobile} {
-    grid-template-columns: 12em;
   }
 `;

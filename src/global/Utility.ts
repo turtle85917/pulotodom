@@ -84,6 +84,7 @@ export const getHumanTime = (time: number) => {
  */
 export const getHumanTimeDistance = (from: number, to: number = Date.now()) => {
   const distance = Math.round((to - from) / 1000);
+  if (from === 0) return L.render(L.locale)("loading");
   return distance < 0
     ? L.get(L.locale)("time-distance-future", getHumanTime(-distance))
     : L.get(L.locale)("time-distance-past", getHumanTime(distance))
