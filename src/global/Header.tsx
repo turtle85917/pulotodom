@@ -10,20 +10,26 @@ interface S {
 }
 
 export default class Header extends React.Component<{}, S> {
+  private navigations: Navgation[];
+
   constructor(props: {}) {
     super(props);
     this.state = {
       openLocaleDropdown: false,
       openMobileMenuWindow: false,
       openMobileLocaleDropDown: false
-    }
+    };
+    this.navigations = [
+      { path: "projects", onClick: () => cutaway("/projects") },
+      { path: "timeline", onClick: () => cutaway("/timeline") },
+      { path: "locale", onClick: () => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown }) }
+    ];
+    if (/\/(.+)/.test(window.location.pathname)) this.navigations.unshift({ path: "return", onClick: () => cutaway('/') });
   }
 
   public componentDidMount(): void {
     window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        this.setState({ openLocaleDropdown: false });
-      }
+      if (event.key === "Escape") this.setState({ openLocaleDropdown: false });
     });
   }
 
@@ -33,18 +39,9 @@ export default class Header extends React.Component<{}, S> {
         <div className="desc">{L.get("nickname-d")}</div>
       </Nickname>
       <Navigation>
-        {/\/(.+)/.test(window.location.pathname) && <button onClick={() => cutaway('/')} data-for="tooltip" data-tip="return-t">
-          {L.render("return")}
-        </button>}
-        <button onClick={() => cutaway("/projects")} data-for="tooltip" data-tip="projects-t">
-          {L.render("projects")}
-        </button>
-        <button onClick={() => cutaway("/timeline")} data-for="tooltip" data-tip="timeline-t">
-          {L.render("timeline")}
-        </button>
-        <button data-for="tooltip" data-tip="locale-t" onClick={() => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown })}>
-          {L.render("locale")}
-        </button>
+        {this.navigations.map(item => <button data-for="tooltip" data-tip={`${item.path}-t`} onClick={item.onClick} key={item.path}>
+          {L.render(item.path)}
+        </button>)}
         {this.state.openLocaleDropdown && <Dropdown>
           <DropdownMenu onClick={() => L.setLocale("ko-KR")}>{L.render("locale-ko")}</DropdownMenu>
           <DropdownMenu onClick={() => L.setLocale("en-US")}>{L.render("locale-en")}</DropdownMenu>
@@ -54,26 +51,11 @@ export default class Header extends React.Component<{}, S> {
         {L.render(`menu${this.state.openMobileMenuWindow ? "-x" : ''}`)}
       </MenuButton>
       {this.state.openMobileMenuWindow && <MenuContainer>
-        {/\/(.+)/.test(window.location.pathname) && <MenuItemButton className="mobile" onClick={() => cutaway('/')}>
-          {L.render("return")}
+        {this.navigations.map(item => <MenuItemButton className="mobile" onClick={item.onClick} key={item.path}>
+          {L.render(item.path)}
           &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("return-t")}</MenuItemButtonDesc>
-        </MenuItemButton>}
-        <MenuItemButton className="mobile" onClick={() => cutaway("/projects")}>
-          {L.render("projects")}
-          &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("projects-t")}</MenuItemButtonDesc>
-        </MenuItemButton>
-        <MenuItemButton className="mobile" onClick={() => cutaway("/timeline")}>
-          {L.render("timeline")}
-          &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("timeline-t")}</MenuItemButtonDesc>
-        </MenuItemButton>
-        <MenuItemButton className="mobile">
-          {L.render("locale")}
-          &nbsp;
-          <MenuItemButtonDesc className="desc">{L.get("locale-t")}</MenuItemButtonDesc>
-        </MenuItemButton>
+          <MenuItemButtonDesc className="desc">{L.get(`${item.path}-t`)}</MenuItemButtonDesc>
+        </MenuItemButton>)}
       </MenuContainer>}
     </Container>;
   }
