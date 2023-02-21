@@ -33,8 +33,8 @@ export default function Projects(): JSX.Element {
     if (githubUrl) {
       setLoading(true);
       fetch(githubUrl).then(res => res.json()).then(data => {
-        setLoading(false);
         setGithubCommits(data);
+        setLoading(false);
       });
     }
     if (vercelUrl) {
@@ -44,16 +44,16 @@ export default function Projects(): JSX.Element {
           Authorization: `Bearer ${import.meta.env.VITE_VERCEL_API_TOKEN}`
         }
       }).then(res => res.json()).then(data => {
-        setLoading(false);
         setVercelProject(data);
+        setLoading(false);
       });
     }
     if (npmUrl) {
       setLoading(true);
       fetch(npmUrl.registry).then(res => res.json()).then(data => setNpmRegistry(data));
       fetch(npmUrl.downloads).then(res => res.json()).then(data => {
-        setLoading(false);
         setNpmDownloads(data);
+        setLoading(false);
       });
     }
   }, [monologue]);
@@ -66,7 +66,6 @@ export default function Projects(): JSX.Element {
         {monologue.title}
         <div className="desc">{monologue.description}</div>
       </Title>
-      {monologue.links && <div className="desc">{L.render(L.locale)("loading")}</div>}
     </Container>;
 
   return <Container>
