@@ -105,7 +105,7 @@ export default function Projects(): JSX.Element {
       <div className="desc">{L.get("projects-d")}</div>
     </Title>
     <ProjectCards>
-      {projects.map((item, index) => <Card title={item.title} description={cut(item.description, 50)} links={item.links} onClick={() => cutaway(`/projects/${item.title}`)} key={index} />)}
+      {projects.map((item, index) => <Card title={item.title} description={cut(item.description, 45)} links={item.links} onClick={() => cutaway(`/projects/${item.title}`)} key={index} />)}
     </ProjectCards>
   </Container>;
 }

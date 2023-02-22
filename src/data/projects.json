@@ -1,7 +1,7 @@
 [
   {
     "title": "포트폴리오",
-    "description": "현재 보고 있는 이 사이트에요.",
+    "description": "현재 보고 있는 이 사이트에요. 지금까지 만든 프로젝트들과 그 외의 것들을 담아둔 사이트에요.",
     "links": {
       "github": "https://github.com/turtle85917/pulotodom",
       "preview": "https://pulotodom.vercel.app"
@@ -9,7 +9,7 @@
   },
   {
     "title": "AI가 봐주는 MBTI",
-    "description": "처음으로 AI를 학습시켜서 만들어본 웹 사이트에요.",
+    "description": "각 MBTI에 해당하는 연예인 사진들을 크롤링하여 학습을 시켜 AI 모델을 만든 후, 이를 웹에 적용을 하여 만들었어요.",
     "links": {
       "github": "https://github.com/turtle85917/mbti-ai",
       "preview": "https://mbti-ai.vercel.app"
@@ -17,7 +17,7 @@
   },
   {
     "title": "Flood-it",
-    "description": "transition 속성을 처음으로 활용해서 만든 게임이에요.",
+    "description": "transition 속성을 처음으로 활용해서 만든 게임이에요. @keyframes 규칙을 활용할려는데 색상이 제각각이라 난항을 겪던 중 알게된 속성이에요.",
     "links": {
       "github": "https://github.com/turtle85917/flood-it",
       "preview": "https://flood-it-nine.vercel.app"
@@ -25,7 +25,7 @@
   },
   {
     "title": "Tower of Hanoi",
-    "description": "css로만 게임 요소를 그려 만든 첫 게임이에요.",
+    "description": "이 웹 게임을 만들려고 할 때 css로 필요한 요소를 그려서 만들면 편하겠단 생각으로 만든 게임이에요.",
     "links": {
       "github": "https://github.com/turtle85917/tower-of-hanoi",
       "preview": "https://tower-ofhanoi.vercel.app"
@@ -33,7 +33,7 @@
   },
   {
     "title": "실시간 채팅",
-    "description": "tailwindcss와 socket.io 공부 목적용을 제작된 사이트에요. 백엔드는 Express (node.js) 기술이, 프론트엔드는 Vite과 React 기술이 사용되었어요.",
+    "description": "tailwindcss와 socket.io 공부 목적용을 제작된 사이트에요. 백엔드에서 웹 서버를 구축하고 프론트엔드에서 통신해가며 채팅을 실시간으로 띄우는 프로젝트죠.",
     "links": {
       "github": "https://github.com/turtle85917/live-chatting",
       "preview": "https://live-chatting.vercel.app"
@@ -41,7 +41,7 @@
   },
   {
     "title": "funny-terminal",
-    "description": "처음으로 만든 NPM 모듈이에요. 터미널에서 할 수 있는 텍스트 게임을 편하게 제작을 목적으로 개발하였어요.",
+    "description": "처음으로 만든 NPM 모듈이에요. 터미널에서 텍스트로 게임을 디자인하고 만들고 있을 때, 이를 모듈화시켜 유용한 기능들을 모아두잔 생각으로 만들었어요.",
     "links": {
       "github": "https://github.com/turtle85917/readline",
       "npm": "https://www.npmjs.com/package/funny-terminal"
@@ -49,7 +49,7 @@
   },
   {
     "title": "yt-subtitles",
-    "description": "유튜브 자막을 배열 형태로 가져와요. 아직 공개되지 않은 프로젝트에서 사용하기 위한 목적으로 개발되었어요.",
+    "description": "유튜브 자막을 불러오는 NPM 모듈이에요. 기존에 쓰려던 모듈에선 내용만 불러와져서 필요한 색상 값까지 불러오잔 생각으로 만들었어요.",
     "links": {
       "github": "https://github.com/turtle85917/yt-subtitles",
       "npm": "https://www.npmjs.com/package/yt-subtitles"
@@ -57,21 +57,21 @@
   },
   {
     "title": "sokoban-go",
-    "description": "Golang 언어를 배우면서 만들어본 간단한 텍스트 게임이에요. 창고지기 게임이라고 불린다네요.",
+    "description": "Golang 언어를 배우면서 만들어본 간단한 텍스트 게임이에요. 배열과 맵 등 다양한 키워드와 문법들을 배워가면서 만들었어요.",
     "links": {
       "github": "https://github.com/turtle85917/sokoban-go"
     }
   },
   {
     "title": "sogoban",
-    "description": "sokoban-go 프로젝트를 텍스트가 아닌 새로운 창에서 플레이할 수 있게끔 제작해본 게임이에요. 동시에 ebitengine에 대해 공부하기도 했어요.",
+    "description": "ebitengine 공부 목적용으로 제작된 게임이에요. sokoban-go 프로젝트의 소스 코드를 적극적으로 활용하였어요.",
     "links": {
       "github": "https://github.com/turtle85917/sogoban"
     }
   },
   {
     "title": "pingpong",
-    "description": "Phaser3 공부용 목적으로 제작된 웹 게임이에요.",
+    "description": "Phaser3 공부용 목적으로 제작된 웹 게임이에요. 웹 게임을 만들다 canvas로만 된 게임을 만들어 볼려고 제작했어요.",
     "links": {
       "github": "https://github.com/turtle85917/pingpong",
       "preview": "https://ping-pong-pulto.vercel.app"
