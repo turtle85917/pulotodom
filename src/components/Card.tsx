@@ -36,10 +36,18 @@ const Container = styled.div`
   cursor: pointer;
   background-color: #e2e2e2;
   border-bottom: 0.4em solid #a7a7a7;
-  box-shadow: 0px 20px 50px -15px rgba(0,0,0,0.7);
+  box-shadow: 0px 20px 50px -15px rgba(0, 0, 0, 0.7);
 
   &:hover {
     transform: translateY(-10px);
+  }
+
+  @media ${({ theme }) => theme.device.laptop} {
+    width: 90%;
+
+    &:last-child {
+      margin-bottom: 1.5em;
+    }
   }
 `;
 
@@ -54,7 +62,7 @@ const Body = styled.div`
   margin-left: auto;
   margin-right: auto;
   font-family: Desc;
-  height: 5vw;
+  height: max(10%, 15vw);
   overflow: hidden;
 `;
 

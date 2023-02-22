@@ -39,7 +39,7 @@ export const cut = (text: string, limit: number) => {
 export const cutaway = (href: string) => {
   window.dispatchEvent(new Event("curtain-close"));
   window.setTimeout(() => window.location.href = href, 500);
-};
+}
 
 export const getGithubApiCommitsLink = (githubRepoLink: string) => {
   const execArray = REGEX_GITHUB_REPO_LINK.exec(githubRepoLink);
