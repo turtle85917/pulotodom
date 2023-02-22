@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import L from "@languages";
 import { cutaway } from "./Utility";
+import { deviceSizes } from "./Theme";
 
 interface State {
   openLocaleDropdown: boolean;
@@ -56,7 +57,7 @@ export default class Header extends React.Component<{}, State> {
           <MenuItemButtonDesc className="desc">{L.get(`${item.path}-t`)}</MenuItemButtonDesc>
         </MenuItemButton>)}
       </div>}
-      {this.state.openLocaleDropdown && <div className="mobileContainer">
+      {(this.state.openLocaleDropdown && window.innerWidth < deviceSizes.mobile) && <div className="mobileContainer">
         <MenuItemButton className="mobile" onClick={() => L.setLocale("ko-KR")}>{L.render("locale-ko")}</MenuItemButton>
         <MenuItemButton className="mobile" onClick={() => L.setLocale("en-US")}>{L.render("locale-en")}</MenuItemButton>
       </div>}

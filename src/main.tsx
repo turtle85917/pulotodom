@@ -7,10 +7,10 @@ import ReactTooltip from "react-tooltip";
 import Curtain from "@components/Curtain";
 import theme from "@global/Theme";
 import Header from "@global/Header";
+import PageRoutes from "@global/Routes";
 import L from "@languages";
 import ko from "@languages/ko-KR.json";
 import en from "@languages/en-US.json";
-import PageRoutes from "@global/Routes";
 
 // 언어 추가 (필수)
 L.addLocale("ko-KR", ko);
@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
   </ThemeProvider>
 );
 
-// styled 정의
+// 디자인 정의
 const Tooltip = styled.div`
   font-family: Desc;
 `;
