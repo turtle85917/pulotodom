@@ -3,28 +3,26 @@ import styled from "styled-components";
 import L from "@languages";
 import { cutaway } from "./Utility";
 
-interface S {
+interface State {
   openLocaleDropdown: boolean;
   openMobileMenuWindow: boolean;
-  openMobileLocaleDropDown: boolean;
 }
 
-export default class Header extends React.Component<{}, S> {
+export default class Header extends React.Component<{}, State> {
   private navigations: Navgation[];
 
   constructor(props: {}) {
     super(props);
     this.state = {
       openLocaleDropdown: false,
-      openMobileMenuWindow: false,
-      openMobileLocaleDropDown: false
+      openMobileMenuWindow: false
     };
     this.navigations = [
+      { path: "status", onClick: () => cutaway("/status") },
       { path: "projects", onClick: () => cutaway("/projects") },
       { path: "timeline", onClick: () => cutaway("/timeline") },
-      { path: "locale", onClick: () => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown }) }
+      { path: "locale", onClick: () => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown, openMobileMenuWindow: false }) }
     ];
-    if (/\/(.+)/.test(window.location.pathname)) this.navigations.unshift({ path: "return", onClick: () => cutaway('/') });
   }
 
   public componentDidMount(): void {
@@ -35,6 +33,7 @@ export default class Header extends React.Component<{}, S> {
 
   public render(): React.ReactNode {
     return <Container>
+      <button className="mobile" onClick={() => cutaway('/')}>{L.render("home")}</button>
       <Nickname>
         <div className="desc">{L.get("nickname-d")}</div>
       </Nickname>
@@ -47,16 +46,20 @@ export default class Header extends React.Component<{}, S> {
           <DropdownMenu onClick={() => L.setLocale("en-US")}>{L.render("locale-en")}</DropdownMenu>
         </Dropdown>}
       </Navigation>
-      <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow })}>
+      <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow, openLocaleDropdown: false })}>
         {L.render(`menu${this.state.openMobileMenuWindow ? "-x" : ''}`)}
       </MenuButton>
-      {this.state.openMobileMenuWindow && <MenuContainer>
+      {this.state.openMobileMenuWindow && <div className="mobileContainer">
         {this.navigations.map(item => <MenuItemButton className="mobile" onClick={item.onClick} key={item.path}>
           {L.render(item.path)}
           &nbsp;
           <MenuItemButtonDesc className="desc">{L.get(`${item.path}-t`)}</MenuItemButtonDesc>
         </MenuItemButton>)}
-      </MenuContainer>}
+      </div>}
+      {this.state.openLocaleDropdown && <div className="mobileContainer">
+        <MenuItemButton className="mobile" onClick={() => L.setLocale("ko-KR")}>{L.render("locale-ko")}</MenuItemButton>
+        <MenuItemButton className="mobile" onClick={() => L.setLocale("en-US")}>{L.render("locale-en")}</MenuItemButton>
+      </div>}
     </Container>;
   }
 }
@@ -67,6 +70,20 @@ const Container = styled.header`
   padding: 0.5em;
   height: var(--header-height);
   background-color: #e7e7e7;
+
+  div.mobileContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 50px;
+    width: 100%;
+    height: var(--absoulte-header);
+    top: var(--header-height);
+    left: 0;
+    z-index: 50;
+    background-color: #575757dc;
+    animation: FadeIn 500ms forwards;
+  }
 `;
 
 const Navigation = styled.nav`
@@ -88,20 +105,6 @@ const MenuButton = styled.button`
       display: block;
     }
   }
-`;
-
-const MenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  gap: 50px;
-  width: 100%;
-  height: var(--absoulte-header);
-  top: var(--header-height);
-  left: 0;
-  z-index: 50;
-  background-color: #575757dc;
-  animation: FadeIn 500ms forwards;
 `;
 
 const MenuItemButton = styled.button`

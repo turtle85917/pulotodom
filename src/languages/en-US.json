@@ -30,7 +30,7 @@
   "timeline-t": "From the beginning until now",
   "guide": "Welcome to the my portfolio site.",
   "guide-d1": "You can see the my development history,",
-  "guide-d2": "and you can also see the biography.",
+  "guide-d2": "and you can also see the timeline.",
   "link-github": "#{icon:github|prefix:fab} Github",
   "link-npm": "#{icon:npm|prefix:fab} NPM",
   "link-preview": "#{icon:eye} Preview",
