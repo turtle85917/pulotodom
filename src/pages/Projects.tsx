@@ -32,7 +32,7 @@ export default function Projects(): JSX.Element {
     const githubUrl = getGithubApiCommitsLink(monologue.links.github ?? '');
     if (githubUrl) {
       setLoading(true);
-      fetch(githubUrl).then(res => res.json()).then(data => {
+      fetch(githubUrl).then<GithubCommit[]>(res => res.json()).then(data => {
         setGithubCommits(data);
         setLoading(false);
       });
@@ -43,15 +43,15 @@ export default function Projects(): JSX.Element {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_VERCEL_API_TOKEN}`
         }
-      }).then(res => res.json()).then(data => {
+      }).then<VercelProjects>(res => res.json()).then(data => {
         setVercelProject(data);
         setLoading(false);
       });
     }
     if (npmUrl) {
       setLoading(true);
-      fetch(npmUrl.registry).then(res => res.json()).then(data => setNpmRegistry(data));
-      fetch(npmUrl.downloads).then(res => res.json()).then(data => {
+      fetch(npmUrl.registry).then<NpmRegistry>(res => res.json()).then(data => setNpmRegistry(data));
+      fetch(npmUrl.downloads).then<NpmDownloads>(res => res.json()).then(data => {
         setNpmDownloads(data);
         setLoading(false);
       });
@@ -160,11 +160,17 @@ const FieldsetItems = styled.div`
   flex-direction: column;
   gap: 15px;
   min-width: calc(70vw - 10%);
+
+  fieldset {
+    background-color: #cdcdcd;
+  }
 `;
 
 const FieldsetHead = styled.legend`
   margin: 0 0.3em;
-  padding: 0 0.2em;
+  background-color: #ffffff;
+  border-radius: 0.5em;
+  padding: 0.35em;
 `;
 
 const FieldsetBody = styled.div`
