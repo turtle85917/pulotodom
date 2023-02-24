@@ -69,6 +69,13 @@ export const getHumanTimeDistance = (from: number, to: number = Date.now()) => {
 }
 
 /**
+ * 현재 시간을 가독성 높게 변환. (예: 1900-12-31)
+ */
+export const getHumanNowTime = () => {
+  return new Intl.DateTimeFormat("fr-CA", {year: "numeric", month: "2-digit", day: "2-digit"}).format(Date.now());
+}
+
+/**
  * 부족한 길이만큼 채울 값으로 배열을 채움.
  * 
  * @param array 배열

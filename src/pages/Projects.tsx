@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 import L from "@languages";
 import Card from "@components/Card";
 import HttpStatusPage from "@components/HttpStatusPage";
-import { cut, cutaway, fillArrayWithEmptyValues, getHumanTimeDistance } from "@global/Utility";
-import { Line } from "react-chartjs-2";
+import { cut, cutaway, fillArrayWithEmptyValues, getHumanNowTime, getHumanTimeDistance } from "@global/Utility";
 
 const REGEX_GITHUB_REPO_LINK = /https:\/\/github.com\/((?:.+)\/(?:.+))/;
 const REGEX_NPM_REGISTRY_LINK = /https:\/\/www\.npmjs\.com\/package\/(.+)/;
@@ -15,16 +15,16 @@ export default function Projects(): JSX.Element {
   const { name } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [monologue, setMonologue] = useState<Project|null>(null);
+  const [monologue, setMonologue] = useState<Project>();
   const [githubCommits, setGithubCommits] = useState<GithubCommit[]>([]);
-  const [npmRegistry, setNpmRegistry] = useState<NpmRegistry|null>(null);
-  const [npmDownloads, setNpmDownloads] = useState<NpmDownloads|null>(null);
-  const [vercelProject, setVercelProject] = useState<VercelProjects|null>(null);
+  const [npmRegistry, setNpmRegistry] = useState<NpmRegistry>();
+  const [npmDownloads, setNpmDownloads] = useState<NpmDownloads>();
+  const [vercelProject, setVercelProject] = useState<VercelProjects>();
 
   useEffect(() => {
     import("@data/projects.json").then(data => {
       setLoading(false);
-      setMonologue(data.default?.find(item => item.title === name) ?? null);
+      setMonologue(data.default?.find(item => item.title === name) ?? undefined);
       setProjects(data.default);
     });
   }, []);
@@ -35,40 +35,31 @@ export default function Projects(): JSX.Element {
     const npmExec = monologue.links.npm?.match(REGEX_NPM_REGISTRY_LINK);
     const vercelExec = monologue.links.preview?.match(REGEX_VERCEL_LINK);
     const githubExec = monologue.links.github?.match(REGEX_GITHUB_REPO_LINK);
-    if (githubExec) {
-      setLoading(true);
-      fetch(`https://api.github.com/repos/${githubExec[1]}/commits?per_page=1000000`).then<GithubCommit[]>(res => res.json()).then(data => {
-        setGithubCommits(data);
-        setLoading(false);
-      });
-    }
-    if (vercelExec) {
-      setLoading(true);
-      fetch(`https://api.vercel.com/v9/projects/${vercelExec[1]}`, {
+    setLoading(true);
+    Promise.all([
+      githubExec && fetch(`https://api.github.com/repos/${githubExec[1]}/commits?per_page=1000000`).then(blob => blob.json()).catch(undefined),
+      vercelExec && fetch(`https://api.vercel.com/v9/projects/${vercelExec[1]}`, {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_VERCEL_API_TOKEN}`
         }
-      }).then<VercelProjects>(res => res.json()).then(data => {
-        setVercelProject(data);
-        setLoading(false);
-      });
-    }
-    if (npmExec) {
-      setLoading(true);
-      fetch(`https://registry.npmjs.org/${npmExec[1]}`).then<NpmRegistry>(res => res.json()).then(data => {
-        setNpmRegistry(data);
-        fetch(`https://api.npmjs.org/downloads/range/${data.time.created.slice(0, 10)}:2023-02-20/${npmExec[1]}`).then<NpmDownloads>(res => res.json()).then(data => {
-          setNpmDownloads(data);
-          setLoading(false);
-        });
-      });
-    }
+      }).then(blob => blob.json()).catch(undefined),
+      npmExec && fetch(`https://registry.npmjs.org/${npmExec[1]}`).then(blob => blob.json()).catch(undefined)
+    ]).then(reses => {
+      setGithubCommits(reses[0]);
+      setVercelProject(reses[1]);
+      setNpmRegistry(reses[2]);
+      if (npmExec) {
+        new Promise<NpmDownloads>((res, rej) => fetch(`https://api.npmjs.org/downloads/range/${reses[2].time.created.slice(0, 10)}:${getHumanNowTime()}/${npmExec[1]}`).then(blob => res(blob.json())).catch(rej))
+          .then(res => setNpmDownloads(res));
+      }
+      setLoading(false);
+    });
   }, [monologue]);
 
 
   if (loading) return <div className="desc loading">{L.render("loading")}</div>;
-  if (monologue === null && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
-  if (monologue !== null) {
+  if (!monologue && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
+  if (monologue !== undefined) {
     const filledNpmDownloads = fillArrayWithEmptyValues(npmDownloads?.downloads.slice(-10)??[], 10, { day: '', downloads: 0 });
     const vercelStatus = vercelProject?.targets?.production.readyState
       ? L.render(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)
@@ -127,6 +118,7 @@ export default function Projects(): JSX.Element {
                       intersect: false
                     }
                   }}
+                  width={700}
                   className="chart"
                 />
                 <Footer className="desc">{L.render("monologue-npm-limit-10")}</Footer>
@@ -150,8 +142,8 @@ export default function Projects(): JSX.Element {
   </Container>;
 }
 
-const npmVersion = (registry: NpmRegistry|null) => {
-  if (registry === null) return L.render("loading");
+const npmVersion = (registry?: NpmRegistry) => {
+  if (!registry) return L.render("loading");
   const latest = registry["dist-tags"]["latest"];
   const published = new Date(registry.time[latest]).getTime();
   return L.render("monologue-npm-version-c", latest, getHumanTimeDistance(published));
