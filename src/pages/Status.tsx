@@ -23,12 +23,22 @@ export default function Status(): JSX.Element {
   if (loading) return <div className="desc loading">{L.render("loading")}</div>;
 
   return <Container>
-    <Card title={L.render("status-env")} description={<>
-      <span>{L.get("status-env-total-time")}</span>
-      <div className="desc">{allTimeSinceToday?.data.text}</div>
-      <span>{L.get("status-env-projects")}</span>
-      <div className="desc">{L.get("piece", commits?.total??0)}</div>
-    </>} footer={L.get("status-env-f")} />
+    <Card
+      title={L.render("status-env")}
+      description={<>
+        <span>{L.get("status-env-total-time")}</span>
+        <div className="desc">{allTimeSinceToday?.data.text}</div>
+        <span>{L.get("status-env-projects")}</span>
+        <div className="desc">{L.get("piece", commits?.total??0)}</div>
+      </>}
+      footer={L.get("status-env-f")}
+      />
+    <Card
+      title={L.render("status-skills")}
+      description={<>
+        <div className="desc">{L.render("loading")}</div>
+      </>}
+      />
   </Container>;
 }
 
@@ -36,9 +46,12 @@ const Container = styled.article`
   display: flex;
   position: absolute;
   width: 100%;
+  gap: 5em;
   height: var(--absoulte-header);
   top: var(--header-height);
   left: 0;
-  padding-top: 1em;
+  padding-top: 2px;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;

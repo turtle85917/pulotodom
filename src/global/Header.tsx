@@ -67,9 +67,14 @@ export default class Header extends React.Component<{}, State> {
 
 const Container = styled.header`
   display: flex;
+  position: fixed;
   font-size: 14pt;
   padding: 0.5em;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: var(--header-height);
+  z-index: 50;
   background-color: #e7e7e7;
 
   div.mobileContainer {
