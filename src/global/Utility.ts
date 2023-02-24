@@ -1,9 +1,5 @@
 import L from "@languages";
 
-const REGEX_GITHUB_REPO_LINK = /https:\/\/github.com\/((?:.+)\/(?:.+))/;
-const REGEX_NPM_REGISTRY_LINK = /https:\/\/www\.npmjs\.com\/package\/(.+)/;
-const REGEX_VERCEL_LINK = /https:\/\/(.+?)\.vercel\.app/;
-
 /**
  * 부울 값을 숫자로 반환.
  * 
@@ -41,27 +37,6 @@ export const cutaway = (href: string) => {
   window.setTimeout(() => window.location.href = href, 500);
 }
 
-export const getGithubApiCommitsLink = (githubRepoLink: string) => {
-  const execArray = REGEX_GITHUB_REPO_LINK.exec(githubRepoLink);
-  if (execArray === null) return null;
-  return `https://api.github.com/repos/${execArray[1]}/commits?per_page=1000000`;
-}
-
-export const getNPMApiLink = (npmRegistryLink: string) => {
-  const execArray = REGEX_NPM_REGISTRY_LINK.exec(npmRegistryLink);
-  if (execArray === null) return null;
-  return {
-    registry: `https://registry.npmjs.org/${execArray[1]}`,
-    downloads: `https://api.npmjs.org/downloads/range/1900-01-01:2023-02-20/${execArray[1]}`
-  };
-}
-
-export const getVercelApiLink = (vercelLink: string) => {
-  const execArray = REGEX_VERCEL_LINK.exec(vercelLink);
-  if (execArray === null) return null;
-  return `https://api.vercel.com/v9/projects/${execArray[1]}`;
-}
-
 /**
  * 시간을 가독성 높게 변환. (예: `1시간 23분`)
  * 
@@ -81,12 +56,28 @@ export const getHumanTime = (time: number) => {
 
 /**
  * 주어진 두 시간의 차를 가독성 높게 변환. (예: `1시간 23분 전`)
+ * 
+ * @param from 시작 시간
+ * @param to 도착 시간
  */
 export const getHumanTimeDistance = (from: number, to: number = Date.now()) => {
   const distance = Math.round((to - from) / 1000);
-  if (from === 0) return L.render("loading");
   return distance < 0
     ? L.get("time-distance-future", getHumanTime(-distance))
     : L.get("time-distance-past", getHumanTime(distance))
   ;
+}
+
+/**
+ * 부족한 길이만큼 채울 값으로 배열을 채움.
+ * 
+ * @param array 배열
+ * @param limit 제한된 길이
+ * @param value 채울 값
+ */
+export const fillArrayWithEmptyValues = <T = string>(array: Array<T>, limit: number, value: T) => {
+  return [
+    ...Array.from<T>({ length: limit-array.length }).fill(value),
+    ...array
+  ];
 }

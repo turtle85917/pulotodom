@@ -23,7 +23,8 @@
       "@components/*": ["src/components/*"],
       "@languages": ["src/languages"],
       "@languages/*": ["src/languages/*"],
-      "@data/*": ["src/data/*"]
+      "@data/*": ["src/data/*"],
+      "@lib/*": ["src/lib/*"]
     }
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "**/*.d.ts"],

@@ -4,7 +4,12 @@ import styled from "styled-components";
 import L from "@languages";
 import Card from "@components/Card";
 import HttpStatusPage from "@components/HttpStatusPage";
-import { cut, cutaway, getGithubApiCommitsLink, getHumanTimeDistance, getNPMApiLink, getVercelApiLink } from "@global/Utility";
+import { cut, cutaway, fillArrayWithEmptyValues, getHumanTimeDistance } from "@global/Utility";
+import { Line } from "react-chartjs-2";
+
+const REGEX_GITHUB_REPO_LINK = /https:\/\/github.com\/((?:.+)\/(?:.+))/;
+const REGEX_NPM_REGISTRY_LINK = /https:\/\/www\.npmjs\.com\/package\/(.+)/;
+const REGEX_VERCEL_LINK = /https:\/\/(.+?)\.vercel\.app/;
 
 export default function Projects(): JSX.Element {
   const { name } = useParams();
@@ -15,7 +20,7 @@ export default function Projects(): JSX.Element {
   const [npmRegistry, setNpmRegistry] = useState<NpmRegistry|null>(null);
   const [npmDownloads, setNpmDownloads] = useState<NpmDownloads|null>(null);
   const [vercelProject, setVercelProject] = useState<VercelProjects|null>(null);
-  
+
   useEffect(() => {
     import("@data/projects.json").then(data => {
       setLoading(false);
@@ -27,19 +32,19 @@ export default function Projects(): JSX.Element {
   useEffect(() => {
     if (!monologue) return;
     if (!monologue.links.github && !monologue.links.npm && !monologue.links.preview) return;
-    const npmUrl = getNPMApiLink(monologue.links.npm ?? '');
-    const vercelUrl = getVercelApiLink(monologue.links.preview ?? '');
-    const githubUrl = getGithubApiCommitsLink(monologue.links.github ?? '');
-    if (githubUrl) {
+    const npmExec = monologue.links.npm?.match(REGEX_NPM_REGISTRY_LINK);
+    const vercelExec = monologue.links.preview?.match(REGEX_VERCEL_LINK);
+    const githubExec = monologue.links.github?.match(REGEX_GITHUB_REPO_LINK);
+    if (githubExec) {
       setLoading(true);
-      fetch(githubUrl).then<GithubCommit[]>(res => res.json()).then(data => {
+      fetch(`https://api.github.com/repos/${githubExec[1]}/commits?per_page=1000000`).then<GithubCommit[]>(res => res.json()).then(data => {
         setGithubCommits(data);
         setLoading(false);
       });
     }
-    if (vercelUrl) {
+    if (vercelExec) {
       setLoading(true);
-      fetch(vercelUrl, {
+      fetch(`https://api.vercel.com/v9/projects/${vercelExec[1]}`, {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_VERCEL_API_TOKEN}`
         }
@@ -48,19 +53,32 @@ export default function Projects(): JSX.Element {
         setLoading(false);
       });
     }
-    if (npmUrl) {
+    if (npmExec) {
       setLoading(true);
-      fetch(npmUrl.registry).then<NpmRegistry>(res => res.json()).then(data => setNpmRegistry(data));
-      fetch(npmUrl.downloads).then<NpmDownloads>(res => res.json()).then(data => {
-        setNpmDownloads(data);
-        setLoading(false);
+      fetch(`https://registry.npmjs.org/${npmExec[1]}`).then<NpmRegistry>(res => res.json()).then(data => {
+        setNpmRegistry(data);
+        fetch(`https://api.npmjs.org/downloads/range/${data.time.created.slice(0, 10)}:2023-02-20/${npmExec[1]}`).then<NpmDownloads>(res => res.json()).then(data => {
+          setNpmDownloads(data);
+          setLoading(false);
+        });
       });
     }
   }, [monologue]);
 
+
   if (loading) return <div className="desc loading">{L.render("loading")}</div>;
   if (monologue === null && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
-  if (monologue !== null)
+  if (monologue !== null) {
+    const filledNpmDownloads = fillArrayWithEmptyValues(npmDownloads?.downloads.slice(-10)??[], 10, { day: '', downloads: 0 });
+    const vercelStatus = vercelProject?.targets?.production.readyState
+      ? L.render(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)
+      : L.render("loading")
+    ;
+    const vercelCreatedAtHumanTimeDistance = vercelProject?.link?.createdAt
+      ? getHumanTimeDistance(vercelProject?.link?.createdAt)
+      : L.render("loading")
+    ;
+
     return <Container>
       <Title>
         {monologue.title}
@@ -68,29 +86,50 @@ export default function Projects(): JSX.Element {
       </Title>
       <FieldsetItems>
         {Object.entries(monologue.links).map(([k, v]) => <fieldset key={k}>
-          <FieldsetHead>{L.render(`link-${k}`)}</FieldsetHead>
+          <FieldsetHead onClick={() => window.open(v, "_blank")}>{L.render(`link-${k}`)}</FieldsetHead>
           <FieldsetBody>
             {k === "github"
               ? <>
                 <span>{L.get("monologue-github-LC")}</span>
-                <div className="desc">{githubCommits[0]?.commit.message}</div>
-                <span>{L.get("monologue-github-TC", githubCommits.length)}</span>
+                <div className="desc">{githubCommits[0]?.commit.message || L.get("empty")}</div>
+                <span>{L.get("monologue-github-TC", githubCommits.length || L.get("empty"))}</span>
               </>
               : k === "preview"
               ? <>
                 <span>{L.get("monologue-preview-status")}</span>
-                <div className="desc">{L.render(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)}</div>
+                <div className="desc">{vercelStatus}</div>
                 <span>{L.get("monologue-preview-created")}</span>
-                <div className="desc">{getHumanTimeDistance(vercelProject?.link?.createdAt??0)}</div>
+                <div className="desc">{vercelCreatedAtHumanTimeDistance}</div>
               </>
               : k === "npm"
               ? <>
                 <span>{L.get("monologue-npm-version")}</span>
                 <div className="desc">{npmVersion(npmRegistry)}</div>
                 <span>{L.get("monologue-npm-license")}</span>
-                <div className="desc">{npmRegistry?.license}</div>
+                <div className="desc">{npmRegistry?.license ?? L.get("empty")}</div>
                 <span>{L.get("monologue-npm-downloads")}</span>
                 <div className="desc">{L.get("time", npmDownloads?.downloads.reduce((prev, current) => ({ day: '', downloads: prev.downloads+current.downloads })).downloads)}</div>
+                <Line
+                  data={{
+                    labels: filledNpmDownloads.map(d => d.day || L.get("empty")),
+                    datasets: [
+                      {
+                        label: "Downloads",
+                        data: filledNpmDownloads.map(d => d.downloads),
+                        borderColor: "#37946e"
+                      }
+                    ]
+                  }}
+                  options={{
+                    responsive: true,
+                    interaction: {
+                      mode: "index" as const,
+                      intersect: false
+                    }
+                  }}
+                  className="chart"
+                />
+                <Footer className="desc">{L.render("monologue-npm-limit-10")}</Footer>
               </>
               : <div className="desc">{L.render("loading")}</div>
             }
@@ -98,6 +137,7 @@ export default function Projects(): JSX.Element {
         </fieldset>)}
       </FieldsetItems>
     </Container>;
+  }
 
   return <Container>
     <Title>
@@ -171,9 +211,26 @@ const FieldsetHead = styled.legend`
   background-color: #ffffff;
   border-radius: 0.5em;
   padding: 0.35em;
+  transition: 300ms;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #979797;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const FieldsetBody = styled.div`
   padding: 0.5em;
   font-family: Desc;
+`;
+
+const Footer = styled.div`
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+  font-size: 15pt;
+  border-top: 2px dotted black;
 `;

@@ -54,6 +54,7 @@
   "monologue-npm-version-c": "v#{0}#{br}#{icon:arrow-right} #{1}",
   "monologue-npm-license": "라이센스",
   "monologue-npm-downloads": "총 조회수",
+  "monologue-npm-limit-10": "#{icon:triangle-exclamation} 최신부터 10일 이전까지의 정보에요.",
   "monologue-preview-status": "상태",
   "monologue-preview-created": "최초 배포일",
   "vercel-status-REA": "#{icon:check} 정상",

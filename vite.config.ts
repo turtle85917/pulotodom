@@ -12,6 +12,7 @@ export default defineConfig({
       { find: "@languages", replacement: "/src/languages" },
       { find: "@components", replacement: "/src/components" },
       { find: "@data", replacement: "/src/data" },
+      { find: "@lib", replacement: "/src/lib" },
     ]
   }
 });

@@ -16,6 +16,9 @@ import en from "@languages/en-US.json";
 L.addLocale("ko-KR", ko);
 L.addLocale("en-US", en);
 
+// chart.js 관련 설정
+import "@lib/registerChartjs";
+
 // pf.* 설정
 localStorage.setItem("pf.locale", L.locale);
 
