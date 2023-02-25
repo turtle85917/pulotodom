@@ -45,7 +45,7 @@ const CurtainContainer = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 2;
 `;
 
 const CurtainPart = styled.div<{ reverse: boolean; }>`

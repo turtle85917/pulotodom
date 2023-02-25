@@ -7,6 +7,7 @@ import ReactTooltip from "react-tooltip";
 import Curtain from "@components/Curtain";
 import theme from "@global/Theme";
 import Header from "@global/Header";
+import Aside from "@components/Aside";
 import PageRoutes from "@global/Routes";
 import L from "@languages";
 import ko from "@languages/ko-KR.json";
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
       <Header />
       <PageRoutes />
       <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(tip)}</Tooltip>} />
+      <Aside />
       <Curtain />
     </BrowserRouter>
   </ThemeProvider>

@@ -22,7 +22,7 @@ export default class Card extends React.Component<Props, {}> {
       {this.props.links && <Footer>
         {Object.entries(this.props.links).map(([k, v], index) => <SourceItem href={v} target="_blank" key={index}>{L.render(`link-${k}`)}</SourceItem>)}
       </Footer>}
-      {this.props.footer && <Footer>{this.props.footer}</Footer>}
+      {this.props.footer && <Footer className="desc">{this.props.footer}</Footer>}
     </Container>;
   }
 }

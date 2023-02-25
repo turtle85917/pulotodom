@@ -25,7 +25,7 @@ export default function Status(): JSX.Element {
   return <Container>
     <Card
       title={L.render("status-env")}
-      footer={<div className="desc">{L.render("status-env-f")}</div>}
+      footer={L.render("status-env-f")}
       >
       <span>{L.get("status-env-total-time")}</span>
       <div className="desc">{allTimeSinceToday?.data.text}</div>
@@ -34,7 +34,7 @@ export default function Status(): JSX.Element {
     </Card>
     <Card
       title={L.render("status-skills")}
-      footer={<div className="desc">{L.render("more")}</div>}
+      footer={<More className="desc">{L.render("more")}</More>}
       >
       {L.get("status-skills-d")}
     </Card>
@@ -53,4 +53,11 @@ const Container = styled.article`
   align-items: center;
   justify-content: center;
   margin-top: 1rem;
+`;
+
+const More = styled.a`
+  transition: 300ms;
+  &:hover {
+    color: blue;
+  }
 `;

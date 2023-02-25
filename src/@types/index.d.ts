@@ -12,3 +12,9 @@ interface Navgation {
   path: string;
   onClick: () => any;
 }
+
+interface Component {
+  type: "Alert" | "Confirm";
+  title: string | JSX.Element;
+  content: React.ReactNode;
+}

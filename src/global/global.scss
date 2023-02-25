@@ -13,7 +13,7 @@
 }
 
 :root {
-  --fg-color: #37946e;
+  --color-green: #37946e;
   --bg-color: #206d4d;
   --header-height: 60px;
   --absoulte-header: calc(100vh - var(--header-height));
@@ -51,10 +51,10 @@ a {
   text-decoration: none;
 }
 
-div.desc {
+div.desc, a.desc, label.desc {
   color: #2e2e2e;
   font-size: 10pt;
-  font-family: Desc;
+  font-family: Desc!important;
 
   &.loading {
     color: #000000;
