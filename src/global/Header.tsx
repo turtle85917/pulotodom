@@ -35,7 +35,6 @@ export default class Header extends React.Component<{}, State> {
   public render(): React.ReactNode {
     return <Container>
       <button className="mobile" onClick={() => cutaway('/')}>{L.render("home")}</button>
-      <button className="mobile" onClick={() => window.dispatchEvent(new CustomEvent<Component>("component-open", { detail: { type: "Alert", title: "test", content: <div className="desc">안녕하세요!</div> } }))}>TEST</button>
       <Nickname>
         <div className="desc">{L.get("nickname-d")}</div>
       </Nickname>

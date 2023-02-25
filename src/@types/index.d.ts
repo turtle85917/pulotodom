@@ -13,8 +13,10 @@ interface Navgation {
   onClick: () => any;
 }
 
+type ComponentType = "Alert" | "Confirm";
+
 interface Component {
-  type: "Alert" | "Confirm";
+  type: ComponentType;
   title: string | JSX.Element;
   content: React.ReactNode;
 }

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "@components/Card";
 import HttpStatusPage from "@components/HttpStatusPage";
 import Request from "@global/Request";
+import { openAsideComponent } from "@global/Utility";
 import L from "@languages";
 
 export default function Status(): JSX.Element {
@@ -34,7 +35,13 @@ export default function Status(): JSX.Element {
     </Card>
     <Card
       title={L.render("status-skills")}
-      footer={<More className="desc">{L.render("more")}</More>}
+      footer={<More
+        className="desc"
+        onClick={() => openAsideComponent("Alert", L.render("status-skills"), <div className="desc">{L.render("loading")}</div>)}
+        >
+          {L.render("more")}
+        </More>
+      }
       >
       {L.get("status-skills-d")}
     </Card>

@@ -18,9 +18,8 @@ export default class Curtain extends React.Component<{}, State> {
 
   public componentDidMount(): void {
     this.animatedTimeout();
-    window.addEventListener("curtain-close", () => {
-      this.setState({ animated: false, reverse: true });
-    });
+    window.addEventListener("curtain-open", () => this.setState({ animated: true }));
+    window.addEventListener("curtain-close", () => this.setState({ animated: false, reverse: true }));
   }
 
   public animatedTimeout(): void {
