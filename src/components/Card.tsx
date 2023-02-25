@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import L from "@languages";
-import Icon from "./Icon";
 
 interface Props {
   title: React.ReactNode;
-  description: React.ReactNode;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
   links?: Record<string, string>;
-  footer?: string;
   onClick?: () => any;
 }
 
@@ -19,14 +18,11 @@ export default class Card extends React.Component<Props, {}> {
   public render(): React.ReactNode {
     return <Container onClick={this.props.onClick}>
       <Head>{this.props.title}</Head>
-      <Body>{this.props.description}</Body>
+      <Body>{this.props.children}</Body>
       {this.props.links && <Footer>
         {Object.entries(this.props.links).map(([k, v], index) => <SourceItem href={v} target="_blank" key={index}>{L.render(`link-${k}`)}</SourceItem>)}
       </Footer>}
-      {this.props.footer && <Footer className="desc">
-        <Icon name={["fa", "fa-triangle-exclamation"]} />&nbsp;
-        {this.props.footer}
-      </Footer>}
+      {this.props.footer && <Footer>{this.props.footer}</Footer>}
     </Container>;
   }
 }
@@ -76,7 +72,7 @@ const Footer = styled.div`
   display: flex;
   gap: 5px;
   margin-top: 0.5em;
-  padding-top: 0.5em;
+  padding: 0.5em 0.2em 0 0.2em;
   border-top: 2px dotted #000000;
   justify-content: center;
 `;

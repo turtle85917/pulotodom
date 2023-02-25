@@ -25,33 +25,32 @@ export default function Status(): JSX.Element {
   return <Container>
     <Card
       title={L.render("status-env")}
-      description={<>
-        <span>{L.get("status-env-total-time")}</span>
-        <div className="desc">{allTimeSinceToday?.data.text}</div>
-        <span>{L.get("status-env-projects")}</span>
-        <div className="desc">{L.get("piece", commits?.total??0)}</div>
-      </>}
-      footer={L.get("status-env-f")}
-      />
+      footer={<div className="desc">{L.render("status-env-f")}</div>}
+      >
+      <span>{L.get("status-env-total-time")}</span>
+      <div className="desc">{allTimeSinceToday?.data.text}</div>
+      <span>{L.get("status-env-projects")}</span>
+      <div className="desc">{L.get("piece", commits?.total??0)}</div>
+    </Card>
     <Card
       title={L.render("status-skills")}
-      description={<>
-        <div className="desc">{L.render("loading")}</div>
-      </>}
-      />
+      footer={<div className="desc">{L.render("more")}</div>}
+      >
+      {L.get("status-skills-d")}
+    </Card>
   </Container>;
 }
 
 const Container = styled.article`
   display: flex;
   position: absolute;
+  gap: 2.5rem;
   width: 100%;
-  gap: 5em;
-  height: var(--absoulte-header);
   top: var(--header-height);
   left: 0;
   padding-top: 2px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 1rem;
 `;
