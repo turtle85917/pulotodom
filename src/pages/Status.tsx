@@ -65,6 +65,6 @@ const Container = styled.article`
 const More = styled.a`
   transition: 300ms;
   &:hover {
-    color: blue;
+    color: var(--blue-100);
   }
 `;

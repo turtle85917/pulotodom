@@ -13,10 +13,23 @@
 }
 
 :root {
-  --color-green: #37946e;
-  --bg-color: #206d4d;
   --header-height: 60px;
   --absoulte-header: calc(100vh - var(--header-height));
+  --white: #ffffff;
+  --black: #000000;
+  --green-100: #37946e;
+  --green-200: #206d4d;
+  --green-300: #2a5845;
+  --blue-100: #2089ec;
+  --grey-100: #e7e7e7;
+  --grey-200: #f1f1f1;
+  --grey-300: #cdcdcd;
+  --grey-400: #979797;
+  --grey-500: #535353;
+  --grey-600: #2e2e2e;
+  --alpha-grey-100: #ffffff52;
+  --alpha-black-100: rgba(0, 0, 0, 0.5);
+  --alpha-black-200: rgba(0, 0, 0, 0.7);
 }
 
 * {
@@ -36,7 +49,7 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background-color: var(--bg-color);
+  background-color: var(--green-200);
   overflow-x: hidden;
 }
 
@@ -47,17 +60,17 @@ section#main {
 }
 
 a {
-  color: black;
+  color: var(--black);
   text-decoration: none;
 }
 
 div.desc, a.desc, label.desc {
-  color: #2e2e2e;
+  color: var(--grey-600);
   font-size: 10pt;
   font-family: Desc!important;
 
   &.loading {
-    color: #000000;
+    color: var(--black);
     font-size: 15pt;
     margin-top: 5px;
   }
@@ -65,7 +78,7 @@ div.desc, a.desc, label.desc {
 
 button {
   border: none;
-  background-color: #dadada;
+  background-color: var(--grey-200);
   min-width: 2em;
   padding: 0.5em;
   cursor: pointer;
@@ -76,11 +89,11 @@ button {
   transition: 200ms background-color;
 
   &:not(:disabled) {
-    border-bottom: 5px solid #6b6b6b;
+    border-bottom: 5px solid var(--grey-400);
 
     &:not(&.mobile):hover {
       border-bottom: none;
-      background-color: #a7a7a7;
+      background-color: var(--grey-400);
       transform: translateY(4px);
       height: 35px;
     }
@@ -92,8 +105,8 @@ button {
 
   &:disabled {
     cursor: no-drop;
-    color: #949494;
-    background-color: #6b6b6b;
+    color: var(--grey-300);
+    background-color: var(--grey-500);
   }
 }
 

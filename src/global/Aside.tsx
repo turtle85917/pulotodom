@@ -62,10 +62,8 @@ const Container = styled.aside`
 const DialogContainer = styled.div`
   position: absolute;
   min-width: 15vw;
-  border-color: #a8a8a8;
-  background-color: #dfdfdf;
-  color: white;
-  background-color: var(--color-green);
+  color: var(--white);
+  background-color: var(--green-100);
   z-index: 5;
 `;
 
@@ -77,7 +75,7 @@ const DialogHead = styled.div`
   padding: 0.3em 0.2em;
   touch-action: none;
   cursor: default;
-  background-color: #2a5845;
+  background-color: var(--green-300);
 `;
 
 const DialogHeadContent = styled.label`

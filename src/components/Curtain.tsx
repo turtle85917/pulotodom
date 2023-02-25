@@ -50,7 +50,7 @@ const CurtainContainer = styled.div`
 const CurtainPart = styled.div<{ reverse: boolean; }>`
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--alpha-black-100);
   transition: 500ms;
   animation: CurtainAnimation 500ms forwards;
 

@@ -95,7 +95,7 @@ const Vertical = styled.span`
   height: 0px;
   margin-left: auto;
   margin-right: auto;
-  background-color: #ffffff52;
+  background-color: var(--alpha-grey-100);
   animation: VerticalDrop 1s forwards 2600ms;
   transform: translateY(15px);
 

@@ -7,7 +7,7 @@ import ReactTooltip from "react-tooltip";
 import Curtain from "@components/Curtain";
 import theme from "@global/Theme";
 import Header from "@global/Header";
-import Aside from "@components/Aside";
+import Aside from "@global/Aside";
 import PageRoutes from "@global/Routes";
 import L from "@languages";
 import ko from "@languages/ko-KR.json";

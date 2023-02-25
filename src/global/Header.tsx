@@ -75,7 +75,7 @@ const Container = styled.header`
   width: 100%;
   height: var(--header-height);
   z-index: 1;
-  background-color: #e7e7e7;
+  background-color: var(--grey-300);
 
   div.mobileContainer {
     display: flex;
@@ -87,7 +87,7 @@ const Container = styled.header`
     top: var(--header-height);
     left: 0;
     z-index: 50;
-    background-color: #575757dc;
+    background-color: var(--alpha-grey-100);
     animation: FadeIn 500ms forwards;
   }
 `;
@@ -145,14 +145,14 @@ const Dropdown = styled.div`
   position: absolute;
   top: 55px;
   right: 0;
-  color: white;
+  color: var(--white);
   font-size: 12pt;
   min-width: 40px;
   text-align: center;
   justify-content: center;
   min-width: 100px;
   z-index: 100;
-  background-color: #8a8a8a;
+  background-color: var(--grey-300);
 `;
 
 const DropdownMenu = styled.a`
@@ -166,6 +166,6 @@ const DropdownMenu = styled.a`
   transition: 200ms;
 
   &:hover {
-    background-color: #535353;
+    background-color: var(--grey-400);
   }
 `;

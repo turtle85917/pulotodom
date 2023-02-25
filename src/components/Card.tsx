@@ -36,9 +36,9 @@ const Container = styled.div`
   transition: 300ms;
   border-radius: 10px;
   cursor: pointer;
-  background-color: #e2e2e2;
-  border-bottom: 0.4em solid #a7a7a7;
-  box-shadow: 0px 20px 50px -15px rgba(0, 0, 0, 0.7);
+  background-color: var(--grey-100);
+  border-bottom: 0.4em solid var(--grey-200);
+  box-shadow: 0px 20px 50px -15px var(--alpha-black-200);
 
   &:hover {
     transform: translateY(-10px);
@@ -56,7 +56,7 @@ const Container = styled.div`
 const Head = styled.div`
   font-size: 15pt;
   text-align: center;
-  border-bottom: 2px dotted #000000;
+  border-bottom: 2px dotted var(--black);
 `;
 
 const Body = styled.div`
@@ -73,13 +73,13 @@ const Footer = styled.div`
   gap: 5px;
   margin-top: 0.5em;
   padding: 0.5em 0.2em 0 0.2em;
-  border-top: 2px dotted #000000;
+  border-top: 2px dotted var(--black);
   justify-content: center;
 `;
 
 const SourceItem = styled.a`
   padding-right: 0.5em;
-  border-right: 0.2px solid #000000;
+  border-right: 0.2px solid var(--black);
   font-size: 10.5pt;
 
   &:last-child {

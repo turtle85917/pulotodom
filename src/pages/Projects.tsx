@@ -162,11 +162,11 @@ const Container = styled.article`
 
 const Title = styled.h1`
   font-size: 20pt;
-  color: #f1f1f1;
+  color: var(--grey-200);
   margin: 0.5em;
 
   div.desc {
-    color: #bebebe;
+    color: var(--grey-300);
     font-size: 12pt;
     font-family: Desc;
     font-weight: 100;
@@ -224,5 +224,5 @@ const Footer = styled.div`
   margin-top: 0.5em;
   padding-top: 0.5em;
   font-size: 15pt;
-  border-top: 2px dotted black;
+  border-top: 2px dotted var(--black);
 `;
