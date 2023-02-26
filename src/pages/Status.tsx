@@ -1,21 +1,26 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import Request from "@global/Request";
+import { checkColorBright, openAsideComponent } from "@global/Utility";
 import Card from "@components/Card";
 import HttpStatusPage from "@components/HttpStatusPage";
-import Request from "@global/Request";
-import { openAsideComponent } from "@global/Utility";
 import L from "@languages";
 
-export default function Status(): JSX.Element {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [allTimeSinceToday, setAllTimeSinceToday] = useState<WakatimeAllTimeSinceToday>();
-  const [commits, setCommits] = useState<WakatimeCommits>();
+const SKILL_CATEGORIES = ["frontend", "backend", "framework", "database", "engine"];
 
-  useEffect(() => {
+export default function Status(): JSX.Element {
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [skills, setSkills] = React.useState<Skills|null>(null);
+  const [allTimeSinceToday, setAllTimeSinceToday] = React.useState<WakatimeAllTimeSinceToday|null>(null);
+  const [commits, setCommits] = React.useState<WakatimeCommits|null>(null);
+
+  React.useEffect(() => {
     const R = new Request("https://wakatime.com/api/v1", [["api_key", import.meta.env.VITE_WAKATIME_API_KEY]]);
     R.get<WakatimeAllTimeSinceToday>("/users/current/all_time_since_today", (result) => setAllTimeSinceToday(result));
-    R.get<WakatimeCommits>("/users/current/projects", (result) => {
-      setCommits(result);
+    R.get<WakatimeCommits>("/users/current/projects", (result) => setCommits(result));
+
+    import("@data/skills.json").then(data => {
+      setSkills(data.default as Skills);
       setLoading(false);
     });
   }, []);
@@ -37,7 +42,12 @@ export default function Status(): JSX.Element {
       title={L.render("status-skills")}
       footer={<More
         className="desc"
-        onClick={() => openAsideComponent("Alert", L.render("status-skills"), <div className="desc">{L.render("loading")}</div>)}
+        onClick={() => openAsideComponent("Alert", L.render("status-skills"), SKILL_CATEGORIES.map(item => <fieldset key={item}>
+          <FieldsetHead>{L.render(`skill-tag-${item}`)}</FieldsetHead>
+          <div className="children">
+            {skills?.filter(skill => skill.tags.includes(item)).map(skill => <div className="desc" style={{ background: skill.gradient, backgroundColor: skill.color, color: checkColorBright(skill.color) ? "var(--grey-100)" : "var(--black)", padding: "0.2em", borderRadius: "2px" }} key={skill.name}>{skill.name}</div>)}
+          </div>
+        </fieldset>))}
         >
           {L.render("more")}
         </More>
@@ -66,5 +76,25 @@ const More = styled.a`
   transition: 300ms;
   &:hover {
     color: var(--blue-100);
+  }
+`;
+
+const FieldsetHead = styled.legend`
+  margin: 0 0.3em;
+  padding: 0.35em;
+  font-size: 12pt;
+  color: var(--grey-600);
+  font-family: Desc;
+  border-radius: 0.5em;
+
+  &+div.children {
+    display: flex;
+    gap: 4px;
+    flex-flow: row wrap;
+    padding: 0.5em;
+  }
+
+  &:focus {
+    outline: none;
   }
 `;

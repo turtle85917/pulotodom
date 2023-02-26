@@ -105,3 +105,20 @@ export const openAsideComponent = (type: ComponentType, title: string|JSX.Elemen
     }
   }));
 }
+
+// https://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+/**
+ * 색상 값이 어두운지 판단함.
+ * 
+ * @param hexcode 헥스코드.
+ */
+export const checkColorBright = (hexcode: string) => {
+  const color = hexcode.slice(1);
+  const hexadecimal = parseInt(color, 16);
+  const rgb = {
+    r: hexadecimal >> 16 & 0xff,
+    g: hexadecimal >> 8 & 0xff,
+    b: hexadecimal >> 0 & 0xff
+  };
+  return (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) < 40;
+}

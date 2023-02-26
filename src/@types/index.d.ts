@@ -8,6 +8,15 @@ interface Project {
   }
 }
 
+type Skills = Skill[];
+
+interface Skill {
+  name: string;
+  color: string;
+  gradient?: string;
+  tags: string[];
+}
+
 interface Navgation {
   path: string;
   onClick: () => any;

@@ -87,7 +87,7 @@ const Container = styled.header`
     top: var(--header-height);
     left: 0;
     z-index: 50;
-    background-color: var(--alpha-grey-100);
+    background-color: var(--alpha-black-100);
     animation: FadeIn 500ms forwards;
   }
 `;

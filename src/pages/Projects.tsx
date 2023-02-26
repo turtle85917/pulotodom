@@ -62,7 +62,7 @@ export default function Projects(): JSX.Element {
   if (monologue !== undefined) {
     const filledNpmDownloads = fillArrayWithEmptyValues(npmDownloads?.downloads.slice(-10)??[], 10, { day: '', downloads: 0 });
     const vercelStatus = vercelProject?.targets?.production.readyState
-      ? L.render(`vercel-status-${vercelProject?.targets?.production.readyState.slice(0, 3)}`)
+      ? L.render(`vercel-status-${vercelProject?.targets?.production.readyState}`)
       : L.render("loading")
     ;
     const vercelCreatedAtHumanTimeDistance = vercelProject?.link?.createdAt

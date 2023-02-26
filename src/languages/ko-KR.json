@@ -60,9 +60,14 @@
   "monologue-npm-limit-10": "#{icon:triangle-exclamation} 최신부터 10일 이전까지의 정보에요.",
   "monologue-preview-status": "상태",
   "monologue-preview-created": "최초 배포일",
-  "vercel-status-REA": "#{icon:check} 정상",
-  "vercel-status-ERR": "#{icon:bug} 고장",
-  "vercel-status-BUI": "#{icon:trowel} 빌드 중",
-  "vercel-status-QUE": "#{icon:spinner|cycle:pulse} 처리 중",
-  "vercel-status-CAN": "#{icon:ban} 취소됨"
+  "vercel-status-Ready": "#{icon:check} 정상",
+  "vercel-status-Error": "#{icon:bug} 고장",
+  "vercel-status-Building": "#{icon:trowel} 빌드 중",
+  "vercel-status-Queue": "#{icon:spinner|cycle:pulse} 처리 중",
+  "vercel-status-Cancle": "#{icon:ban} 취소됨",
+  "skill-tag-frontend": "#{icon:eye} 프론트엔드",
+  "skill-tag-backend": "#{icon:eye-slash} 백엔드",
+  "skill-tag-framework": "#{icon:toolbox} 프레임워크",
+  "skill-tag-database": "#{icon:server} 데이터베이스",
+  "skill-tag-engine": "#{icon:car-side} 게임 엔진"
 }

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "HTML5",
+    "color": "#E34F26",
+    "tags": ["frontend"]
+  },
+  {
+    "name": "CSS",
+    "color": "#1572B6",
+    "tags": ["frontend"]
+  },
+  {
+    "name": "SCSS",
+    "color": "#CF649A",
+    "tags": ["frontend"]
+  },
+  {
+    "name": "TailwindCSS",
+    "color": "#38BDF8",
+    "tags": ["frontend"]
+  },
+  {
+    "name": "JavaScript",
+    "color": "#DEC81C",
+    "tags": ["frontend", "backend"]
+  },
+  {
+    "name": "TypeScript",
+    "color": "#007ACC",
+    "tags": ["frontend", "backend"]
+  },
+  {
+    "name": "React",
+    "color": "#61DAFB",
+    "tags": ["frontend", "framework"]
+  },
+  {
+    "name": "Next.js",
+    "color": "#000000",
+    "tags": ["frontend", "framework"]
+  },
+  {
+    "name": "Vite",
+    "color": "#A247CA",
+    "gradient": "linear-gradient(135deg, rgba(76,195,255,1) 0%, rgba(124,135,255,1) 30%, rgba(255,204,36,1) 50%, rgba(189,52,254,1) 70%, rgba(144,109,254,1) 100%)",
+    "tags": ["frontend", "framework"]
+  },
+  {
+    "name": "Express",
+    "color": "#000000",
+    "tags": ["backend", "framework"]
+  },
+  {
+    "name": "MongoDB",
+    "color": "#4ea94b",
+    "tags": ["database"]
+  },
+  {
+    "name": "SQLite",
+    "color": "#8B8B8B",
+    "tags": ["database"]
+  },
+  {
+    "name": "Godot",
+    "color": "#478CBF",
+    "tags": ["engine"]
+  }
+]

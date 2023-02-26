@@ -15,38 +15,50 @@ export default class Aside extends React.Component<{}, State> {
     modalComponent: null
   };
 
-  componentDidMount(): void {
-    window.addEventListener("component-open", data => {
-      const { detail } = data as CustomEvent<Component>;
-      window.dispatchEvent(new Event("curtain-close"));
-      if (detail.type === "Alert") {
-        this.setState({
-          openComponent: true,
-          modalComponent: <DialogContainer className="modal" style={{ top: "0px", left: "0px" }}>
-            <DialogHead>
-              <DialogHeadContent>{detail.title}</DialogHeadContent>
-              <button className="mobile" onClick={() => {
-                this.setState({ modalComponent: null, openComponent: false });
-                window.dispatchEvent(new Event("curtain-open"));
-              }}>{L.render("menu-x")}</button>
-            </DialogHead>
-            <DialogBody>{detail.content}</DialogBody>
-          </DialogContainer>
-        }, () => {
-          const currentModal = document.querySelector<HTMLDivElement>("div.modal");
-          currentModal?.style.setProperty("top", `${(window.innerHeight - (currentModal?.clientHeight??0)) / 2}px`);
-          currentModal?.style.setProperty("left", `${(window.innerWidth - (currentModal?.clientWidth??0)) / 2}px`);
-        });
-      }
-    });
+  public componentDidMount(): void {
+    window.addEventListener("component-open", this.componentOpenListener.bind(this));
+    window.addEventListener("keydown", this.keydownListener.bind(this));
   }
 
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     if (!this.state.openComponent) return null;
 
     return <Container>
       {this.state.modalComponent}
     </Container>;
+  }
+
+  private closeComponent() {
+    this.setState({ modalComponent: null, openComponent: false });
+    window.dispatchEvent(new Event("curtain-open"));
+  }
+
+  private componentOpenListener(event: Event) {
+    const { detail } = event as CustomEvent<Component>;
+    window.dispatchEvent(new Event("curtain-close"));
+    if (detail.type === "Alert") {
+      this.setState({
+        openComponent: true,
+        modalComponent: <DialogContainer className="modal" style={{ top: "0px", left: "0px" }}>
+          <DialogHead>
+            <DialogHeadContent>{detail.title}</DialogHeadContent>
+            <button className="mobile" onClick={() => this.closeComponent()}>{L.render("menu-x")}</button>
+          </DialogHead>
+          <DialogBody>{detail.content}</DialogBody>
+        </DialogContainer>
+      }, () => {
+        const currentModal = document.querySelector<HTMLDivElement>("div.modal");
+        currentModal?.style.setProperty("top", `${(window.innerHeight - (currentModal?.clientHeight??0)) / 2}px`);
+        currentModal?.style.setProperty("left", `${(window.innerWidth - (currentModal?.clientWidth??0)) / 2}px`);
+      });
+    }
+  }
+
+  private keydownListener(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.setState({ modalComponent: null, openComponent: false });
+      window.dispatchEvent(new Event("curtain-open"));
+    }
   }
 }
 
