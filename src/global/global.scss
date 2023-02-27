@@ -72,7 +72,7 @@ div.desc, a.desc, label.desc {
   &.loading {
     color: var(--black);
     font-size: 15pt;
-    margin-top: 5px;
+    margin-top: calc(var(--header-height) + 5px);
   }
 }
 

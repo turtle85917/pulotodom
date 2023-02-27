@@ -20,7 +20,16 @@ export default class Header extends React.Component<{}, State> {
     };
     this.navigations = [
       { path: "status", onClick: () => cutaway("/status") },
-      { path: "contact", onClick: () => openAsideComponent("Alert", L.render("contact"), <div className="desc">{L.render("loading")}</div>) },
+      {
+        path: "contact",
+        onClick: () =>
+          openAsideComponent("Alert", L.render("contact"),
+          <>
+            <a href={L.get("link-email-a")}>{L.render("link-email")}</a>
+            <div className="desc">{L.get("link-email-v")}</div>
+          </>
+        )
+      },
       { path: "projects", onClick: () => cutaway("/projects") },
       { path: "timeline", onClick: () => cutaway("/timeline") },
       { path: "locale", onClick: () => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown, openMobileMenuWindow: false }) }
@@ -53,8 +62,7 @@ export default class Header extends React.Component<{}, State> {
       </MenuButton>
       {this.state.openMobileMenuWindow && <div className="mobileContainer">
         {this.navigations.map(item => <MenuItemButton className="mobile" onClick={item.onClick} key={item.path}>
-          {L.render(item.path)}
-          &nbsp;
+          <span>{L.render(item.path)}</span>
           <MenuItemButtonDesc className="desc">{L.get(`${item.path}-t`)}</MenuItemButtonDesc>
         </MenuItemButton>)}
       </div>}
@@ -116,14 +124,19 @@ const MenuButton = styled.button`
 
 const MenuItemButton = styled.button`
   display: flex;
+  flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 50px;
 
+  span {
+    font-size: 11pt;
+  }
+
   div.desc {
-    font-size: 6pt;
+    font-size: 9pt;
   }
 
   &:first-child {

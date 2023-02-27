@@ -1,4 +1,4 @@
-// 이 컴포넌트에서는 모달 혹은 경고창 등 바로 위에 드러나야 하는 것들을 종합적으로 관리하는 컴포넌트.
+// 모달 혹은 경고창 등 바로 위에 드러나야 하는 것들을 종합적으로 관리하는 컴포넌트.
 
 import React from "react";
 import styled from "styled-components";
@@ -74,6 +74,7 @@ const Container = styled.aside`
 const DialogContainer = styled.div`
   position: absolute;
   min-width: 15vw;
+  max-width: 90%;
   color: var(--white);
   background-color: var(--green-100);
   z-index: 5;
@@ -98,6 +99,7 @@ const DialogHeadContent = styled.label`
 `;
 
 const DialogBody = styled.div`
-  font-size: 15pt;
   padding: 0.2em;
+  font-size: 14pt;
+  color: var(--grey-300);
 `;
