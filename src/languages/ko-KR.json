@@ -34,6 +34,8 @@
   "status-env-projects": "작업물 갯수",
   "status-skills": "#{icon:head-side-virus} 사용하는 언어들",
   "status-skills-d": "사용하거나 배우고 있는 언어들을 보려면 아래 더보기를 눌러주세요.",
+  "contact": "#{icon:phone} 연락처",
+  "contact-t": "저랑 연락하는 다양한 방법",
   "projects": "#{icon:box-archive} 프로젝트들",
   "projects-d": "지금까지 만든 프로젝트 카드들을 나열해봤어요. 카드를 눌러 상세한 정보를 볼 수 있어요.",
   "projects-t": "지금까지 만든 것들",

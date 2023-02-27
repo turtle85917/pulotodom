@@ -8,17 +8,22 @@ interface State {
 }
 
 export default class Curtain extends React.Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      animated: false,
-      reverse: false
-    };
-  }
+  public state: State = {
+    animated: false,
+    reverse: false
+  };
 
   public componentDidMount(): void {
     this.animatedTimeout();
-    window.addEventListener("curtain-open", () => this.setState({ animated: true }));
+    window.addEventListener("curtain-open", () => {
+      this.setState({ animated: false, reverse: false });
+      // NOTE 애니메이션 다시 재생
+      const curtainElement = document.querySelector<HTMLDivElement>("div.curtain");
+      curtainElement?.querySelectorAll<HTMLDivElement>("div").forEach(item => item.animate([
+        { opacity: 0 }
+      ], { duration: 320, fill: "forwards" }));
+      this.animatedTimeout();
+    });
     window.addEventListener("curtain-close", () => this.setState({ animated: false, reverse: true }));
   }
 
@@ -30,7 +35,8 @@ export default class Curtain extends React.Component<{}, State> {
 
   public render(): React.ReactNode {
     if (this.state.animated) return null;
-    return <CurtainContainer>
+
+    return <CurtainContainer className="curtain">
       <CurtainPart className="left" reverse={this.state.reverse} />
       <CurtainPart className="right" reverse={this.state.reverse} />
     </CurtainContainer>;

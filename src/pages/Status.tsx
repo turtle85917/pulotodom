@@ -25,7 +25,6 @@ export default function Status(): JSX.Element {
     });
   }, []);
 
-  if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />;
   if (loading) return <div className="desc loading">{L.render("loading")}</div>;
 
   return <Container>

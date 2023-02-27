@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import L from "@languages";
-import { cutaway } from "./Utility";
 import { deviceSizes } from "./Theme";
+import { cutaway, openAsideComponent } from "./Utility";
 
 interface State {
   openLocaleDropdown: boolean;
@@ -20,6 +20,7 @@ export default class Header extends React.Component<{}, State> {
     };
     this.navigations = [
       { path: "status", onClick: () => cutaway("/status") },
+      { path: "contact", onClick: () => openAsideComponent("Alert", L.render("contact"), <div className="desc">{L.render("loading")}</div>) },
       { path: "projects", onClick: () => cutaway("/projects") },
       { path: "timeline", onClick: () => cutaway("/timeline") },
       { path: "locale", onClick: () => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown, openMobileMenuWindow: false }) }
