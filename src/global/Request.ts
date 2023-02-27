@@ -21,7 +21,17 @@ export default class Request {
     let url = this.baseUrl + endpoint;
     options ??= { params: this.params };
     if (Array.isArray(options.params)) url += `?${options.params.map(data => data[0]+"="+data[1]).join('&')}`;
-    return (await fetch(url, { method, body: options.body })).json() as T;
+    return (await fetch(url, {
+      method,
+      body: options.body,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": '*',
+        "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+      },
+      credentials: "include"
+    })).json() as T;
   }
 
   public async get<T extends unknown>(endpoint: string, callback: (result: T) => void, options?: RequestOptions) {
