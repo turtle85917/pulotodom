@@ -31,6 +31,10 @@ export default class L {
     return localStorage.getItem("pf.locale") ?? L.defaultLocale;
   }
 
+  public static get languages() {
+    return Object.keys(L.dictionary);
+  }
+
   public static get(key: string, ...args: any[]) {
     return L.dictionary[L.locale]?.[key]?.replace(REGEXP_PATTERN, (_, v) => args[v]??'') ?? `(L#${key})`;
   }

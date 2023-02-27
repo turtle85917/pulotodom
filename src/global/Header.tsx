@@ -53,8 +53,8 @@ export default class Header extends React.Component<{}, State> {
           {L.render(item.path)}
         </button>)}
         {this.state.openLocaleDropdown && <Dropdown>
-          <DropdownMenu onClick={() => L.setLocale("ko-KR")}>{L.render("locale-ko")}</DropdownMenu>
-          <DropdownMenu onClick={() => L.setLocale("en-US")}>{L.render("locale-en")}</DropdownMenu>
+          {L.languages.map(item => <DropdownMenu onClick={() => L.setLocale(item)}>{L.render(`locale-${item}`)}</DropdownMenu>)}
+          <DropdownMenu className="disabled">{L.render(`locale-${L.locale}`)}</DropdownMenu>
         </Dropdown>}
       </Navigation>
       <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow, openLocaleDropdown: false })}>
@@ -179,7 +179,13 @@ const DropdownMenu = styled.a`
   align-items: center;
   transition: 200ms;
 
-  &:hover {
+  &.disabled {
+    margin-top: 2px;
+    border-top: 2px dotted var(--black);
+    cursor: initial;
+  }
+
+  &:not(&.disabled):hover {
     background-color: var(--grey-400);
   }
 `;
