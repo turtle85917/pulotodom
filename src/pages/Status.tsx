@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Request from "@global/Request";
 import { checkColorBright, openAsideComponent } from "@global/Utility";
 import Card from "@components/Card";
-import HttpStatusPage from "@components/HttpStatusPage";
 import L from "@languages";
 
 const SKILL_CATEGORIES = ["frontend", "backend", "framework", "database", "engine"];
@@ -11,14 +9,8 @@ const SKILL_CATEGORIES = ["frontend", "backend", "framework", "database", "engin
 export default function Status(): JSX.Element {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [skills, setSkills] = React.useState<Skills|null>(null);
-  const [allTimeSinceToday, setAllTimeSinceToday] = React.useState<WakatimeAllTimeSinceToday|null>(null);
-  const [commits, setCommits] = React.useState<WakatimeCommits|null>(null);
 
   React.useEffect(() => {
-    const R = new Request("https://wakatime.com/api/v1", [["api_key", import.meta.env.VITE_WAKATIME_API_KEY]]);
-    R.get<WakatimeAllTimeSinceToday>("/users/current/all_time_since_today", (result) => setAllTimeSinceToday(result));
-    R.get<WakatimeCommits>("/users/current/projects", (result) => setCommits(result));
-
     import("@data/skills.json").then(data => {
       setSkills(data.default as Skills);
       setLoading(false);
@@ -28,15 +20,6 @@ export default function Status(): JSX.Element {
   if (loading) return <div className="desc loading">{L.render("loading")}</div>;
 
   return <Container>
-    <Card
-      title={L.render("status-env")}
-      footer={L.render("status-env-f")}
-      >
-      <span>{L.get("status-env-total-time")}</span>
-      <div className="desc">{allTimeSinceToday?.data.text}</div>
-      <span>{L.get("status-env-projects")}</span>
-      <div className="desc">{L.get("piece", commits?.total??0)}</div>
-    </Card>
     <Card
       title={L.render("status-skills")}
       footer={<More
