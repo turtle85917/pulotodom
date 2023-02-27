@@ -34,6 +34,7 @@ export default class Header extends React.Component<{}, State> {
       { path: "timeline", onClick: () => cutaway("/timeline") },
       { path: "locale", onClick: () => this.setState({ openLocaleDropdown: !this.state.openLocaleDropdown, openMobileMenuWindow: false }) }
     ];
+    if (/\/(.+)/.test(window.location.pathname)) this.navigations.unshift({ path: "return", onClick: () => cutaway('/') });
   }
 
   public componentDidMount(): void {
@@ -53,8 +54,8 @@ export default class Header extends React.Component<{}, State> {
           {L.render(item.path)}
         </button>)}
         {this.state.openLocaleDropdown && <Dropdown>
-          {L.languages.map(item => <DropdownMenu onClick={() => L.setLocale(item)}>{L.render(`locale-${item}`)}</DropdownMenu>)}
-          <DropdownMenu className="disabled">{L.render(`locale-${L.locale}`)}</DropdownMenu>
+          {L.languages.map(item => <DropdownMenu onClick={() => L.setLocale(item)} key={item}>{L.get(`locale-${item}`)}</DropdownMenu>)}
+          <DropdownMenu className="disabled">{L.get(`locale-${L.locale}`)}</DropdownMenu>
         </Dropdown>}
       </Navigation>
       <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow, openLocaleDropdown: false })}>
@@ -67,8 +68,8 @@ export default class Header extends React.Component<{}, State> {
         </MenuItemButton>)}
       </div>}
       {(this.state.openLocaleDropdown && window.innerWidth < deviceSizes.mobile) && <div className="mobileContainer">
-        <MenuItemButton className="mobile" onClick={() => L.setLocale("ko-KR")}>{L.render("locale-ko")}</MenuItemButton>
-        <MenuItemButton className="mobile" onClick={() => L.setLocale("en-US")}>{L.render("locale-en")}</MenuItemButton>
+        {L.languages.map(item => <MenuItemButton className="mobile" onClick={() => L.setLocale(item)} key={item}>{L.get(`locale-${item}`)}</MenuItemButton>)}
+        <MenuItemButton className="mobile" disabled>{L.get("selected", L.get(`locale-${L.locale}`))}</MenuItemButton>
       </div>}
     </Container>;
   }
