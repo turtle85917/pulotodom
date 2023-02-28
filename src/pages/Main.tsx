@@ -5,7 +5,7 @@ export default function Main(): JSX.Element {
   return <Container>
     <div>
       <NicknameGroup data-for="tooltip" data-tip="nickname-t">
-        {L.get("nickname").split('').map((chunk, index) => <Nickname index={index} key={index}>{chunk}</Nickname>)}
+        {Array.from(L.get("nickname")).map((chunk, index) => <Nickname index={index} key={index}>{chunk}</Nickname>)}
       </NicknameGroup>
       <Introduction className="desc">{L.get("nickname-s")}</Introduction>
       <Vertical />
