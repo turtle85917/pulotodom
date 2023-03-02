@@ -68,13 +68,22 @@ export default function Timeline(): JSX.Element {
       handleScrollTo(event.deltaY >= 0 ? "down" : "up");
     }, { passive: false });
 
-    window.addEventListener("touchmove", (event) => {
-    }, { passive: false });
+    window.addEventListener("touchstart", (event) => {
+      const positions: [number, number][] = [];
+      if (event.cancelable) event.preventDefault();
 
-    window.addEventListener("touchend", (event) => {
-      event.preventDefault();
-      handleScrollTo(event.changedTouches[0].screenY >= window.innerHeight / 2 ? "down" : "up");
-    });
+      window.addEventListener("touchmove", (event) => {
+        if (event.cancelable) event.preventDefault();
+        positions.push([event.touches[0].screenX, event.touches[0].screenY]);
+      }, { passive: false });
+
+      window.addEventListener("touchend", () => {
+        if (positions.length === 0) return;
+        const position = positions
+          .reduce((pv, v) => [pv[0] - Math.round(v[0] / positions.length), pv[1] - Math.round(v[1] / positions.length)]);
+        handleScrollTo(position[1] >= 0 ? "down" : "up");
+      });
+    }, { passive: false });
   }, [timelineDatas]);
 
   if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />
