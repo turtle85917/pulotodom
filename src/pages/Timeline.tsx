@@ -48,11 +48,10 @@ export default function Timeline(): JSX.Element {
   React.useEffect(() => {
     if (timelineDatas.length === 0) return;
     // NOTE 스크롤 관련 이벤트
-    window.addEventListener("wheel", (event) => {
-      event.preventDefault();
-      const scrollDirection = event.deltaY >= 0 ? "down" : "up";
-      const children = Array.from(document.querySelectorAll<HTMLDivElement>(`div.${TimelineItem.styledComponentId}.active`));
-      const nearest = children.findIndex(child => child.offsetTop - MARGIN === window.scrollY) + (scrollDirection === "up" ? -1 : 1);
+    const children = Array.from(document.querySelectorAll<HTMLDivElement>("div.active"));
+
+    const handleScrollTo = (direction: "up" | "down") => {
+      const nearest = children.findIndex(child => child.offsetTop - MARGIN === window.scrollY) + (direction === "up" ? -1 : 1);
       if (nearest < -1) return;
       if (nearest === -1) window.scrollTo({ top: 0, behavior: "smooth" });
       else {
@@ -62,15 +61,27 @@ export default function Timeline(): JSX.Element {
           behavior: "smooth"
         });
       }
+    };
+
+    window.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      handleScrollTo(event.deltaY >= 0 ? "down" : "up");
     }, { passive: false });
-    window.addEventListener("scroll", (event) => {});
+
+    window.addEventListener("touchmove", (event) => {
+    }, { passive: false });
+
+    window.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      handleScrollTo(event.changedTouches[0].screenY >= window.innerHeight / 2 ? "down" : "up");
+    });
   }, [timelineDatas]);
 
   if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />
   if (loading) return <div className="desc loading">{L.render("loading")}</div>
 
   return <Container>
-    <Header className="desc">{L.render("timeline-d")}</Header>
+    <Header>{L.render("timeline-d")}</Header>
     <TimelineItems>
       <MDXProvider
         components={{
@@ -98,9 +109,11 @@ const Container = styled.article`
   left: 0;
 `;
 
-const Header = styled.div`
+const Header = styled.h4`
   margin: 1em;
+  color: var(--grey-600);
   line-height: 2em;
+  font-family: Desc;
 `;
 
 const TimelineItems = styled.div`

@@ -8,6 +8,12 @@ interface Project {
   }
 }
 
+interface TouchInfo {
+  startX: number;
+  startY: number;
+  startTime: number;
+}
+
 type Skills = Skill[];
 
 interface Skill {
