@@ -7,6 +7,7 @@ import HttpStatusPage from "@components/HttpStatusPage";
 type TimelineData = [string, typeof import("*.mdx")["default"]|undefined];
 
 const REGEX_DATE = /(\d{4})(\d{2})(\d{2})/;
+const REGEX_CONTROL_KEY = /(?:Page|Arrow)(Up|Down)/;
 const YEARS = [2020, 2021, 2022, 2023];
 const MARGIN = 10;
 
@@ -76,6 +77,11 @@ export default function Timeline(): JSX.Element {
       if (event.button === 1) event.preventDefault();
     }
 
+    const onKeyDown = (event: KeyboardEvent) => {
+      const exec = REGEX_CONTROL_KEY.exec(event.key);
+      if (exec) handleScrollTo(exec[1].toLowerCase() as "up" | "down");
+    }
+
     const onTouchStart = (event: TouchEvent) => {
       const positions: [number, number][] = [];
       if (event.cancelable) event.preventDefault();
@@ -97,17 +103,19 @@ export default function Timeline(): JSX.Element {
     }
 
     window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("keydown", onKeyDown);
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("touchstart", onTouchStart, { passive: false });
 
     return (() => {
       window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
     });
   }, [timelineDatas]);
 
-  if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />
+  if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />;
   if (loading) return <div className="desc loading">{L.render("loading")}</div>
 
   return <Container>
@@ -115,7 +123,8 @@ export default function Timeline(): JSX.Element {
     <TimelineItems>
       <MDXProvider
         components={{
-          p: (props) => <p {...props} style={{ fontFamily: "Desc" }} />
+          p: (props) => <p {...props} style={{ fontFamily: "Desc" }} />,
+          hr: (props: any) => <MDXHr {...props} />
         }}
       >
         {timelineDatas.map(([date, TItem]) => <TimelineItem className={TItem && "active"} key={date}>
@@ -172,4 +181,10 @@ const TimelineItemLabel = styled.span`
     font-size: 14pt;
     font-family: Desc;
   }
+`;
+
+const MDXHr = styled.hr`
+  width: calc(140px + 20vw);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 `;
