@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router";
 import { Line } from "react-chartjs-2";
 import styled from "styled-components";
@@ -13,15 +13,15 @@ const REGEX_VERCEL_LINK = /https:\/\/(.+?)\.vercel\.app/;
 
 export default function Projects(): JSX.Element {
   const { name } = useParams();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [monologue, setMonologue] = useState<Project>();
-  const [githubCommits, setGithubCommits] = useState<GithubCommit[]>([]);
-  const [npmRegistry, setNpmRegistry] = useState<NpmRegistry>();
-  const [npmDownloads, setNpmDownloads] = useState<NpmDownloads>();
-  const [vercelProject, setVercelProject] = useState<VercelProjects>();
+  const [loading, setLoading] = React.useState(true);
+  const [projects, setProjects] = React.useState<Project[]>([]);
+  const [monologue, setMonologue] = React.useState<Project>();
+  const [githubCommits, setGithubCommits] = React.useState<GithubCommit[]>([]);
+  const [npmRegistry, setNpmRegistry] = React.useState<NpmRegistry>();
+  const [npmDownloads, setNpmDownloads] = React.useState<NpmDownloads>();
+  const [vercelProject, setVercelProject] = React.useState<VercelProjects>();
 
-  useEffect(() => {
+  React.useEffect(() => {
     import("@data/projects.json").then(data => {
       setLoading(false);
       setMonologue(data.default?.find(item => item.title === name) ?? undefined);
@@ -29,7 +29,7 @@ export default function Projects(): JSX.Element {
     });
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!monologue) return;
     if (!monologue.links.github && !monologue.links.npm && !monologue.links.preview) return;
     const npmExec = monologue.links.npm?.match(REGEX_NPM_REGISTRY_LINK);

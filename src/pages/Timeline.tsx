@@ -36,6 +36,9 @@ export default function Timeline(): JSX.Element {
           .catch<TimelineData>(() => [item, undefined])
       )
     ).then(datas => {
+      // NOTE 스크롤바 숨기기
+      document.body.style.setProperty("overflow-y", "hidden");
+
       // NOTE 값이 존재하는 위치로 이동
       let sliceIndex = datas.findIndex(item => item[1] !== undefined);
       if (sliceIndex === -1) sliceIndex = 0;
@@ -49,41 +52,59 @@ export default function Timeline(): JSX.Element {
     if (timelineDatas.length === 0) return;
     // NOTE 스크롤 관련 이벤트
     const children = Array.from(document.querySelectorAll<HTMLDivElement>("div.active"));
-
     const handleScrollTo = (direction: "up" | "down") => {
       const nearest = children.findIndex(child => child.offsetTop - MARGIN === window.scrollY) + (direction === "up" ? -1 : 1);
       if (nearest < -1) return;
       if (nearest === -1) window.scrollTo({ top: 0, behavior: "smooth" });
       else {
         if (children.length <= nearest) return;
+        const offset = children[nearest].offsetTop - MARGIN;
         window.scrollTo({
-          top: children[nearest].offsetTop - MARGIN,
+          top: offset,
           behavior: "smooth"
         });
       }
     };
 
-    window.addEventListener("wheel", (event) => {
+    const onWheel = (event: WheelEvent) => {
       event.preventDefault();
       handleScrollTo(event.deltaY >= 0 ? "down" : "up");
-    }, { passive: false });
+    }
 
-    window.addEventListener("touchstart", (event) => {
+    const onMouseDown = (event: MouseEvent) => {
+      // NOTE 휠 클릭 막기
+      if (event.button === 1) event.preventDefault();
+    }
+
+    const onTouchStart = (event: TouchEvent) => {
       const positions: [number, number][] = [];
       if (event.cancelable) event.preventDefault();
 
-      window.addEventListener("touchmove", (event) => {
+      const onTouchMove = (event: TouchEvent) => {
         if (event.cancelable) event.preventDefault();
         positions.push([event.touches[0].screenX, event.touches[0].screenY]);
-      }, { passive: false });
+      }
 
-      window.addEventListener("touchend", () => {
+      const onTouchEnd = (_event: TouchEvent) => {
         if (positions.length === 0) return;
         const position = positions
           .reduce((pv, v) => [pv[0] - Math.round(v[0] / positions.length), pv[1] - Math.round(v[1] / positions.length)]);
         handleScrollTo(position[1] >= 0 ? "down" : "up");
-      });
-    }, { passive: false });
+      }
+
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
+      window.addEventListener("touchend", onTouchEnd);
+    }
+
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: false });
+
+    return (() => {
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+    });
   }, [timelineDatas]);
 
   if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />

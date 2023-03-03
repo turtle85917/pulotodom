@@ -7,7 +7,7 @@ import L from "@languages";
 const SKILL_CATEGORIES = ["frontend", "backend", "framework", "database", "engine"];
 
 export default function Status(): JSX.Element {
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState(true);
   const [skills, setSkills] = React.useState<Skills|null>(null);
 
   React.useEffect(() => {

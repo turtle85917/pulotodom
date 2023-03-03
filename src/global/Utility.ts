@@ -109,7 +109,7 @@ export const openAsideComponent = (type: ComponentType, title: string|JSX.Elemen
 /**
  * 색상 값이 어두운지 판단함.
  * 
- * @param hexcode 헥스코드.
+ * @param hexcode 헥스코드
  * @see https://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
  */
 export const checkColorBright = (hexcode: string) => {
