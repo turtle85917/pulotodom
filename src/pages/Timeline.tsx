@@ -5,6 +5,7 @@ import L from "@languages";
 import HttpStatusPage from "@components/HttpStatusPage";
 
 type TimelineData = [string, typeof import("*.mdx")["default"]|undefined];
+type Direction = "up" | "down";
 
 const REGEX_DATE = /(\d{4})(\d{2})(\d{2})/;
 const REGEX_CONTROL_KEY = /(?:Page|Arrow)(Up|Down)/;
@@ -37,9 +38,6 @@ export default function Timeline(): JSX.Element {
           .catch<TimelineData>(() => [item, undefined])
       )
     ).then(datas => {
-      // NOTE 스크롤바 숨기기
-      document.body.style.setProperty("overflow-y", "hidden");
-
       // NOTE 값이 존재하는 위치로 이동
       let sliceIndex = datas.findIndex(item => item[1] !== undefined);
       if (sliceIndex === -1) sliceIndex = 0;
@@ -52,14 +50,20 @@ export default function Timeline(): JSX.Element {
   React.useEffect(() => {
     if (timelineDatas.length === 0) return;
     // NOTE 스크롤 관련 이벤트
+    let scroll = { play: false, y: 0 };
     const children = Array.from(document.querySelectorAll<HTMLDivElement>("div.active"));
-    const handleScrollTo = (direction: "up" | "down") => {
+    const handleScrollTo = (direction: Direction) => {
+      if (scroll.play) return;
       const nearest = children.findIndex(child => child.offsetTop - MARGIN === window.scrollY) + (direction === "up" ? -1 : 1);
+      scroll.play = nearest >= -1 && children.length > nearest;
       if (nearest < -1) return;
-      if (nearest === -1) window.scrollTo({ top: 0, behavior: "smooth" });
-      else {
+      if (nearest === -1) {
+        scroll.y = 0;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
         if (children.length <= nearest) return;
         const offset = children[nearest].offsetTop - MARGIN;
+        scroll.y = offset;
         window.scrollTo({
           top: offset,
           behavior: "smooth"
@@ -79,7 +83,22 @@ export default function Timeline(): JSX.Element {
 
     const onKeyDown = (event: KeyboardEvent) => {
       const exec = REGEX_CONTROL_KEY.exec(event.key);
-      if (exec) handleScrollTo(exec[1].toLowerCase() as "up" | "down");
+      if (exec || /[ws]/.test(event.key)) {
+        event.preventDefault();
+        handleScrollTo(
+          event.key === 'w'
+          ? "up"
+          : (exec?.[1].toLowerCase() as Direction ?? "down")
+        );
+      }
+    }
+
+    const onScroll = (event: Event) => {
+      if (scroll.play) {
+        scroll.play = window.scrollY !== scroll.y;
+        return;
+      }
+      event.preventDefault();
     }
 
     const onTouchStart = (event: TouchEvent) => {
@@ -104,15 +123,9 @@ export default function Timeline(): JSX.Element {
 
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("scroll", onScroll, { passive: false });
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("touchstart", onTouchStart, { passive: false });
-
-    return (() => {
-      window.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-    });
   }, [timelineDatas]);
 
   if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />;

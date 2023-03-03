@@ -9,6 +9,10 @@ interface State {
   openMobileMenuWindow: boolean;
 }
 
+const LIMPIDITY = "1";
+const HIGH_TRANSPARENCY = "0.8";
+const LOW_TRANSPARENCY = "0.15";
+
 export default class Header extends React.Component<{}, State> {
   private navigations: Navgation[];
 
@@ -40,6 +44,16 @@ export default class Header extends React.Component<{}, State> {
   public componentDidMount(): void {
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") this.setState({ openLocaleDropdown: false });
+    });
+    const header = document.querySelector<HTMLElement>(`header.${Container.styledComponentId}`);
+    window.addEventListener("scroll", () => {
+      header?.style.setProperty("opacity", window.scrollY > 0 ? LOW_TRANSPARENCY : LIMPIDITY);
+    });
+    header?.addEventListener("mouseover", () => {
+      if (header.style.opacity === LOW_TRANSPARENCY) header.style.setProperty("opacity", HIGH_TRANSPARENCY);
+    });
+    header?.addEventListener("mouseleave", () => {
+      if (header.style.opacity === HIGH_TRANSPARENCY) header.style.setProperty("opacity", LOW_TRANSPARENCY);
     });
   }
 
@@ -84,6 +98,7 @@ const Container = styled.header`
   left: 0;
   width: 100%;
   height: var(--header-height);
+  transition: 300ms;
   z-index: 1;
   background-color: var(--grey-300);
 
