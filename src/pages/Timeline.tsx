@@ -103,7 +103,11 @@ export default function Timeline(): JSX.Element {
 
     const onTouchStart = (event: TouchEvent) => {
       const positions: [number, number][] = [];
-      if (event.cancelable) event.preventDefault();
+      if (
+        event.cancelable &&
+        !((event.target instanceof HTMLButtonElement) && /메뉴|닫기|Menu|Close/.test(event.target.innerText)) &&
+        !document.querySelector("header div.mobileContainer")
+      ) event.preventDefault();
 
       const onTouchMove = (event: TouchEvent) => {
         if (event.cancelable) event.preventDefault();
@@ -112,9 +116,10 @@ export default function Timeline(): JSX.Element {
 
       const onTouchEnd = (_event: TouchEvent) => {
         if (positions.length === 0) return;
-        const position = positions
-          .reduce((pv, v) => [pv[0] - Math.round(v[0] / positions.length), pv[1] - Math.round(v[1] / positions.length)]);
-        handleScrollTo(position[1] >= 0 ? "down" : "up");
+        const start = positions[0];
+        const end = positions[positions.length-1];
+        const distance = [start[0]-end[0], start[1]-end[1]];
+        if (positions.length > 10) handleScrollTo(distance[1] >= 0 ? "down" : "up");
       }
 
       window.addEventListener("touchmove", onTouchMove, { passive: false });

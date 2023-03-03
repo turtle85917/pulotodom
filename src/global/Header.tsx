@@ -50,10 +50,10 @@ export default class Header extends React.Component<{}, State> {
       header?.style.setProperty("opacity", window.scrollY > 0 ? LOW_TRANSPARENCY : LIMPIDITY);
     });
     header?.addEventListener("mouseover", () => {
-      if (header.style.opacity === LOW_TRANSPARENCY) header.style.setProperty("opacity", HIGH_TRANSPARENCY);
+      if (header.style.opacity === LOW_TRANSPARENCY && window.innerWidth >= deviceSizes.mobile) header.style.setProperty("opacity", HIGH_TRANSPARENCY);
     });
     header?.addEventListener("mouseleave", () => {
-      if (header.style.opacity === HIGH_TRANSPARENCY) header.style.setProperty("opacity", LOW_TRANSPARENCY);
+      if (header.style.opacity === HIGH_TRANSPARENCY && window.innerWidth >= deviceSizes.mobile) header.style.setProperty("opacity", LOW_TRANSPARENCY);
     });
   }
 
@@ -72,13 +72,16 @@ export default class Header extends React.Component<{}, State> {
           <DropdownMenu className="disabled">{L.get(`locale-${L.locale}`)}</DropdownMenu>
         </Dropdown>}
       </Navigation>
-      <MenuButton className="mobile" onClick={() => this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow, openLocaleDropdown: false })}>
+      <MenuButton className="mobile" onClick={() => {
+        if (!this.state.openLocaleDropdown) this.headerToggle("const");
+        this.setState({ openMobileMenuWindow: !this.state.openMobileMenuWindow, openLocaleDropdown: false });
+      }}>
         {L.render(`menu${this.state.openMobileMenuWindow ? "-x" : ''}`)}
       </MenuButton>
       {this.state.openMobileMenuWindow && <div className="mobileContainer">
         {this.navigations.map(item => <MenuItemButton className="mobile" onClick={item.onClick} key={item.path}>
           <span>{L.render(item.path)}</span>
-          <MenuItemButtonDesc className="desc">{L.get(`${item.path}-t`)}</MenuItemButtonDesc>
+          <div className="desc">{L.get(`${item.path}-t`)}</div>
         </MenuItemButton>)}
       </div>}
       {(this.state.openLocaleDropdown && window.innerWidth < deviceSizes.mobile) && <div className="mobileContainer">
@@ -86,6 +89,10 @@ export default class Header extends React.Component<{}, State> {
         <MenuItemButton className="mobile" disabled>{L.get("selected", L.get(`locale-${L.locale}`))}</MenuItemButton>
       </div>}
     </Container>;
+  }
+
+  private headerToggle(token: string) {
+    document.querySelector<HTMLElement>(`header.${Container.styledComponentId}`)?.classList.toggle(token);
   }
 }
 
@@ -101,6 +108,10 @@ const Container = styled.header`
   transition: 300ms;
   z-index: 1;
   background-color: var(--grey-300);
+
+  &.const {
+    opacity: 1 !important;
+  }
 
   div.mobileContainer {
     display: flex;
@@ -158,11 +169,6 @@ const MenuItemButton = styled.button`
   &:first-child {
     margin-top: 50px;
   }
-`;
-
-const MenuItemButtonDesc = styled.div`
-  margin-top: auto;
-  margin-bottom: 6.25px;
 `;
 
 const Nickname = styled.span`
