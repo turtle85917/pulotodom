@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import L from "@languages";
 import { deviceSizes } from "./Theme";
-import { cutaway, openAsideComponent } from "./Utility";
+import { cutaway } from "./Utility";
+import Aside from "@components/Aside";
 
 interface State {
   openLocaleDropdown: boolean;
@@ -27,12 +28,13 @@ export default class Header extends React.Component<{}, State> {
       {
         path: "contact",
         onClick: () =>
-          openAsideComponent("Alert", L.render("contact"),
-          <>
-            <a href={L.get("link-email-a")}>{L.render("link-email")}</a>
-            <div className="desc">{L.get("link-email-v")}</div>
-          </>
-        )
+          Aside.openModal(
+            <>
+              <a href={L.get("link-email-a")}>{L.render("link-email")}</a>
+              <div className="desc">{L.get("link-email-v")}</div>
+            </>,
+            L.render("contact")
+          )
       },
       { path: "projects", onClick: () => cutaway("/projects") },
       { path: "timeline", onClick: () => cutaway("/timeline") },

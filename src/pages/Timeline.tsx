@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { MDXProvider } from "@mdx-js/react";
 import L from "@languages";
 import GithubRepo from "@components/GithubRepo";
-import HttpStatusPage from "@components/HttpStatusPage";
 
 type TimelineData = [string, typeof import("*.mdx")["default"]|undefined];
 type Direction = "up" | "down";
@@ -28,7 +27,7 @@ const dates = Array.from(YEARS, (v) =>
 .flat(2);
 
 export default function Timeline(): JSX.Element {
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(true); 
   const [timelineDatas, setTimelineDatas] = React.useState<TimelineData[]>([]);
 
   React.useEffect(() => {
@@ -130,7 +129,6 @@ export default function Timeline(): JSX.Element {
     window.addEventListener("touchstart", onTouchStart, { passive: false });
   }, [timelineDatas]);
 
-  if (process.env.NODE_ENV === "production") return <HttpStatusPage statusCode="501" />;
   if (loading) return <div className="desc loading">{L.render("loading")}</div>
 
   return <Container>

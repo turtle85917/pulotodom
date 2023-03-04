@@ -5,58 +5,104 @@ import styled from "styled-components";
 import L from "@languages";
 
 interface State {
-  openComponent: boolean;
-  modalComponent: JSX.Element|null;
+  type: ComponentType | null;
+  title: string | JSX.Element | null;
+  body: React.ReactNode;
+  onSubmit: ((answer?: boolean) => void) | null;
+  onClose: (() => void) | null;
 }
 
 export default class Aside extends React.Component<{}, State> {
   public state: State = {
-    openComponent: false,
-    modalComponent: null
+    type: null,
+    title: null,
+    body: null,
+    onSubmit: null,
+    onClose: null
   };
+  private tick: number = 0;
+  private static singleton: Aside;
+
+  public static openModal(body: React.ReactNode, title?: string | JSX.Element) {
+    window.dispatchEvent(new Event("curtain-close"));
+    return new Promise<void>((res, rej) => Aside.singleton.setState({
+      type: "Alert",
+      title: title ?? null,
+      body,
+      onSubmit: () => res(),
+      onClose: rej
+    }));
+  }
+
+  public static openConfirm(body: React.ReactNode, title?: string | JSX.Element) {
+    window.dispatchEvent(new Event("curtain-close"));
+    return new Promise<boolean>((res, rej) => Aside.singleton.setState({
+      type: "Confirm",
+      title: title ?? null,
+      body,
+      onSubmit: (answer) => res(answer as any),
+      onClose: rej
+    }));
+  }
 
   public componentDidMount(): void {
-    window.addEventListener("component-open", this.componentOpenListener.bind(this));
+    Aside.singleton = this;
     window.addEventListener("keydown", this.keydownListener.bind(this));
   }
 
+  public componentDidUpdate(): void {
+    if (this.state.type) {
+      this.tick = window.setInterval(() => {
+        const currentModal = document.querySelector<HTMLDivElement>("div.modal");
+        currentModal?.style.setProperty("top", `${((window.innerHeight + (window.scrollY * 2)) - (currentModal?.clientHeight??0)) / 2}px`);
+        currentModal?.style.setProperty("left", `${((window.innerWidth + (window.scrollX * 2)) - (currentModal?.clientWidth??0)) / 2}px`);
+      }, 100);
+    }
+    if (this.state.type === null) {
+      window.clearInterval(this.tick);
+    }
+  }
+
   public render(): React.ReactNode {
-    if (!this.state.openComponent) return null;
+    if (!this.state.type) return null;
 
     return <Container>
-      {this.state.modalComponent}
+      {this.state.type && <DialogContainer className="modal" style={{ top: "0px", left: "0px" }}>
+        <DialogHead>
+          <DialogHeadContent>{this.state.title || L.get("empty")}</DialogHeadContent>
+          <button className="mobile" onClick={this.clickCloseButton.bind(this)}>{L.render("menu-x")}</button>
+        </DialogHead>
+        <DialogBody>{this.state.body}</DialogBody>
+        {this.state.type === "Confirm" && <DialogConfirmComponent>
+          <button className="mobile" onClick={this.clickYesButton.bind(this)}>{L.get("yes")}</button>
+          <button className="mobile no" onClick={this.clickNoButton.bind(this)}>{L.get("no")}</button>
+        </DialogConfirmComponent>}
+      </DialogContainer>}
     </Container>;
   }
 
-  private closeComponent() {
-    this.setState({ modalComponent: null, openComponent: false });
+  private clickYesButton() {
+    this.state.onSubmit?.(true);
+    this.setState({ type: null });
     window.dispatchEvent(new Event("curtain-open"));
   }
 
-  private componentOpenListener(event: Event) {
-    const { detail } = event as CustomEvent<Component>;
-    window.dispatchEvent(new Event("curtain-close"));
-    if (detail.type === "Alert") {
-      this.setState({
-        openComponent: true,
-        modalComponent: <DialogContainer className="modal" style={{ top: "0px", left: "0px" }}>
-          <DialogHead>
-            <DialogHeadContent>{detail.title}</DialogHeadContent>
-            <button className="mobile" onClick={() => this.closeComponent()}>{L.render("menu-x")}</button>
-          </DialogHead>
-          <DialogBody>{detail.content}</DialogBody>
-        </DialogContainer>
-      }, () => {
-        const currentModal = document.querySelector<HTMLDivElement>("div.modal");
-        currentModal?.style.setProperty("top", `${(window.innerHeight - (currentModal?.clientHeight??0)) / 2}px`);
-        currentModal?.style.setProperty("left", `${(window.innerWidth - (currentModal?.clientWidth??0)) / 2}px`);
-      });
-    }
+  private clickNoButton() {
+    this.state.onSubmit?.(false);
+    this.setState({ type: null });
+    window.dispatchEvent(new Event("curtain-open"));
+  }
+
+  private clickCloseButton() {
+    this.state.onClose?.();
+    this.setState({ type: null });
+    window.dispatchEvent(new Event("curtain-open"));
   }
 
   private keydownListener(event: KeyboardEvent) {
     if (event.key === "Escape") {
-      this.setState({ modalComponent: null, openComponent: false });
+      this.state.onClose?.();
+      this.setState({ type: null });
       window.dispatchEvent(new Event("curtain-open"));
     }
   }
@@ -102,4 +148,16 @@ const DialogBody = styled.div`
   padding: 0.2em;
   font-size: 14pt;
   color: var(--grey-300);
+`;
+
+const DialogConfirmComponent = styled.div`
+  display: flex;
+  margin: 0.5em 0;
+  align-items: center;
+  justify-content: space-around;
+
+  button.no {
+    color: var(--white);
+    background-color: var(--rose-100);
+  }
 `;

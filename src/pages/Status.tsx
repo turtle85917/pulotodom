@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { checkColorBright, openAsideComponent } from "@global/Utility";
+import { checkColorBright } from "@global/Utility";
 import Card from "@components/Card";
 import L from "@languages";
+import Aside from "@components/Aside";
 
 const SKILL_CATEGORIES = ["frontend", "backend", "framework", "database", "engine"];
 
@@ -24,12 +25,12 @@ export default function Status(): JSX.Element {
       title={L.render("status-skills")}
       footer={<More
         className="desc"
-        onClick={() => openAsideComponent("Alert", L.render("status-skills"), SKILL_CATEGORIES.map(item => <fieldset key={item}>
+        onClick={() => Aside.openModal(SKILL_CATEGORIES.map(item => <fieldset key={item}>
           <FieldsetHead>{L.render(`skill-tag-${item}`)}</FieldsetHead>
           <div className="children">
             {skills?.filter(skill => skill.tags.includes(item)).map(skill => <div className="desc" style={{ background: skill.gradient, backgroundColor: skill.color, color: checkColorBright(skill.color) ? "var(--grey-100)" : "var(--black)", padding: "0.2em", borderRadius: "2px" }} key={skill.name}>{skill.name}</div>)}
           </div>
-        </fieldset>))}
+        </fieldset>), L.render("status-skills"))}
         >
           {L.render("more")}
         </More>

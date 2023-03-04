@@ -90,23 +90,6 @@ export const fillArrayWithEmptyValues = <T = string>(array: Array<T>, limit: num
 }
 
 /**
- * 컴포넌트(모달창 등)를 열어달라고 요청함.
- * 
- * @param type 타입
- * @param title 제목
- * @param content 내용
- */
-export const openAsideComponent = (type: ComponentType, title: string|JSX.Element, content: React.ReactNode) => {
-  window.dispatchEvent(new CustomEvent<Component>("component-open", {
-    detail: {
-      type,
-      title,
-      content
-    }
-  }));
-}
-
-/**
  * 색상 값이 어두운지 판단함.
  * 
  * @param hexcode 헥스코드
