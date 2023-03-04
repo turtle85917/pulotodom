@@ -7,6 +7,7 @@ import ReactTooltip from "react-tooltip";
 import Curtain from "@components/Curtain";
 import theme from "@global/Theme";
 import Header from "@global/Header";
+import Footer from "@global/Footer";
 import Aside from "@components/Aside";
 import HttpStatusPage from "@components/HttpStatusPage";
 import Main from "@pages/Main";
@@ -41,6 +42,7 @@ ReactDOM.createRoot(document.getElementById("main") as HTMLElement).render(
         <Route path="*" element={<HttpStatusPage statusCode="404" needToReturn={true} />} />
       </Routes>
       <ReactTooltip id="tooltip" place="top" getContent={(tip) => <Tooltip>{L.render(tip)}</Tooltip>} />
+      <Footer />
       <Aside />
       <Curtain />
     </BrowserRouter>
