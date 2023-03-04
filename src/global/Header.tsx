@@ -10,7 +10,7 @@ interface State {
 }
 
 const LIMPIDITY = "1";
-const HIGH_TRANSPARENCY = "0.8";
+const HIGH_TRANSPARENCY = "0.9";
 const LOW_TRANSPARENCY = "0.15";
 
 export default class Header extends React.Component<{}, State> {

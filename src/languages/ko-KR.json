@@ -6,6 +6,7 @@
   "nickname-s": "웹을 다룬다거나 게임을 만들어요.",
   "nickname-t": "#{icon:star} 쨘! 저의 프로필 이미지에요. #{icon:star}#{br}#{br}#{img:/slime.png}",
   "empty": "-",
+  "here": "여기!",
   "more": "#{icon:plus} … 더보기",
   "selected": "선택된 값 : #{0}",
   "time": "#{0}회",
@@ -69,5 +70,7 @@
   "skill-tag-backend": "#{icon:eye-slash} 백엔드",
   "skill-tag-framework": "#{icon:toolbox} 프레임워크",
   "skill-tag-database": "#{icon:server} 데이터베이스",
-  "skill-tag-engine": "#{icon:car-side} 게임 엔진"
+  "skill-tag-engine": "#{icon:car-side} 게임 엔진",
+  "github-repository-stars": "#{icon:star|prefix:far} 별 #{0}개",
+  "github-repository-forks": "#{icon:code-fork} 포크 #{0}회"
 }

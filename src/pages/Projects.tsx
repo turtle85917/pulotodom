@@ -58,7 +58,7 @@ export default function Projects(): JSX.Element {
 
 
   if (loading) return <div className="desc loading">{L.render("loading")}</div>;
-  if (!monologue && name) return <HttpStatusPage statusCode="404" needToReturn={true} />
+  if (!monologue && name) return <HttpStatusPage statusCode="404" needToReturn={true} />;
   if (monologue !== undefined) {
     const filledNpmDownloads = fillArrayWithEmptyValues(npmDownloads?.downloads.slice(-10)??[], 10, { day: '', downloads: 0 });
     const vercelStatus = vercelProject?.targets?.production.readyState

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MDXProvider } from "@mdx-js/react";
 import L from "@languages";
+import GithubRepo from "@components/GithubRepo";
 import HttpStatusPage from "@components/HttpStatusPage";
 
 type TimelineData = [string, typeof import("*.mdx")["default"]|undefined];
@@ -101,14 +102,10 @@ export default function Timeline(): JSX.Element {
       event.preventDefault();
     }
 
+    // BUG 모바일 UX 버그
     const onTouchStart = (event: TouchEvent) => {
       const positions: [number, number][] = [];
-      if (
-        event.cancelable &&
-        !((event.target instanceof HTMLButtonElement) && /메뉴|닫기|Menu|Close/.test(event.target.innerText)) &&
-        !document.querySelector("header div.mobileContainer")
-      ) event.preventDefault();
-
+      event.preventDefault();
       const onTouchMove = (event: TouchEvent) => {
         if (event.cancelable) event.preventDefault();
         positions.push([event.touches[0].screenX, event.touches[0].screenY]);
@@ -142,7 +139,9 @@ export default function Timeline(): JSX.Element {
       <MDXProvider
         components={{
           p: (props) => <p {...props} style={{ fontFamily: "Desc" }} />,
-          hr: (props: any) => <MDXHr {...props} />
+          hr: (props: any) => <MDXHr {...props} />,
+          L: (props) => <div className="desc">{L.render(props.k)}</div>,
+          Repository: (props) => <GithubRepo {...props} />
         }}
       >
         {timelineDatas.map(([date, TItem]) => <TimelineItem className={TItem && "active"} key={date}>
